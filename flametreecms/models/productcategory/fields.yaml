@@ -1,0 +1,14 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: Name
+        type: text
+tabs:
+    defaultTab: Product Manager
+    fields:
+        products:
+            type: partial
+            path: $/godspeed/flametreecms/models/productcategory/relation_manager.htm

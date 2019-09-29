@@ -1,0 +1,21 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+    producer_name:
+        label: Producer Name
+        searchable: true
+    producer_origin:
+        label: Producer Origin
+        searchable: true
+    producer_website:
+        label: Producer Website
+        searchable: true
+    producer_logo:
+        label: Logo
+        type: partial
+        path: ~/plugins/godspeed/flametreecms/models/product/_list_logo.htm

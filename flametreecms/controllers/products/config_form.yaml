@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Product
+
+# Model Form Field configuration
+form: $/godspeed/flametreecms/models/product/fields.yaml
+
+# Model Class name
+modelClass: GodSpeed\FlametreeCMS\Models\Product
+
+# Default redirect location
+defaultRedirect: godspeed/flametreecms/products
+
+# Create page
+create:
+    title: Create Product
+    redirect: godspeed/flametreecms/products/update/:id
+    redirectClose: godspeed/flametreecms/products
+
+# Update page
+update:
+    title: Edit Product
+    redirect: godspeed/flametreecms/products
+    redirectClose: godspeed/flametreecms/products
+
+# Preview page
+preview:
+    title: Preview Product

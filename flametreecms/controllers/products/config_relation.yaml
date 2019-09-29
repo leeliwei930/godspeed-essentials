@@ -1,0 +1,9 @@
+category:
+    label: Category
+    view:
+        list: $/godspeed/flametreecms/models/productcategory/columns.yaml
+        toolbarsButtons: link|unlink
+    manage:
+        form: $/godspeed/flametreecms/models/productcategory/fields.yaml
+        list: $/godspeed/flametreecms/models/productcategory/columns.yaml
+

@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Special Order
+
+# Model Form Field configuration
+form: $/godspeed/flametreecms/models/specialorder/fields.yaml
+
+# Model Class name
+modelClass: GodSpeed\FlametreeCMS\Models\SpecialOrder
+
+# Default redirect location
+defaultRedirect: godspeed/flametreecms/specialorders
+
+# Create page
+create:
+    title: Create Special Order
+    redirect: godspeed/flametreecms/specialorders/update/:id
+    redirectClose: godspeed/flametreecms/specialorders
+
+# Update page
+update:
+    title: Edit Special Order
+    redirect: godspeed/flametreecms/specialorders
+    redirectClose: godspeed/flametreecms/specialorders
+
+# Preview page
+preview:
+    title: Preview Special Order

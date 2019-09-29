@@ -1,0 +1,16 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+    name:
+        label: Name
+        searchable: true
+    producers:
+        label: Number of Producers
+        type: partial
+        path: ~/plugins/godspeed/flametreecms/models/productcategory/_list_num_of_producers.htm
+        sortable: false

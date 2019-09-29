@@ -1,0 +1,22 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    producer_name:
+        label: Producer Name
+        type: text
+    producer_origin:
+        label: Producer Origin
+        type: text
+    producer_website:
+        label: Producer Websites
+        type: text
+    producer_logo:
+        label: Producer Company Logo
+        type: mediafinder
+    product_category:
+        label: Category
+        type: relation
+        nameFrom: name
+        emptyOption: Please Select A Category
