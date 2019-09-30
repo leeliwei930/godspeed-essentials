@@ -3,3 +3,6 @@
 - create_products_table.php
 - ProductsSeeder.php
 - create_special_orders_table.php
+
+1.0.1:
+    - update_users_plugin_table.php

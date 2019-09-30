@@ -1,0 +1,22 @@
+# ===================================
+#  Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: rainlab.user::lang.user.name
+        span: auto
+    surname:
+        label: rainlab.user::lang.user.username
+        span: auto
+    username:
+        label: rainlab.user::lang.user.surname
+        span: auto
+    email:
+        label: Email
+    password:
+        label: Password
+        type: password
+    phone_number:
+        label: Phone Number
+        type: text

@@ -1,7 +1,12 @@
 <?php namespace GodSpeed\FlametreeCMS;
 
 use Backend;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
+use RainLab\User\Models\User;
 use System\Classes\PluginBase;
+use RainLab\User\Controllers\Users as RainLabUsersController;
 
 /**
  * flametreeCMS Plugin Information File
@@ -13,6 +18,8 @@ class Plugin extends PluginBase
      *
      * @return array
      */
+    public $require = ['RainLab.User'];
+
     public function pluginDetails()
     {
         return [
@@ -30,7 +37,6 @@ class Plugin extends PluginBase
      */
     public function register()
     {
-
     }
 
     /**
@@ -40,7 +46,8 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
-
+        // extend users importer
+        $this->extendingRainLabUserPlugin();
     }
 
     /**
@@ -70,7 +77,7 @@ class Plugin extends PluginBase
 //        return []; // Remove this line to activate
 
         return [
-            'godspeed.flametreecms.some_permission' => [
+            'godspeed.flametreecms.manage_volunteers' => [
                 'tab' => 'flametreeCMS',
                 'label' => 'Some permission'
             ],
@@ -136,4 +143,47 @@ class Plugin extends PluginBase
         ];
     }
 
+    public function extendingRainLabUserPlugin()
+    {
+        Event::listen('backend.menu.extendItems', function ($manager) {
+
+
+            $manager->addSideMenuItems('RainLab.User', 'user', [
+                'Import volunteers' => [
+                    "label" => "Import Volunteers",
+                    "icon" => 'icon-list',
+                    "url" => Backend::url("rainlab/user/users/import"),
+                ]
+            ]);
+        });
+
+        RainLabUsersController::extend(function ($controller) {
+            $controller->implement[] = 'Backend.Behaviors.ImportExportController';
+            $controller->addDynamicProperty(
+                'importExportConfig',
+                '$/godspeed/flametreecms/controllers/volunteers/config_import_export.yaml'
+            );
+            $controller->addViewPath("$/godspeed/flametreecms/views/rainlabUser");
+        });
+
+        RainLabUsersController::extendFormFields(function ($form, $model, $context) {
+            if (!$model instanceof User) {
+                return;
+            }
+
+            $model->rules['phone_number'] = "between:8,20";
+            $form->addFields([
+                'phone_number' => [
+                    "label" => "Phone Number"
+                ]
+            ]);
+        });
+
+        RainLabUsersController::extendListColumns(function ($list, $model) {
+            $list->addColumns(['phone_number' => [
+                'searchable' => true,
+                'label' => "Phone Number",
+            ]]);
+        });
+    }
 }
