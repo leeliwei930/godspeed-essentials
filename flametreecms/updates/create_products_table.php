@@ -16,7 +16,6 @@ class CreateProductsTable extends Migration
             $table->string('producer_website')->nullable();
             $table->string('producer_logo')->default('default.png');
             $table->unsignedInteger('product_category_id')->nullable();
-
             $table->foreign('product_category_id')->references('id')->on('godspeed_flametreecms_product_categories')->onDelete('set null');
             $table->timestamps();
         });

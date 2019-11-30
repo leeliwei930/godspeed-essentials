@@ -1,0 +1,31 @@
+subject = "Your Flametree volunteer account is ready"
+description = "Invitation notification for volunteer"
+layout = flametreeCMS-frontend
+==
+<div class="header-message">
+    <img src="http://flametreecoop.com/community/wp-content/uploads/2014/07/logo-flametree1.jpg" alt="" class="brand">
+    <h2 class="headline">{{ subject }}</h2>
+    <p class="subheading">Your account is ready!</p>
+</div>
+<div class="order-info-card">
+    <div class="card-header">
+        Account Information
+    </div>
+    <div class="card-body">
+        <div class="section">
+            <p class="label">Username</p>
+            <p class="text">{{volunteer.email}}</p>
+        </div>
+        <div class="section">
+            <p class="label">Password</p>
+            <p class="text">{{ password }}</p>
+        </div>
+        {%  if mailActions %}
+        <div class="card-actions">
+{#            <a href="{{ mailActions.markAsRead }}" class="btn btn-primary">Mark As Read</a>#}
+{#            <a href="{{ mailActions.viewInfo}}" class="btn btn-info">View Order</a>#}
+        </div>
+        {%  endif %}
+    </div>
+
+</div>

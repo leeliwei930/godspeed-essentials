@@ -115,6 +115,16 @@ class Plugin extends PluginBase
                         'icon'  => 'icon-inbox',
                         'url'   => Backend::url('godspeed/flametreecms/specialorders'),
                     ],
+                    "video" => [
+                        'label' => "Videos",
+                        'icon' => 'icon-film',
+                        'url'   => Backend::url('godspeed/flametreecms/video'),
+                    ],
+                    "videoplaylist" => [
+                        "label" => "Video Playlist",
+                        "icon" => "icon-list",
+                        "url" => Backend::url("godspeed/flametreecms/videoplaylist")
+                    ]
                 ]
             ],
         ];
@@ -124,7 +134,8 @@ class Plugin extends PluginBase
     {
         return [
             'godspeed.flametreecms::mail.templates.receiver-template',
-             'godspeed.flametreecms::mail.templates.sender-template'
+             'godspeed.flametreecms::mail.templates.sender-template',
+            'godspeed.flametreecms::mail.templates.volunteer-invitation'
         ];
     }
 

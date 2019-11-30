@@ -1,0 +1,14 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: Playlist Name
+        hint: The playlist name must be unique.
+tabs:
+    defaultTab: Video Manager
+    fields:
+        videos:
+            type: partial
+            path: $/godspeed/flametreecms/models/videoplaylist/relation_manager.htm

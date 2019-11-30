@@ -1,0 +1,17 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+    type:
+        label: Media Sources
+    embed_id:
+        label: Embed ID
+        searchable: true
+    playlist:
+        label: Playlist
+        relation: video_playlist
+        select: name
