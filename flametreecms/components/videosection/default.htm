@@ -1,0 +1,11 @@
+<video-gallery
+    video-list="{{ __SELF__.getAllVideos().videos }}"
+
+    {%  if (__SELF__.property('autoplay') == 1) %}
+    v-bind:autoplay="true"
+    {%  else  %}
+        v-bind:autoplay="false"
+
+    {%  endif %}
+    playlist-name="{{ __SELF__.getAllVideos().name }}"
+></video-gallery>

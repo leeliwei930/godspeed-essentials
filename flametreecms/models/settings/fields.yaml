@@ -1,0 +1,4 @@
+fields:
+    youtube_data_api_key:
+        label: YouTube Data API Key
+        type: text

@@ -10,6 +10,7 @@ fields:
         label: Embed ID
         type: text
         placeholder: The embed id which is associated after the youtube url for your video
+
     video_playlist:
         label: Playlist
         type: relation

@@ -59,7 +59,8 @@ class Plugin extends PluginBase
     {
         return [
             "GodSpeed\FlametreeCMS\Components\ProductCategory" => "ProductCategory",
-            "GodSpeed\FlametreeCMS\Components\SpecialOrderForm" => "SpecialOrderForm"
+            "GodSpeed\FlametreeCMS\Components\SpecialOrderForm" => "SpecialOrderForm",
+            "GodSpeed\FlametreeCMS\Components\VideoSection" => "VideoSection"
         ]; // Remove this line to activate
 
 //        return [
@@ -151,6 +152,21 @@ class Plugin extends PluginBase
         return [
             'flametreecms-frontend-header' => "godspeed.flametreecms::mail.partials.flametreeCMS-frontend-header",
             'flametreecms-frontend-footer' => "godspeed.flametreecms::mail.partials.flametreeCMS-frontend-footer"
+        ];
+    }
+
+    public function registerSettings()
+    {
+        return [
+            'flametree-cms-api-settings' => [
+                'label'       => 'FlameTree CMS API Settings',
+                'description' => 'Manage API keys that connect with third party services',
+                'category'    => 'FlametreeCMS',
+                'icon'        => 'icon-plug',
+                'class'         =>  'GodSpeed\FlametreeCMS\Models\Settings',
+                'order'       => 500,
+                'keywords'    => 'api settings'
+            ]
         ];
     }
 
