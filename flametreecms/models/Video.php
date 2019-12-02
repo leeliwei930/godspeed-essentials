@@ -20,7 +20,9 @@ class Video extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = [
+        "embed_id" , "duration" , "featured_image" , "description" , "type" , "title"
+    ];
 
     /**
      * @var array Relations

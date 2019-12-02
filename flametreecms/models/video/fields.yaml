@@ -4,15 +4,47 @@
 
 fields:
     type:
-        label: Type
+        label: Media Sources
         type: dropdown
+        span: left
     embed_id:
         label: Embed ID
         type: text
+        span: right
         placeholder: The embed id which is associated after the youtube url for your video
+    title:
+        label: Video Title
+        readOnly: true
+        span: left
+        context:
+            - update
+            - preview
+    duration:
+        label: Video Duration (Seconds)
+        readOnly: true
+        type: number
+        span: right
+        context:
+            - update
+            - preview
+    description:
+        label: Video Description
+        type: textarea
+        readOnly: true
+        context:
+            - update
+            - preview
 
+    featured_image:
+        label: Video Featured Image (Thumbnail)
+        type: text
+        readOnly: true
+        context:
+            - update
+            - preview
     video_playlist:
         label: Playlist
         type: relation
         emptyOption: Uncategorized
+
 

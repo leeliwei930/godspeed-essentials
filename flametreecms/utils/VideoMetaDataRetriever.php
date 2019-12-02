@@ -67,15 +67,15 @@ class VideoMetaDataRetriever
                     ->addMinutes($dtInterval->i)
                     ->addSeconds($dtInterval->s);
             $seconds = $end->diffInSeconds($start);
-
             $data = [
                 "status" => self::OK,
                 "duration" => $seconds,
-                "featured_image" => self::$youtubeAPIConfig['thumbnail_base'] . $embedID . "/maxresdefault.jpg",
+                "featured_image" => self::$youtubeAPIConfig['thumbnail_base'] . $embedID . "/sddefault.jpg",
                 "title" => $response["items"][0]['snippet']['title'],
                 "description" => $response['items'][0]['snippet']['description'],
                 "embed_id" => $response['items'][0]['id']
             ];
+
         } else {
             $data = [
                 "status" => self::NOT_FOUND

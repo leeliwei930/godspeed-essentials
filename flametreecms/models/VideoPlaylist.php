@@ -38,4 +38,10 @@ class VideoPlaylist extends Model
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
+
+    public function addVideo($data)
+    {
+
+        return $this->videos()->create($data);
+    }
 }

@@ -2,7 +2,7 @@
     video-list="{{ __SELF__.getAllVideos().videos }}"
 
     {%  if (__SELF__.property('autoplay') == 1) %}
-    v-bind:autoplay="true"
+        v-bind:autoplay="true"
     {%  else  %}
         v-bind:autoplay="false"
 
