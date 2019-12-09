@@ -1,9 +1,12 @@
 <?php namespace GodSpeed\FlametreeCMS;
 
 use Backend;
+use GodSpeed\FlametreeCMS\Utils\VideoMeta\Video;
+use GodSpeed\FlametreeCMS\Models\Video as VideoModel;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
+use October\Rain\Exception\ValidationException;
 use RainLab\User\Models\User;
 use System\Classes\PluginBase;
 use RainLab\User\Controllers\Users as RainLabUsersController;
@@ -48,6 +51,7 @@ class Plugin extends PluginBase
     {
         // extend users importer
         $this->extendingRainLabUserPlugin();
+        $this->extendControllerBehaviour();
     }
 
     /**
@@ -212,5 +216,72 @@ class Plugin extends PluginBase
                 'label' => "Phone Number",
             ]]);
         });
+    }
+
+    public function extendControllerBehaviour()
+    {
+        VideoModel::extend(function ($model) {
+            $model->bindEvent('model.beforeCreate', function () use ($model) {
+                $api = Video::make($model->type);
+
+
+                $res = $api->get($model->embed_id);
+
+
+                if ($res['status'] === Video::OK) {
+                    $data = [
+                        'type' => $model->type,
+                        'embed_id' => $res['embed_id'],
+                        'duration' => $res['duration'],
+                        'featured_image' => $res['featured_image'],
+                        'title' => $res['title'],
+                        'description' => $res['description'],
+                    ];
+
+                    $model->embed_id = $data['embed_id'];
+                    $model->duration = $data['duration'];
+                    $model->featured_image = $data['featured_image'];
+                    $model->title = $data['title'];
+                    $model->description = $data['description'];
+
+                } else {
+                    throw new ValidationException([
+                        'embed_id' => "Invalid video id please make sure the video sources is selected correctly"
+                    ]);
+                }
+            });
+            $model->bindEvent('model.beforeSave', function () use ($model) {
+                $api = Video::make($model->type);
+
+
+                $res = $api->get($model->embed_id);
+
+
+                if ($res['status'] === Video::OK) {
+                    $data = [
+                        'type' => $model->type,
+                        'embed_id' => $res['embed_id'],
+                        'duration' => $res['duration'],
+                        'featured_image' => $res['featured_image'],
+                        'title' => $res['title'],
+                        'description' => $res['description'],
+                    ];
+
+                    $model->embed_id = $data['embed_id'];
+                    $model->duration = $data['duration'];
+                    $model->featured_image = $data['featured_image'];
+                    $model->title = $data['title'];
+                    $model->description = $data['description'];
+
+                } else {
+                    throw new ValidationException([
+                        'embed_id' => "Invalid video id please make sure the video sources is selected correctly"
+                    ]);
+                }
+            });
+        });
+
+
+
     }
 }

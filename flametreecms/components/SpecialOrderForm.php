@@ -3,6 +3,7 @@
 use Backend\Facades\Backend;
 use Cms\Classes\ComponentBase;
 use GodSpeed\FlametreeCMS\Models\SpecialOrder;
+use GodSpeed\FlametreeCMS\Repositories\SpecialOrderFormRepository;
 use Illuminate\Support\Facades\Mail;
 
 class SpecialOrderForm extends ComponentBase
@@ -43,56 +44,7 @@ class SpecialOrderForm extends ComponentBase
 
     public function onSubmit()
     {
-        $request = post();
-
-        $specialOrder = SpecialOrder::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'message' => $request['message'],
-            'phone_number' => $request['phone_number']
-        ]);
-
-        if($this->property('Enable email forwarding') == 1){
-            $this->sendToReceiver($specialOrder);
-        }
-
-        if($this->property('Resend Notification To Customer') == 1){
-            $this->sendBackToSender($specialOrder);
-        }
-    }
-
-    public function sendBackToSender($order)
-    {
-        Mail::send( "godspeed.flametreecms::mail.templates.sender-template", [ 'order' => $order->toArray()] , function($message) use($order){
-            $message->to($order['email']);
-        });
-
-    }
-
-    public function sendToReceiver($order){
-        $receiver = $this->property("To");
-        $ccList = $this->preprocessingCCList();
-        $mailActions = [
-            'markAsRead' => Backend::url('godspeed/flametreecms/specialorders/markAsRead/'.$order->id),
-            'viewInfo' => Backend::url('godspeed/flametreecms/specialorders/preview/'.$order->id)
-        ];
-        Mail::send("godspeed.flametreecms::mail.templates.receiver-template", [
-            'order' => $order->toArray(),
-            'mailActions' => $mailActions
-        ],
-            function($message) use($receiver, $ccList){
-                $message->to($receiver);
-                $message->cc($ccList);
-        });
-
-    }
-
-    protected function preprocessingCCList(){
-        $emails = $this->property('CC');
-        $emails= str_replace(" ", "", $emails);
-        $emailList = explode(",", $emails);
-
-        return $emailList;
-
+        $specialOrderRepo = new SpecialOrderFormRepository(post(), $this->getProperties());
+        $specialOrderRepo->placeOrder();
     }
 }

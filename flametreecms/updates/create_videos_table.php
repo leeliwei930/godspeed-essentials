@@ -13,7 +13,7 @@ class CreateVideosTable extends Migration
             $table->increments('id');
             $table->string('embed_id');
             $table->string('type');
-            $table->integer('duration');
+            $table->integer('duration')->default(0);
             $table->string('featured_image');
             $table->string('title');
             $table->longText('description');
