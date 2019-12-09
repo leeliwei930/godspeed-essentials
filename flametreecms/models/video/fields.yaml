@@ -7,44 +7,66 @@ fields:
         label: Media Sources
         type: dropdown
         span: left
-    embed_id:
+
+    embed_id[for][platform]:
         label: Embed ID
         type: text
         span: right
         placeholder: The embed id which is associated after the youtube url for your video
+        dependsOn:
+            - type
+        hidden: true
+
+
+    embed_id[for][video]:
+        label: Embed ID
+        type: mediafinder
+        mode: file
+        span: right
+        hidden: true
+        dependsOn:
+            - type
     title:
         label: Video Title
         readOnly: true
         span: left
-        context:
-            - update
-            - preview
+        hidden: true
+        dependsOn:
+            - type
     duration:
         label: Video Duration (Seconds)
         readOnly: true
         type: number
+        hidden: true
         span: right
-        context:
-            - update
-            - preview
+        dependsOn:
+            - type
+
     description:
         label: Video Description
         type: textarea
         readOnly: true
-        context:
-            - update
-            - preview
+        hidden: true
+        dependsOn:
+            - type
 
-    featured_image:
+    featured_image[for][video]:
+        label: Video Featured Image (Thumbnail)
+        type: mediafinder
+        mode: file
+        hidden: true
+        dependsOn:
+            - type
+    featured_image[for][platform]:
         label: Video Featured Image (Thumbnail)
         type: text
-        readOnly: true
-        context:
-            - update
-            - preview
+        hidden: true
+        dependsOn:
+            - type
     video_playlist:
         label: Playlist
         type: relation
         emptyOption: Uncategorized
+
 
 

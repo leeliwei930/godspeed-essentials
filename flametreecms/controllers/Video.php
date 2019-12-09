@@ -2,6 +2,8 @@
 
 use BackendMenu;
 use Backend\Classes\Controller;
+use GodSpeed\FlametreeCMS\Repositories\VideoRepository;
+
 /**
  * Video Back-end Controller
  */
@@ -21,7 +23,6 @@ class Video extends Controller
 
         BackendMenu::setContext('GodSpeed.FlametreeCMS', 'flametreecms', 'video');
     }
-
 
 
 }

@@ -1,0 +1,31 @@
+{
+    "name": "godspeed/flametreecms",
+    "description": "A proprietary CMS designed for Flame Tree Co-op",
+    "require-dev": {
+    },
+    "license": "Proprietary",
+    "authors": [
+        {
+            "name": "Lee Li Wei",
+            "email": "leeliwei930@gmail.com"
+        },
+        {
+            "name": "David Yong",
+            "email": "dpsy611@uowmail.edu.au"
+        },
+        {
+            "name": "Wai Kit Low",
+            "email": "wkl090@uowmail.edu.au"
+        },
+        {
+            "name" : "Alwyn Yeo Khai Yuan",
+            "email": "akyy958@uowmail.edu.au"
+        },
+        {
+            "name" : "Nadun Jayawardena",
+            "email": "nj547@uowmail.edu.au"
+        }
+    ],
+    "require": {
+    }
+}

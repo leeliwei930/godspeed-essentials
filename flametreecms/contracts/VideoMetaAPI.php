@@ -9,5 +9,5 @@ interface VideoMetaAPI {
      * @return ["key" => "value"]
      */
     public function getConfig($key);
-    public function get($resource_id);
+    public function get();
 }

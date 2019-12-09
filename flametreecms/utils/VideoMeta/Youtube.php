@@ -12,16 +12,22 @@ class Youtube extends Video
 {
     public $name = "youtube";
 
-    public function get($resource)
+    public function __construct($model)
+    {
+        parent::__construct($model);
+    }
+
+    public function get()
     {
         $youtubeRes = Http::get($this->getConfig('api_base') . '?' . http_build_query([
             'part' => 'contentDetails,snippet',
-            'id' => $resource,
+            'id' => $this->request['embed_id']['for']['platform'],
             'key' => Settings::get('youtube_data_api_key')
         ]))->send();
+
         $response = json_decode($youtubeRes, true);
 
-        if (!is_null($response) && count($response["items"]) > 0) {
+        if (!is_null($response) && isset($response["items"]) &&count($response["items"]) > 0) {
             // parsing duration from YouTube response with ISO8601 format
             $dtInterval = new \DateInterval($response["items"][0]['contentDetails']['duration']);
             //calculate the duration
@@ -36,7 +42,9 @@ class Youtube extends Video
             $data = [
                 "status" => self::OK,
                 "duration" => $seconds,
-                "featured_image" => $this->getConfig('thumbnail_base') . $resource . "/sddefault.jpg",
+                "featured_image" => $this->getConfig('thumbnail_base')
+                . $this->request['embed_id']['for']['platform'] . "/sddefault.jpg",
+
                 "title" => $response["items"][0]['snippet']['title'],
                 "description" => $response['items'][0]['snippet']['description'],
                 "embed_id" => $response['items'][0]['id']

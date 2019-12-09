@@ -221,42 +221,9 @@ class Plugin extends PluginBase
     public function extendControllerBehaviour()
     {
         VideoModel::extend(function ($model) {
-            $model->bindEvent('model.beforeCreate', function () use ($model) {
-                $api = Video::make($model->type);
-
-
-                $res = $api->get($model->embed_id);
-
-
-                if ($res['status'] === Video::OK) {
-                    $data = [
-                        'type' => $model->type,
-                        'embed_id' => $res['embed_id'],
-                        'duration' => $res['duration'],
-                        'featured_image' => $res['featured_image'],
-                        'title' => $res['title'],
-                        'description' => $res['description'],
-                    ];
-
-                    $model->embed_id = $data['embed_id'];
-                    $model->duration = $data['duration'];
-                    $model->featured_image = $data['featured_image'];
-                    $model->title = $data['title'];
-                    $model->description = $data['description'];
-
-                } else {
-                    throw new ValidationException([
-                        'embed_id' => "Invalid video id please make sure the video sources is selected correctly"
-                    ]);
-                }
-            });
             $model->bindEvent('model.beforeSave', function () use ($model) {
-                $api = Video::make($model->type);
-
-
-                $res = $api->get($model->embed_id);
-
-
+                $api = Video::make(post('Video'));
+                $res = $api->get();
                 if ($res['status'] === Video::OK) {
                     $data = [
                         'type' => $model->type,

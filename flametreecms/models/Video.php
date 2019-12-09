@@ -45,7 +45,47 @@ class Video extends Model
     {
         return [
             "youtube" => "YouTube",
-            "vimeo" => "Vimeo"
+            "vimeo" => "Vimeo",
+            "video" => "Media Gallery"
         ];
+    }
+
+    public function filterFields($fields, $context = null)
+    {
+        switch ($context) {
+            case "create":
+                if ($this->type === "video") {
+                    $fields->{'embed_id[for][video]'}->hidden = false;
+                    $fields->{'featured_image[for][video]'}->hidden = false;
+                    $fields->title->hidden = false;
+                    $fields->description->hidden = false;
+                    $fields->title->readOnly = false;
+                    $fields->description->readOnly = false;
+                } else {
+                    $fields->{'embed_id[for][platform]'}->hidden = false;
+                }
+                break;
+            case "update":
+                if ($this->type === "video") {
+                    $fields->{'embed_id[for][video]'}->hidden = false;
+                    $fields->{'featured_image[for][video]'}->hidden = false;
+                    $fields->{'embed_id[for][video]'}->value = $this->embed_id;
+                    $fields->{'featured_image[for][video]'}->value = $this->featured_image;
+
+                    $fields->title->hidden = false;
+                    $fields->description->hidden = false;
+                    $fields->title->readOnly = false;
+                    $fields->description->readOnly = false;
+                    $fields->type->default = $this->type;
+
+                } else {
+                    $fields->{'embed_id[for][platform]'}->hidden = false;
+                    $fields->{'embed_id[for][platform]'}->value = $this->embed_id;
+                    $fields->title->hidden = false;
+                    $fields->description->hidden = false;
+                    $fields->type->default = $this->type;
+                }
+                break;
+        }
     }
 }
