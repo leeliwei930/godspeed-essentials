@@ -24,6 +24,10 @@ class Video extends Model
         "embed_id" , "duration" , "featured_image" , "description" , "type" , "title"
     ];
 
+    protected $appends = [
+        'video_url', 'featured_image_url'
+    ];
+
     /**
      * @var array Relations
      */
@@ -50,6 +54,26 @@ class Video extends Model
         ];
     }
 
+    public function getVideoUrlAttribute($value)
+    {
+        if ($this->attributes['type'] === 'video') {
+            return url("storage/app/media/" . $this->attributes['embed_id']);
+        } else {
+            return $this->attributes['embed_id'];
+        }
+    }
+
+    public function getFeaturedImageUrlAttribute($value)
+    {
+
+        if ($this->attributes['type'] === 'video') {
+            return url("storage/app/media/" . $this->attributes['featured_image']);
+        } else {
+            return $this->attributes['featured_image'];
+        }
+    }
+
+
     public function filterFields($fields, $context = null)
     {
         switch ($context) {
@@ -69,6 +93,8 @@ class Video extends Model
                 if ($this->type === "video") {
                     $fields->{'embed_id[for][video]'}->hidden = false;
                     $fields->{'featured_image[for][video]'}->hidden = false;
+                    $fields->duration->hidden = false;
+                    $fields->duration->readOnly = true;
                     $fields->{'embed_id[for][video]'}->value = $this->embed_id;
                     $fields->{'featured_image[for][video]'}->value = $this->featured_image;
 
@@ -77,7 +103,6 @@ class Video extends Model
                     $fields->title->readOnly = false;
                     $fields->description->readOnly = false;
                     $fields->type->default = $this->type;
-
                 } else {
                     $fields->{'embed_id[for][platform]'}->hidden = false;
                     $fields->{'embed_id[for][platform]'}->value = $this->embed_id;

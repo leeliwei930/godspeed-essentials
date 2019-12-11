@@ -1,9 +1,9 @@
 <?php
 namespace GodSpeed\FlametreeCMS\Utils\VideoMeta;
 
-use FFMpeg\FFProbe;
 use GodSpeed\FlametreeCMS\Contracts\VideoMetaAPI;
 use GodSpeed\FlametreeCMS\Models\Video as VideoModel;
+use GodSpeed\FlametreeCMS\Utils\VideoDurationFormatter;
 use Illuminate\Support\Facades\Log;
 
 class Video implements VideoMetaAPI
@@ -25,9 +25,14 @@ class Video implements VideoMetaAPI
 
     public function get()
     {
+
+        $getID3 =  new \getID3();
+        $file = $getID3->analyze(storage_path('app/media/'. $this->request['embed_id']['for']['video']));
+        $seconds = VideoDurationFormatter::toSeconds($file['playtime_string']);
+
         $data = [
             "status" => self::OK,
-            "duration" => 0,
+            "duration" => $seconds,
             "featured_image" =>  $this->request['featured_image']['for']['video'],
             "title" =>  $this->request['title'],
             "description" => $this->request['description'],
