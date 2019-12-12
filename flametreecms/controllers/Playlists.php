@@ -6,12 +6,12 @@ use Backend\Classes\Controller;
 /**
  * Video Playlist Back-end Controller
  */
-class VideoPlaylist extends Controller
+class Playlists extends Controller
 {
     public $implement = [
         'Backend.Behaviors.FormController',
         'Backend.Behaviors.ListController',
-        'Backend.Behaviors.RelationController'
+        'Backend.Behaviors.RelationController',
     ];
 
     public $formConfig = 'config_form.yaml';
@@ -22,6 +22,6 @@ class VideoPlaylist extends Controller
     {
         parent::__construct();
 
-        BackendMenu::setContext('GodSpeed.FlametreeCMS', 'flametreecms', 'videoplaylist');
+        BackendMenu::setContext('GodSpeed.FlametreeCMS', 'flametreecms', 'playlists');
     }
 }

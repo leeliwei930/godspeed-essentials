@@ -5,7 +5,7 @@ use Cms\Classes\ComponentBase;
 
 use GodSpeed\FlametreeCMS\Models\Video;
 
-use GodSpeed\FlametreeCMS\Models\VideoPlaylist;
+use GodSpeed\FlametreeCMS\Models\Playlist;
 use phpDocumentor\Reflection\DocBlock;
 
 /**
@@ -65,7 +65,7 @@ class VideoSection extends ComponentBase
         $playlistName = $this->property('playlist_name');
 
         if (!is_null($playlistName)) {
-            $videoPlaylist = VideoPlaylist::with(['videos'])->find($playlistName);
+            $videoPlaylist = Playlist::with(['videos'])->find($playlistName);
         } else {
             $videos = Video::where('video_playlist_id', null)->get();
             $videoPlaylist['videos'] = $videos;
@@ -78,6 +78,6 @@ class VideoSection extends ComponentBase
 
     public function getPlaylistOptions()
     {
-        return VideoPlaylist::pluck('name' , 'id')->toArray();
+        return Playlist::pluck('name' , 'id')->toArray();
     }
 }

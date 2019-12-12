@@ -17,14 +17,10 @@ class CreateVideosTable extends Migration
             $table->string('featured_image');
             $table->string('title');
             $table->longText('description');
-            $table->unsignedInteger("video_playlist_id")->nullable();
             $table->timestamps();
 
-
-            $table->foreign('video_playlist_id')
-                ->references('id')
-                ->on('godspeed_flametreecms_video_playlists')->onDelete('set null');
         });
+
     }
 
     public function down()

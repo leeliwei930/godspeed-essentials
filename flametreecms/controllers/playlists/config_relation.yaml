@@ -1,0 +1,10 @@
+videos:
+    label: Videos
+    view:
+        list: $/godspeed/flametreecms/models/video/columns.yaml
+        toolbarButtons: add|remove|create
+    manage:
+        list: $/godspeed/flametreecms/models/video/columns.yaml
+        form: $/godspeed/flametreecms/models/video/modal_fields.yaml
+
+

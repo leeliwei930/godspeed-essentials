@@ -12,19 +12,19 @@ form: $/godspeed/flametreecms/models/video/fields.yaml
 modelClass: GodSpeed\FlametreeCMS\Models\Video
 
 # Default redirect location
-defaultRedirect: godspeed/flametreecms/video
+defaultRedirect: godspeed/flametreecms/videos
 
 # Create page
 create:
     title: Create Video
-    redirect: godspeed/flametreecms/video/update/:id
-    redirectClose: godspeed/flametreecms/video
+    redirect: godspeed/flametreecms/videos/update/:id
+    redirectClose: godspeed/flametreecms/videos
 
 # Update page
 update:
     title: Edit Video
-    redirect: godspeed/flametreecms/video
-    redirectClose: godspeed/flametreecms/video
+    redirect: godspeed/flametreecms/videos
+    redirectClose: godspeed/flametreecms/videos
 
 # Preview page
 preview:

@@ -3,16 +3,16 @@
 # ===================================
 
 # Model List Column configuration
-list: $/godspeed/flametreecms/models/videoplaylist/columns.yaml
+list: $/godspeed/flametreecms/models/playlist/columns.yaml
 
 # Model Class name
-modelClass: GodSpeed\FlametreeCMS\Models\VideoPlaylist
+modelClass: GodSpeed\FlametreeCMS\Models\Playlist
 
 # List Title
-title: Manage Video Playlists
+title: Manage Playlists
 
 # Link URL for each record
-recordUrl: godspeed/flametreecms/videoplaylist/update/:id
+recordUrl: godspeed/flametreecms/playlists/update/:id
 
 # Message to display if the list is empty
 noRecordsMessage: backend::lang.list.no_records

@@ -1,16 +1,18 @@
 <?php namespace GodSpeed\FlametreeCMS\Models;
 
 use Model;
+use October\Rain\Database\Traits\Validation;
 
 /**
  * VideoPlaylist Model
  */
-class VideoPlaylist extends Model
+class Playlist extends Model
 {
+    use Validation;
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'godspeed_flametreecms_video_playlists';
+    public $table = 'godspeed_flametreecms_playlists';
 
     /**
      * @var array Guarded fields
@@ -27,21 +29,23 @@ class VideoPlaylist extends Model
      */
     public $hasOne = [];
     public $hasMany = [
-        "videos" => [
-            "GodSpeed\FlametreeCMS\Models\Video" , "name" => "videos"
-        ]
+
     ];
     public $belongsTo = [];
-    public $belongsToMany = [];
+
+    public $belongsToMany = [
+        'videos' => [
+            "\GodSpeed\FlametreeCMS\Models\Video" , "table" => "godspeed_flametreecms_video_playlists"
+        ]
+    ];
+
+    public $rules =  [
+        'name' => "required|unique:godspeed_flametreecms_playlists,name"
+    ];
+
     public $morphTo = [];
     public $morphOne = [];
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
-
-    public function addVideo($data)
-    {
-
-        return $this->videos()->create($data);
-    }
 }

@@ -8,5 +8,6 @@
     - update_users_plugin_table.php
 
 1.0.2:
-    - create_video_playlists_table.php
     - create_videos_table.php
+    - create_video_playlists_table.php
+

@@ -11,7 +11,3 @@ columns:
     embed_id:
         label: Embed ID
         searchable: true
-    playlist:
-        label: Playlist
-        relation: video_playlist
-        select: name

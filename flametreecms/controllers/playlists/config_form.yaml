@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Playlist
+
+# Model Form Field configuration
+form: $/godspeed/flametreecms/models/playlist/fields.yaml
+
+# Model Class name
+modelClass: GodSpeed\FlametreeCMS\Models\Playlist
+
+# Default redirect location
+defaultRedirect: godspeed/flametreecms/playlists
+
+# Create page
+create:
+    title: Create Playlist
+    redirect: godspeed/flametreecms/playlists/update/:id
+    redirectClose: godspeed/flametreecms/playlists
+
+# Update page
+update:
+    title: Edit Playlist
+    redirect: godspeed/flametreecms/playlists
+    redirectClose: godspeed/flametreecms/playlists
+
+# Preview page
+preview:
+    title: Preview Playlist

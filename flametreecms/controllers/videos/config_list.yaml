@@ -12,7 +12,7 @@ modelClass: GodSpeed\FlametreeCMS\Models\Video
 title: Manage Videos
 
 # Link URL for each record
-recordUrl: godspeed/flametreecms/video/update/:id
+recordUrl: godspeed/flametreecms/videos/update/:id
 
 # Message to display if the list is empty
 noRecordsMessage: backend::lang.list.no_records

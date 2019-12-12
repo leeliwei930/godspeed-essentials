@@ -5,6 +5,7 @@ use GodSpeed\FlametreeCMS\Utils\VideoMeta\Video;
 use GodSpeed\FlametreeCMS\Models\Video as VideoModel;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use October\Rain\Exception\ValidationException;
 use RainLab\User\Models\User;
@@ -26,10 +27,10 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name'        => 'flametreeCMS',
+            'name' => 'flametreeCMS',
             'description' => 'No description provided yet...',
-            'author'      => 'GodSpeed',
-            'icon'        => 'icon-leaf'
+            'author' => 'GodSpeed',
+            'icon' => 'icon-leaf'
         ];
     }
 
@@ -99,11 +100,11 @@ class Plugin extends PluginBase
 
         return [
             'flametreecms' => [
-                'label'       => 'FlameTree CMS',
-                'url'         => Backend::url('godspeed/flametreecms/products'),
-                'icon'        => 'icon-leaf',
+                'label' => 'FlameTree CMS',
+                'url' => Backend::url('godspeed/flametreecms/products'),
+                'icon' => 'icon-leaf',
                 'permissions' => ['godspeed.flametreecms.*'],
-                'order'       => 500,
+                'order' => 500,
                 "sideMenu" => [
                     "products" => [
                         "label" => "Products",
@@ -112,23 +113,23 @@ class Plugin extends PluginBase
                     ],
                     "productcategories" => [
                         'label' => 'Product Category',
-                        'icon'  => 'icon-cube',
-                        'url'   => Backend::url('godspeed/flametreecms/productcategories'),
+                        'icon' => 'icon-cube',
+                        'url' => Backend::url('godspeed/flametreecms/productcategories'),
                     ],
                     "specialorders" => [
                         'label' => 'Special Orders',
-                        'icon'  => 'icon-inbox',
-                        'url'   => Backend::url('godspeed/flametreecms/specialorders'),
+                        'icon' => 'icon-inbox',
+                        'url' => Backend::url('godspeed/flametreecms/specialorders'),
                     ],
-                    "video" => [
+                    "videos" => [
                         'label' => "Videos",
                         'icon' => 'icon-film',
-                        'url'   => Backend::url('godspeed/flametreecms/video'),
+                        'url' => Backend::url('godspeed/flametreecms/videos'),
                     ],
-                    "videoplaylist" => [
-                        "label" => "Video Playlist",
+                    "playlists" => [
+                        "label" => "Playlist",
                         "icon" => "icon-list",
-                        "url" => Backend::url("godspeed/flametreecms/videoplaylist")
+                        "url" => Backend::url("godspeed/flametreecms/playlists")
                     ]
                 ]
             ],
@@ -139,7 +140,7 @@ class Plugin extends PluginBase
     {
         return [
             'godspeed.flametreecms::mail.templates.receiver-template',
-             'godspeed.flametreecms::mail.templates.sender-template',
+            'godspeed.flametreecms::mail.templates.sender-template',
             'godspeed.flametreecms::mail.templates.volunteer-invitation'
         ];
     }
@@ -163,13 +164,13 @@ class Plugin extends PluginBase
     {
         return [
             'flametree-cms-api-settings' => [
-                'label'       => 'FlameTree CMS API Settings',
+                'label' => 'FlameTree CMS API Settings',
                 'description' => 'Manage API keys that connect with third party services',
-                'category'    => 'FlametreeCMS',
-                'icon'        => 'icon-plug',
-                'class'         =>  'GodSpeed\FlametreeCMS\Models\Settings',
-                'order'       => 500,
-                'keywords'    => 'api settings'
+                'category' => 'FlametreeCMS',
+                'icon' => 'icon-plug',
+                'class' => 'GodSpeed\FlametreeCMS\Models\Settings',
+                'order' => 500,
+                'keywords' => 'api settings'
             ]
         ];
     }
@@ -222,6 +223,16 @@ class Plugin extends PluginBase
     {
         VideoModel::extend(function ($model) {
             $model->bindEvent('model.beforeSave', function () use ($model) {
+
+                $validator = Validator::make(
+                    post('Video'),
+                    VideoModel::VALIDATION_RULES,
+                    VideoModel::VALIDATION_MSG
+                );
+
+                if ($validator->fails()) {
+                    throw new \ValidationException($validator);
+                }
                 $api = Video::make(post('Video'));
                 $res = $api->get();
                 if ($res['status'] === Video::OK) {
@@ -239,16 +250,13 @@ class Plugin extends PluginBase
                     $model->featured_image = $data['featured_image'];
                     $model->title = $data['title'];
                     $model->description = $data['description'];
-
                 } else {
                     throw new ValidationException([
                         'embed_id' => "Invalid video id please make sure the video sources is selected correctly"
                     ]);
                 }
             });
+
         });
-
-
-
     }
 }
