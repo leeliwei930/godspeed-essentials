@@ -1,0 +1,14 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: Name
+        type: text
+tabs:
+    defaultTab: Producer Manager
+    fields:
+        producers:
+            type: partial
+            path: $/godspeed/flametreecms/controllers/producercategories/relation_manager.htm

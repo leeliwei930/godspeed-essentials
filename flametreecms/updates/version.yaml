@@ -1,6 +1,6 @@
 1.0.0:
-- create_product_categories_table.php
-- create_products_table.php
+- create_producers_table.php
+- create_producer_categories_table.php
 - ProductsSeeder.php
 - create_special_orders_table.php
 

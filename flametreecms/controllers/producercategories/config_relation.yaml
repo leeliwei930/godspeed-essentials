@@ -1,0 +1,10 @@
+producers:
+    label: Producers
+    view:
+        list: $/godspeed/flametreecms/models/producer/columns.yaml
+        toolbarButtons: add|remove|create
+    manage:
+        form: $/godspeed/flametreecms/models/producer/modal_fields.yaml
+        showCheckboxes: true
+        toolbarButtons: add|remove|create
+

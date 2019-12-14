@@ -15,7 +15,7 @@ class ProductCategory extends ComponentBase
     public function defineProperties()
     {
         return [
-            "Show Products" => [
+            "Show Producers" => [
                 "type" => "checkbox"
             ]
         ];
@@ -23,11 +23,11 @@ class ProductCategory extends ComponentBase
 
     public function all(){
 
-        if($this->property('Show Products')){
-            $productCategories = \GodSpeed\FlametreeCMS\Models\ProductCategory::with(['products'])->get();
+        if($this->property('Show Producers')){
+            $productCategories = \GodSpeed\FlametreeCMS\Models\ProducerCategory::with(['producers'])->get();
 
         } else {
-            $productCategories = \GodSpeed\FlametreeCMS\Models\ProductCategory::all();
+            $productCategories = \GodSpeed\FlametreeCMS\Models\ProducerCategory::all();
 
         }
         return $productCategories;

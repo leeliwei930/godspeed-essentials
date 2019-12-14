@@ -2,7 +2,7 @@
 
 
 use Seeder;
-use GodSpeed\FlametreeCMS\Models\ProductCategory as ProductCategory;
+use GodSpeed\FlametreeCMS\Models\ProducerCategory;
 
 
 class ProductsSeeder extends Seeder
@@ -12,105 +12,105 @@ class ProductsSeeder extends Seeder
        $productCategories = [
            "Fresh Fruit and Vegetable" => [
                 [
-                    "producer_name" => "Dapto Community Farm",
-                    "producer_origin" => "Dapto"
+                    "name" => "Dapto Community Farm",
+                    "origin" => "Dapto"
                 ],
                    [
-                       "producer_name" => "Green Connect",
-                       "producer_origin" => "Warrawong"
+                       "name" => "Green Connect",
+                       "origin" => "Warrawong"
                    ],
                    [
-                       "producer_name" => "Glenbernie Orchard",
-                       "producer_origin" => "Darkes Forest"
+                       "name" => "Glenbernie Orchard",
+                       "origin" => "Darkes Forest"
                    ],
                    [
-                       "producer_name" => "Popes Produce",
-                       "producer_origin" => "Woonona"
+                       "name" => "Popes Produce",
+                       "origin" => "Woonona"
                    ],
                    [
-                       "producer_name" => "Moonacres Farm",
-                       "producer_origin" => "Fitzroy Falls"
+                       "name" => "Moonacres Farm",
+                       "origin" => "Fitzroy Falls"
                    ],
            ],
            "Groceries" => [
                [
-                   "producer_name" => "Balinese Spice Magic & Tempeh Temple",
-                   "producer_origin" => "Unknown"
+                   "name" => "Balinese Spice Magic & Tempeh Temple",
+                   "origin" => "Unknown"
                ],
                [
-                   "producer_name" => "Ma Kutchen Organics",
-                   "producer_origin" => "Sutherland Shire"
+                   "name" => "Ma Kutchen Organics",
+                   "origin" => "Sutherland Shire"
                ],
                [
-                   "producer_name" => "Country Valley",
-                   "producer_origin" => "Picton NSW"
+                   "name" => "Country Valley",
+                   "origin" => "Picton NSW"
                ],
                [
-                   "producer_name" => "Randall Organic Rice",
-                   "producer_origin" => "Griffith in Central NSW"
+                   "name" => "Randall Organic Rice",
+                   "origin" => "Griffith in Central NSW"
                ],
                [
-                   "producer_name" => "Hand 'N' Hoe Organics",
-                   "producer_origin" => "Comboyne on the NSW Mid-North Coast"
+                   "name" => "Hand 'N' Hoe Organics",
+                   "origin" => "Comboyne on the NSW Mid-North Coast"
                ],
                [
-                   "producer_name" => "Malfroys Gold",
-                   "producer_origin" => " Rockley, Central NSW"
+                   "name" => "Malfroys Gold",
+                   "origin" => " Rockley, Central NSW"
                ],
                [
-                   "producer_name" => "Murray View Organics",
-                   "producer_origin" => "Koraleigh, south-west NSW"
+                   "name" => "Murray View Organics",
+                   "origin" => "Koraleigh, south-west NSW"
                ],
                [
-                   "producer_name" => "Vanilla Australlia",
-                   "producer_origin" => "Port Douglas, North Qld
+                   "name" => "Vanilla Australlia",
+                   "origin" => "Port Douglas, North Qld
 Vanilla essence"
                ],
                [
-                   "producer_name" => "Daintree Tea Company",
-                   "producer_origin" => "Diwan, Far North Qld
+                   "name" => "Daintree Tea Company",
+                   "origin" => "Diwan, Far North Qld
 Black tea"
                ],
                [
-                   "producer_name" => "Honest to Goodness",
-                   "producer_origin" => "Alexandria"
+                   "name" => "Honest to Goodness",
+                   "origin" => "Alexandria"
                ],
                [
-                   "producer_name" => "Pacific Organics",
-                   "producer_origin" => "Silverwater"
+                   "name" => "Pacific Organics",
+                   "origin" => "Silverwater"
                ],
                [
-                   "producer_name" => "Global By Nature",
-                   "producer_origin" => "Lane Cove"
+                   "name" => "Global By Nature",
+                   "origin" => "Lane Cove"
                ],
            ],
            "Dairy and Fridge Products" => [
                [
-                   "producer_name" => "Country Valley",
-                   "producer_origin" => "Picton NSW"
+                   "name" => "Country Valley",
+                   "origin" => "Picton NSW"
                ],
                [
-                   "producer_name" => "Marrok Farm",
-                   "producer_origin" => "Elands, Mid North Coast NSW"
+                   "name" => "Marrok Farm",
+                   "origin" => "Elands, Mid North Coast NSW"
                ],
                [
-                   "producer_name" => "Balinese Spice Magic",
-                   "producer_origin" => "Wollongong"
+                   "name" => "Balinese Spice Magic",
+                   "origin" => "Wollongong"
                ],
            ],
            "Healthy Treats" => [
                [
-                   "producer_name" => "The Carob Kitchen",
-                   "producer_origin" => "Port Elliot (SA)"
+                   "name" => "The Carob Kitchen",
+                   "origin" => "Port Elliot (SA)"
                ],
            ]
         ];
 
        foreach($productCategories as $key => $item){
-            $product_category = ProductCategory::create(["name" => $key]);
+            $product_category = ProducerCategory::create(["name" => $key]);
             if(count($productCategories[$key])){
                 foreach($productCategories[$key] as $product){
-                    $product_category->products()->create($product);
+                    $product_category->producers()->create($product);
                 }
             }
        }

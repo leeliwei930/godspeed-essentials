@@ -101,20 +101,20 @@ class Plugin extends PluginBase
         return [
             'flametreecms' => [
                 'label' => 'FlameTree CMS',
-                'url' => Backend::url('godspeed/flametreecms/products'),
+                'url' => Backend::url('godspeed/flametreecms/producers'),
                 'icon' => 'icon-leaf',
                 'permissions' => ['godspeed.flametreecms.*'],
                 'order' => 500,
                 "sideMenu" => [
-                    "products" => [
-                        "label" => "Products",
-                        "icon" => 'icon-list',
-                        "url" => Backend::url("godspeed/flametreecms/products"),
+                    "producers" => [
+                        "label" => "Producers",
+                        "icon" => 'icon-address-book',
+                        "url" => Backend::url("godspeed/flametreecms/producers"),
                     ],
-                    "productcategories" => [
-                        'label' => 'Product Category',
+                    "producercategories" => [
+                        'label' => 'Producer Category',
                         'icon' => 'icon-cube',
-                        'url' => Backend::url('godspeed/flametreecms/productcategories'),
+                        'url' => Backend::url('godspeed/flametreecms/producercategories'),
                     ],
                     "specialorders" => [
                         'label' => 'Special Orders',

@@ -1,8 +1,0 @@
-products:
-    label: Products
-    view:
-        list: $/godspeed/flametreecms/models/product/columns.yaml
-        toolbarButtons: add|remove|create|delete
-    manage:
-        form: $/godspeed/flametreecms/models/product/fields.yaml
-        showCheckboxes: true

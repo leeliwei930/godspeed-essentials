@@ -37,8 +37,8 @@ class CreateVideoPlaylistsTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('godspeed_flametreecms_playlists');
         Schema::dropIfExists("godspeed_flametreecms_video_playlists");
+        Schema::dropIfExists('godspeed_flametreecms_playlists');
 
     }
 }

@@ -1,0 +1,23 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: Producer Name
+        type: text
+    origin:
+        label: Producer Origin
+        type: text
+    website:
+        label: Producer Websites
+        type: text
+    logo:
+        label: Producer Company Logo
+        type: mediafinder
+tabs:
+    defaultTab: Producer Category Manager
+    fields:
+        producer_categories:
+            path: $/godspeed/flametreecms/controllers/producers/relation_manager.htm
+            type: partial

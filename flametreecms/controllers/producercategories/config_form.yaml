@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Producer Category
+
+# Model Form Field configuration
+form: $/godspeed/flametreecms/models/producercategory/fields.yaml
+
+# Model Class name
+modelClass: GodSpeed\FlametreeCMS\Models\ProducerCategory
+
+# Default redirect location
+defaultRedirect: godspeed/flametreecms/producercategories
+
+# Create page
+create:
+    title: Create Producer Category
+    redirect: godspeed/flametreecms/producercategories/update/:id
+    redirectClose: godspeed/flametreecms/producercategories
+
+# Update page
+update:
+    title: Edit Producer Category
+    redirect: godspeed/flametreecms/producercategories
+    redirectClose: godspeed/flametreecms/producercategories
+
+# Preview page
+preview:
+    title: Preview Producer Category
