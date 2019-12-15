@@ -1,0 +1,5 @@
+scopes:
+    submitted_on:
+        type: daterange
+        label: "Submitted Between"
+        conditions: created_at >= ':after' AND created_at <= ':before'

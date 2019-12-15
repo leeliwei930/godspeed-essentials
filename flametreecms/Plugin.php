@@ -1,6 +1,7 @@
 <?php namespace GodSpeed\FlametreeCMS;
 
 use Backend;
+use BackendMenu;
 use GodSpeed\FlametreeCMS\Utils\VideoMeta\Video;
 use GodSpeed\FlametreeCMS\Models\Video as VideoModel;
 use Illuminate\Support\Facades\Event;
@@ -113,7 +114,7 @@ class Plugin extends PluginBase
                     ],
                     "producercategories" => [
                         'label' => 'Producer Category',
-                        'icon' => 'icon-cube',
+                        'icon' => 'icon-users',
                         'url' => Backend::url('godspeed/flametreecms/producercategories'),
                     ],
                     "specialorders" => [
@@ -128,7 +129,7 @@ class Plugin extends PluginBase
                     ],
                     "playlists" => [
                         "label" => "Playlist",
-                        "icon" => "icon-list",
+                        "icon" => "icon-th-list",
                         "url" => Backend::url("godspeed/flametreecms/playlists")
                     ]
                 ]
@@ -181,7 +182,7 @@ class Plugin extends PluginBase
 
 
             $manager->addSideMenuItems('RainLab.User', 'user', [
-                'Import volunteers' => [
+                'imports' => [
                     "label" => "Import Volunteers",
                     "icon" => 'icon-list',
                     "url" => Backend::url("rainlab/user/users/import"),
@@ -196,6 +197,8 @@ class Plugin extends PluginBase
                 '$/godspeed/flametreecms/controllers/volunteers/config_import_export.yaml'
             );
             $controller->addViewPath("$/godspeed/flametreecms/views/rainlabUser");
+            BackendMenu::setContext('RainLab.User', 'user', 'imports');
+
         });
 
         RainLabUsersController::extendFormFields(function ($form, $model, $context) {

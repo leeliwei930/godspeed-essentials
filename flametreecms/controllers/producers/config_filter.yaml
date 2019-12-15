@@ -1,0 +1,6 @@
+scopes:
+    producer_categories:
+        label: Producer Category
+        modelClass: GodSpeed\FlametreeCMS\Models\ProducerCategory
+        condition: id in (select producer_id in godspeed_flametreecms_producer_categories_pivot where producer_id in (:filtered))
+        nameFrom: name
