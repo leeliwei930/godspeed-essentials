@@ -131,6 +131,16 @@ class Plugin extends PluginBase
                         "label" => "Playlist",
                         "icon" => "icon-th-list",
                         "url" => Backend::url("godspeed/flametreecms/playlists")
+                    ],
+                    'faqs' => [
+                        "label" => "Faqs",
+                        "icon" => "icon-question-circle",
+                        "url" => Backend::url("godspeed/flametreecms/faqs")
+                    ],
+                    'faqcategories' => [
+                        "label" => "Faq Categories",
+                        "icon" => "icon-comment",
+                        "url" => Backend::url("godspeed/flametreecms/faqcategories")
                     ]
                 ]
             ],

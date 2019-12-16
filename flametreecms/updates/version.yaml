@@ -11,3 +11,6 @@
     - create_videos_table.php
     - create_video_playlists_table.php
 
+1.0.3:
+    - create_faqs_table.php
+    - create_faq_categories_table.php

@@ -1,0 +1,12 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: Question Category
+        type: text
+    faqs:
+        label: Faqs
+        type: partial
+        path: $/godspeed/flametreecms/controllers/faqcategories/relation_manager.htm

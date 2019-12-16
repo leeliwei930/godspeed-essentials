@@ -1,0 +1,13 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    question:
+        label: Question
+        type: text
+
+    answer:
+        label: Answer
+        type: richeditor
+        size: huge
