@@ -2,9 +2,9 @@
 <mega-menu>
     {%  for product_category in __SELF__.all() %}
     <sidebar-menu-item title="{{ product_category.name }}" link="{{ "/products/#"~product_category.name  }}">
-        {%  if product_category.products %}
-            {%  for product in product_category.products %}
-        <menu-item leading-icon="fas fa-chevron-circle-right" parent="{{ product_category.name }}" title="{{ product.producer_name }}" description="{{ product.producer_origin }}" icon="fas fa-map-marker-alt fa-2x">
+        {%  if product_category.producers %}
+            {%  for product in product_category.producers %}
+        <menu-item leading-icon="fas fa-chevron-circle-right" parent="{{ product_category.name }}" title="{{ product.name }}" description="{{ product.origin }}" icon="fas fa-map-marker-alt fa-2x">
         </menu-item>
 
             {% endfor %}
