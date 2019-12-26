@@ -1,0 +1,120 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    _hint:
+        type: hint
+        path: $/godspeed/flametreecms/controllers/imagesliders/SlidesHint.htm
+        span: left
+    slides:
+        label: Images
+        type: repeater
+        titleFrom: title
+        span: right
+        prompt: Add New Slide
+        form:
+            fields:
+                image:
+                    span: left
+                    label: Slide Image
+                    type: mediafinder
+                    mode: image
+                title:
+                    label: Title
+                    type: text
+                    span: left
+                caption:
+                    label: Caption
+                    type: text
+                    span: right
+                titleAnimation:
+                    label: Title Animation
+                    type: dropdown
+                    span: left
+                captionAnimation:
+                    label: Caption Animation
+                    type: dropdown
+                    span: right
+                primaryActionButtonLink:
+                    label: Primary Action Button Link
+                    type: text
+                    span: left
+                secondaryActionButtonLink:
+                    label: Secondary Action Button Link
+                    type: text
+                    span: right
+                primaryActionButtonType:
+                    label: Primary action button style
+                    type: dropdown
+                    span: left
+                    options:
+                        btn-primary: Primary Color Button
+                        btn-default: Default Color Button
+                        btn-danger: Danger Color Button
+                        btn-success: Success Color Button
+                        btn-outline-primary: Primary Outline Button
+                        btn-outline-default: Default Outline Button
+                        btn-outline-success: Success Outline Button
+                        btn-outline-danger: Danger Outline Button
+                secondaryActionButtonType:
+                    label: Secondary action button type
+                    type: dropdown
+                    span: right
+                    options:
+                        btn-primary: Primary Color Button
+                        btn-default: Default Color Button
+                        btn-danger: Danger Color Button
+                        btn-success: Success Color Button
+                        btn-outline-primary: Primary Outline Button
+                        btn-outline-default: Default Outline Button
+                        btn-outline-success: Success Outline Button
+                        btn-outline-danger: Danger Outline Button
+    label:
+        label: Image Slider Label
+        type: text
+        span: left
+    autoplay:
+        type: switch
+        label: Enable autoplay the slide images
+        span: left
+        comment: Autoplay the image sliders
+        default: true
+
+    interval:
+        type: number
+        label: Slide changed interval
+        span: left
+        default: 1500
+        trigger:
+            action: hide
+            field: autoplay
+            condition: unchecked
+    responsive_size:
+        type: switch
+        label: Enable responsive size image sliders
+        span: full
+        default: true
+    size_w:
+        type: number
+        label: Slider Width (px)
+        span: left
+        trigger:
+            action: show
+            field: responsive_size
+            condition: unchecked
+    size_h:
+        type: number
+        label: Slider Height (px)
+        span: left
+        trigger:
+            action: show
+            field: responsive_size
+            condition: unchecked
+    show_navigation:
+        type: switch
+        label: Enable left and right navigation button
+        default: true
+        span: left
+        comment: Show the left and right navigation button when the image sliders get displayed
+

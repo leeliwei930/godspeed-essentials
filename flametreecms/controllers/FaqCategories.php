@@ -22,6 +22,6 @@ class FaqCategories extends Controller
     {
         parent::__construct();
 
-        BackendMenu::setContext('GodSpeed.FlametreeCMS', 'flametreecms', 'faqcategories');
+        BackendMenu::setContext('GodSpeed.FlametreeCMS', 'flametreecms', 'faqs');
     }
 }

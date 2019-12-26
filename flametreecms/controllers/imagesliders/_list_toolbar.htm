@@ -1,13 +1,8 @@
 <div data-control="toolbar">
     <a
-        href="<?= Backend::url('godspeed/flametreecms/producers') ?>"
-        class="btn btn-primary oc-icon-arrow-left">
-        Back
-    </a>
-    <a
-        href="<?= Backend::url('godspeed/flametreecms/producercategories/create') ?>"
+        href="<?= Backend::url('godspeed/flametreecms/imagesliders/create') ?>"
         class="btn btn-primary oc-icon-plus">
-        New Producer Category
+        New Image Slider
     </a>
 
     <button
@@ -15,7 +10,7 @@
         disabled="disabled"
         onclick="$(this).data('request-data', { checked: $('.control-list').listWidget('getChecked') })"
         data-request="onDelete"
-        data-request-confirm="Are you sure you want to delete the selected Producer Categories?"
+        data-request-confirm="Are you sure you want to delete the selected Image Sliders?"
         data-trigger-action="enable"
         data-trigger=".control-list input[type=checkbox]"
         data-trigger-condition="checked"

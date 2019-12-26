@@ -23,6 +23,6 @@ class ProducerCategories extends Controller
     {
         parent::__construct();
 
-        BackendMenu::setContext('GodSpeed.FlametreeCMS', 'flametreecms', 'producercategories');
+        BackendMenu::setContext('GodSpeed.FlametreeCMS', 'flametreecms', 'producers');
     }
 }

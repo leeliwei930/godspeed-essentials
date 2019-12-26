@@ -112,11 +112,6 @@ class Plugin extends PluginBase
                         "icon" => 'icon-address-book',
                         "url" => Backend::url("godspeed/flametreecms/producers"),
                     ],
-                    "producercategories" => [
-                        'label' => 'Producer Category',
-                        'icon' => 'icon-users',
-                        'url' => Backend::url('godspeed/flametreecms/producercategories'),
-                    ],
                     "specialorders" => [
                         'label' => 'Special Orders',
                         'icon' => 'icon-inbox',
@@ -127,20 +122,15 @@ class Plugin extends PluginBase
                         'icon' => 'icon-film',
                         'url' => Backend::url('godspeed/flametreecms/videos'),
                     ],
-                    "playlists" => [
-                        "label" => "Playlist",
-                        "icon" => "icon-th-list",
-                        "url" => Backend::url("godspeed/flametreecms/playlists")
-                    ],
                     'faqs' => [
                         "label" => "Faqs",
                         "icon" => "icon-question-circle",
                         "url" => Backend::url("godspeed/flametreecms/faqs")
                     ],
-                    'faqcategories' => [
-                        "label" => "Faq Categories",
-                        "icon" => "icon-comment",
-                        "url" => Backend::url("godspeed/flametreecms/faqcategories")
+                    "imagesliders" => [
+                        "label" => "Carousel/Image Slider",
+                        "icon" => 'icon-picture-o',
+                        "url" => Backend::url("godspeed/flametreecms/imagesliders")
                     ]
                 ]
             ],

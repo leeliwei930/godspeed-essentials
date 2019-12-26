@@ -35,7 +35,8 @@ class CreateProductCategoriesTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('godspeed_flametreecms_producer_categories');
         Schema::dropIfExists('godspeed_flametreecms_producer_categories_pivot');
+        Schema::dropIfExists('godspeed_flametreecms_producer_categories');
+
     }
 }

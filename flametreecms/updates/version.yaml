@@ -14,3 +14,4 @@
 1.0.3:
     - create_faqs_table.php
     - create_faq_categories_table.php
+    - create_image_sliders_table.php
