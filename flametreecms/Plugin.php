@@ -66,7 +66,8 @@ class Plugin extends PluginBase
         return [
             "GodSpeed\FlametreeCMS\Components\ProductCategory" => "ProductCategory",
             "GodSpeed\FlametreeCMS\Components\SpecialOrderForm" => "SpecialOrderForm",
-            "GodSpeed\FlametreeCMS\Components\VideoSection" => "VideoSection"
+            "GodSpeed\FlametreeCMS\Components\VideoSection" => "VideoSection",
+            "GodSpeed\FlametreeCMS\Components\ImageSlider" => "ImageSlider"
         ]; // Remove this line to activate
 
 //        return [

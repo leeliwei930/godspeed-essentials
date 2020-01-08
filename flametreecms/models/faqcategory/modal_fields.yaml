@@ -6,4 +6,8 @@ fields:
     name:
         label: Category Name
         type: text
-
+    slug:
+        label: Category Slug
+        preset:
+            field: name
+            type: slug

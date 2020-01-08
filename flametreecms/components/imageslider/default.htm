@@ -1,0 +1,13 @@
+{% if __SELF__.slide() %}
+<carousel>
+    <h1></h1>
+    <h2></h2>
+    <h3></h3>
+</carousel>
+
+{% else %}
+    <div class="alert alert-danger mx-3 my-2 mt-5">
+        <h6>No Slide get specified in component properties</h6>
+        <p>Please select a slide label in {{  __SELF__.name }} component.</p>
+    </div>
+{% endif %}

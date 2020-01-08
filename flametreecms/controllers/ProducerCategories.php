@@ -2,12 +2,16 @@
 
 use BackendMenu;
 use Backend\Classes\Controller;
+use October\Rain\Database\Traits\Validation;
 
 /**
  * Product Categories Back-end Controller
  */
 class ProducerCategories extends Controller
 {
+    use Validation;
+
+
     public $implement = [
         'Backend.Behaviors.FormController',
         'Backend.Behaviors.ListController',
@@ -17,6 +21,13 @@ class ProducerCategories extends Controller
     public $formConfig = 'config_form.yaml';
     public $listConfig = 'config_list.yaml';
     public $relationConfig = 'config_relation.yaml';
+
+    public $rules = [
+        "name" => [
+            "required",
+            "unique:godspeed_flametreecms_producer_categories,name"
+        ]
+    ];
 
 
     public function __construct()

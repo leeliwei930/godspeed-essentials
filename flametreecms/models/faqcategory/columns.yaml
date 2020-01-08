@@ -6,6 +6,6 @@ columns:
     id:
         label: ID
         searchable: true
-    category:
+    name:
         label: Question Category
         searchable: true

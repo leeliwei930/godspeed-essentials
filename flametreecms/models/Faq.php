@@ -1,12 +1,13 @@
 <?php namespace GodSpeed\FlametreeCMS\Models;
 
 use Model;
-
+use October\Rain\Database\Traits\Validation;
 /**
  * faq Model
  */
 class Faq extends Model
 {
+    use Validation;
     /**
      * @var string The database table used by the model.
      */
@@ -27,6 +28,16 @@ class Faq extends Model
     /**
      * @var array Relations
      */
+    protected $rules = [
+
+        "question" =>[
+            "required", "between:5,255"
+        ],
+        "answer" => [
+            "required", "between:5,255"
+        ]
+
+    ];
     public $hasOne = [];
     public $hasMany = [];
     public $belongsTo = [];

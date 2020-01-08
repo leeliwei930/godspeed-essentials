@@ -25,7 +25,9 @@ class Producer extends Model
     ];
 
     protected $rules = [
-        "name" => 'required|between:5,255',
+        "name" => [
+            "required", "between:5,255"
+        ],
         "origin" => 'max:255',
         "logo" => "max:255",
         "website" => 'max:255'

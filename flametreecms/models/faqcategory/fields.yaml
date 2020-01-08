@@ -6,6 +6,11 @@ fields:
     name:
         label: Question Category
         type: text
+    slug:
+        label: Slug
+        preset:
+            field: name
+            type: slug
     faqs:
         label: Faqs
         type: partial

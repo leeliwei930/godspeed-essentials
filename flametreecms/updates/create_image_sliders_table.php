@@ -19,7 +19,11 @@ class CreateImageSlidersTable extends Migration
             $table->boolean('responsive_size');
             $table->integer("size_w")->nullable();
             $table->integer("size_h")->nullable();
-
+            $table->string('navigation_control_shape');
+            $table->boolean('autohide_navigation_control');
+            $table->string('navigation_control_bg_color');
+            $table->string('navigation_color');
+            $table->boolean('show_indicator');
             $table->timestamps();
         });
     }

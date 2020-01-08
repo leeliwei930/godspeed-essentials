@@ -1,12 +1,15 @@
 <?php namespace GodSpeed\FlametreeCMS\Models;
 
+use Illuminate\Validation\Rule;
 use Model;
+use October\Rain\Database\Traits\Validation;
 
 /**
  * FaqCategory Model
  */
 class FaqCategory extends Model
 {
+    use Validation;
     /**
      * @var string The database table used by the model.
      */
@@ -22,6 +25,19 @@ class FaqCategory extends Model
      */
     protected $fillable = [
         'name' , 'slug'
+    ];
+
+    protected $rules = [
+        'name'  => [
+            "required",
+            "between:3,255",
+            "unique:godspeed_flametreecms_faq_categories,name"
+        ],
+        "slug" => [
+            "required",
+            "between:3,255",
+            "unique:godspeed_flametreecms_faq_categories,slug"
+        ]
     ];
 
     /**
