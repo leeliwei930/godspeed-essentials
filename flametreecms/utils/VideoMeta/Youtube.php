@@ -21,7 +21,7 @@ class Youtube extends Video
     {
         $youtubeRes = Http::get($this->getConfig('api_base') . '?' . http_build_query([
             'part' => 'contentDetails,snippet',
-            'id' => $this->request['embed_id']['for']['platform'],
+            'id' => $this->request['embed_id'],
             'key' => Settings::get('youtube_data_api_key')
         ]))->send();
 
@@ -43,7 +43,7 @@ class Youtube extends Video
                 "status" => self::OK,
                 "duration" => $seconds,
                 "featured_image" => $this->getConfig('thumbnail_base')
-                . $this->request['embed_id']['for']['platform'] . "/sddefault.jpg",
+                . $this->request['embed_id'] . "/sddefault.jpg",
 
                 "title" => $response["items"][0]['snippet']['title'],
                 "description" => $response['items'][0]['snippet']['description'],

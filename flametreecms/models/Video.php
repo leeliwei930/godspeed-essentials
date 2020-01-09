@@ -50,15 +50,12 @@ class Video extends Model
         'title' => 'required_if:type,video',
         'type' => 'required|in:video,youtube,vimeo',
         'duration' => 'numeric',
-        'embed_id.for.video' => 'required_if:type,video',
-        'embed_id.for.platform' => "required_if:type,youtube,vimeo"
+        'embed_id' => 'required',
      ];
 
      const VALIDATION_MSG = [
-        'embed_id.for.video.required_if' => "The video path is required when the type is a video",
-        'embed_id.for.platform.required_if' =>
-            "The embed id is required when the type is a platform media"
-     ];
+        'embed_id' => "The video path is required when the type is a video",
+    ];
 
 
      public function getTypeOptions()
@@ -72,10 +69,10 @@ class Video extends Model
 
      public function getVideoUrlAttribute($value)
      {
-         if ($this->attributes['type'] === 'video') {
-             return url("storage/app/media/" . $this->attributes['embed_id']);
+         if ($this->type === 'video') {
+             return url("storage/app/media/" . $this->embed_id);
          } else {
-             return $this->attributes['embed_id'];
+             return $this->embed_id;
          }
      }
 
@@ -83,49 +80,34 @@ class Video extends Model
      public function getFeaturedImageUrlAttribute($value)
      {
 
-         if ($this->attributes['type'] === 'video') {
-             return url("storage/app/media/" . $this->attributes['featured_image']);
+         if ($this->type === 'video') {
+             return url("storage/app/media/" . $this->featured_image);
          } else {
-             return $this->attributes['featured_image'];
+             return $this->featured_image;
          }
      }
 
-
+//
      public function filterFields($fields, $context = null)
      {
          switch ($context) {
+             case "update":
              case "create":
                  if ($this->type === "video") {
-                     $fields->{'embed_id[for][video]'}->hidden = false;
-                     $fields->{'featured_image[for][video]'}->hidden = false;
-                     $fields->title->hidden = false;
-                     $fields->description->hidden = false;
-                     $fields->title->readOnly = false;
-                     $fields->description->readOnly = false;
+                        $fields->{'title'}->readonly = false;
+                        $fields->{'description'}->readonly = false;
                  } else {
-                     $fields->{'embed_id[for][platform]'}->hidden = false;
+                     $fields->{'embed_id'}->type = "text";
+                     $fields->{'title'}->readOnly = true;
+                     $fields->{'description'}->readOnly = true;
                  }
-                 break;
-             case "update":
                  if ($this->type === "video") {
-                     $fields->{'embed_id[for][video]'}->hidden = false;
-                     $fields->{'featured_image[for][video]'}->hidden = false;
-                     $fields->duration->hidden = false;
-                     $fields->duration->readOnly = true;
-                     $fields->{'embed_id[for][video]'}->value = $this->embed_id;
-                     $fields->{'featured_image[for][video]'}->value = $this->featured_image;
-
-                     $fields->title->hidden = false;
-                     $fields->description->hidden = false;
-                     $fields->title->readOnly = false;
-                     $fields->description->readOnly = false;
-                     $fields->type->default = $this->type;
+                     $fields->{'title'}->readonly = false;
+                     $fields->{'description'}->readonly = false;
                  } else {
-                     $fields->{'embed_id[for][platform]'}->hidden = false;
-                     $fields->{'embed_id[for][platform]'}->value = $this->embed_id;
-                     $fields->title->hidden = false;
-                     $fields->description->hidden = false;
-                     $fields->type->default = $this->type;
+                     $fields->{'embed_id'}->type = "text";
+                     $fields->{'title'}->readOnly = true;
+                     $fields->{'description'}->readreadOnlyonly = true;
                  }
                  break;
          }

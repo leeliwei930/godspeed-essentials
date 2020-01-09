@@ -12,7 +12,7 @@ use October\Rain\Exception\ValidationException;
 use RainLab\User\Models\User;
 use System\Classes\PluginBase;
 use RainLab\User\Controllers\Users as RainLabUsersController;
-
+use Illuminate\Database\Eloquent\Factory as EloquentFactory;
 /**
  * flametreeCMS Plugin Information File
  */
@@ -42,6 +42,7 @@ class Plugin extends PluginBase
      */
     public function register()
     {
+        app(EloquentFactory::class)->load(plugins_path('godspeed/flametreecms/database/factories'));
     }
 
     /**
@@ -227,9 +228,8 @@ class Plugin extends PluginBase
     {
         VideoModel::extend(function ($model) {
             $model->bindEvent('model.beforeSave', function () use ($model) {
-
                 $validator = Validator::make(
-                    post('Video'),
+                    $model->toArray(),
                     VideoModel::VALIDATION_RULES,
                     VideoModel::VALIDATION_MSG
                 );
@@ -237,7 +237,7 @@ class Plugin extends PluginBase
                 if ($validator->fails()) {
                     throw new \ValidationException($validator);
                 }
-                $api = Video::make(post('Video'));
+                $api = Video::make($model->toArray());
                 $res = $api->get();
                 if ($res['status'] === Video::OK) {
                     $data = [

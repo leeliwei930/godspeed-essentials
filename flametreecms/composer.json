@@ -26,8 +26,12 @@
             "email": "nj547@uowmail.edu.au"
         }
     ],
+    "autoload-dev": {
+        "classmap": [
+            "database/factories/FlametreeCMSFactory.php"
+        ]
+    },
     "require": {
         "james-heinrich/getid3": "dev-master"
-
     }
 }

@@ -8,66 +8,39 @@ fields:
         span: left
         required: true
         placeholder: Select a video source
-    embed_id[for][platform]:
-        label: Embed ID
-        type: text
-        span: right
-        placeholder: "The embed id which is associated after the youtube url for your video"
-        dependsOn:
-        - type
-        hidden: true
-        required: true
+        default: youtube
 
-    embed_id[for][video]:
-        label: Video Path
-        type: mediafinder
-        mode: file
+    embed_id:
+        label: Embed ID
         span: right
-        hidden: true
-        dependsOn:
-        - type
+        type: mediafinder
+        placeholder: "The embed id which is associated after the youtube url for your video"
         required: true
+        dependsOn:
+            - type
 
     title:
         label: Video Title
-        readOnly: true
         span: left
-        hidden: true
-        dependsOn:
-        - type
         required: true
-
-    duration:
-        label: Video Duration (Seconds)
-        readOnly: true
-        type: number
-        hidden: true
-        span: right
         dependsOn:
-        - type
-
+            - type
     description:
         label: Video Description
         type: textarea
-        readOnly: true
-        hidden: true
         dependsOn:
-        - type
+            - type
 
-    featured_image[for][video]:
+    featured_image:
         label: Video Featured Image (Thumbnail)
         type: mediafinder
-        mode: file
-        hidden: true
         dependsOn:
-        - type
+            - type
+        trigger:
+            action: show
+            field: type
+            condition: value[video]
 
-    featured_image[for][platform]:
-        label: Video Featured Image (Thumbnail)
-        type: text
-        hidden: true
-        dependsOn:
-        - type
 
 tabs:
     defaultTab: Playlist Manager

@@ -16,7 +16,7 @@ class Vimeo extends Video
     {
 
         $vimeoResponse = Http::get($this->getConfig('api_base') . '?' . http_build_query([
-            'url' => "https://vimeo.com/".$this->request['embed_id']['for']['platform']
+            'url' => "https://vimeo.com/".$this->request['embed_id']
         ]))->send();
 
         $response = json_decode($vimeoResponse, true);

@@ -27,16 +27,16 @@ class Video implements VideoMetaAPI
     {
 
         $getID3 =  new \getID3();
-        $file = $getID3->analyze(storage_path('app/media/'. $this->request['embed_id']['for']['video']));
+        $file = $getID3->analyze(storage_path('app/media/'. $this->request['embed_id']));
         $seconds = VideoDurationFormatter::toSeconds($file['playtime_string']);
 
         $data = [
             "status" => self::OK,
             "duration" => $seconds,
-            "featured_image" =>  $this->request['featured_image']['for']['video'],
+            "featured_image" =>  $this->request['featured_image'],
             "title" =>  $this->request['title'],
             "description" => $this->request['description'],
-            "embed_id" => $this->request['embed_id']['for']['video']
+            "embed_id" => $this->request['embed_id']
         ];
 
         return $data;
