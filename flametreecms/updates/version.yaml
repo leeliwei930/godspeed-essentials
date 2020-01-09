@@ -5,13 +5,14 @@
 - create_special_orders_table.php
 
 1.0.1:
-    - update_users_plugin_table.php
+- update_users_plugin_table.php
 
 1.0.2:
-    - create_videos_table.php
-    - create_video_playlists_table.php
+- create_videos_table.php
+- create_video_playlists_table.php
 
 1.0.3:
-    - create_faqs_table.php
-    - create_faq_categories_table.php
-    - create_image_sliders_table.php
+- create_faqs_table.php
+- create_faq_categories_table.php
+- create_image_sliders_table.php
+- FactorySeeder.php

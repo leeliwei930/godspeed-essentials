@@ -9,6 +9,8 @@ use October\Rain\Database\Traits\Validation;
 class Playlist extends Model
 {
     use Validation;
+
+
     /**
      * @var string The database table used by the model.
      */

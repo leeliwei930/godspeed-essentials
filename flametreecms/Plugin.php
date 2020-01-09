@@ -2,17 +2,18 @@
 
 use Backend;
 use BackendMenu;
+use GodSpeed\FlametreeCMS\Models\FaqCategory;
 use GodSpeed\FlametreeCMS\Utils\VideoMeta\Video;
 use GodSpeed\FlametreeCMS\Models\Video as VideoModel;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 use October\Rain\Exception\ValidationException;
 use RainLab\User\Models\User;
 use System\Classes\PluginBase;
 use RainLab\User\Controllers\Users as RainLabUsersController;
 use Illuminate\Database\Eloquent\Factory as EloquentFactory;
+
 /**
  * flametreeCMS Plugin Information File
  */
@@ -200,7 +201,6 @@ class Plugin extends PluginBase
             );
             $controller->addViewPath("$/godspeed/flametreecms/views/rainlabUser");
             BackendMenu::setContext('RainLab.User', 'user', 'imports');
-
         });
 
         RainLabUsersController::extendFormFields(function ($form, $model, $context) {
@@ -260,7 +260,6 @@ class Plugin extends PluginBase
                     ]);
                 }
             });
-
         });
     }
 }

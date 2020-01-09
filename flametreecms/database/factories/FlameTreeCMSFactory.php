@@ -3,18 +3,19 @@
 namespace GodSpeed\FlametreeCMS\Database\Factories;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-use App\User;
 use Faker\Generator as Faker;
 use Faker\Provider\en_AU\Address;
 use Faker\Provider\Internet;
 use Faker\Provider\Lorem;
+use GodSpeed\FlametreeCMS\Models\Faq;
+use GodSpeed\FlametreeCMS\Models\FaqCategory;
+use GodSpeed\FlametreeCMS\Models\Playlist;
 use GodSpeed\FlametreeCMS\Models\Producer;
 use GodSpeed\FlametreeCMS\Models\ProducerCategory;
 use GodSpeed\FlametreeCMS\Models\SpecialOrder;
 use GodSpeed\FlametreeCMS\Models\Video;
 use GodSpeed\FlametreeCMS\Utils\Providers\YoutubeVideoProvider;
 use Illuminate\Support\Str;
-
 
 $factory->define(Producer::class, function (Faker $faker) {
     $faker->addProvider(new Address($faker));
@@ -57,4 +58,29 @@ $factory->define(Video::class, function(Faker $faker){
     ];
 });
 
+
+$factory->define(Playlist::class, function (Faker $faker){
+
+    return [
+        'name' => $faker->word
+    ];
+});
+
+
+$factory->define(Faq::class, function(Faker $faker){
+    return [
+        'question' => $faker->sentence(12) . "?",
+        'answer' => $faker->sentence
+    ];
+});
+
+
+$factory->define(FaqCategory::class, function(Faker $faker){
+
+    $name = $faker->unique()->text(5);
+    return [
+        'name' => $name,
+        'slug' => Str::slug($name)
+    ];
+});
 

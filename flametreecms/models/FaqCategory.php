@@ -35,7 +35,6 @@ class FaqCategory extends Model
         ],
         "slug" => [
             "required",
-            "between:3,255",
             "unique:godspeed_flametreecms_faq_categories,slug"
         ]
     ];
