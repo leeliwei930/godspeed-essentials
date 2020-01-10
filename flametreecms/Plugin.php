@@ -239,6 +239,7 @@ class Plugin extends PluginBase
                 }
                 $api = Video::make($model->toArray());
                 $res = $api->get();
+
                 if ($res['status'] === Video::OK) {
                     $data = [
                         'type' => $model->type,

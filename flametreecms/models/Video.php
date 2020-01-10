@@ -29,6 +29,7 @@ class Video extends Model
         'video_url', 'featured_image_url'
     ];
 
+
     /**
      * @var array Relations
      */
@@ -67,23 +68,23 @@ class Video extends Model
          ];
      }
 
-     public function getVideoUrlAttribute($value)
+     public function getVideoUrlAttribute()
      {
-         if ($this->type === 'video') {
-             return url("storage/app/media/" . $this->embed_id);
+         if ($this->attributes['type'] === 'video') {
+             return url("storage/app/media/" . $this->attributes['embed_id'] ?? 'default.png');
          } else {
-             return $this->embed_id;
+             return $this->attributes['embed_id'] ?? null;
          }
      }
 
 
-     public function getFeaturedImageUrlAttribute($value)
+     public function getFeaturedImageUrlAttribute()
      {
 
-         if ($this->type === 'video') {
-             return url("storage/app/media/" . $this->featured_image);
+         if ($this->attributes['type'] === 'video') {
+             return url("storage/app/media/" . $this->attributes['featured_image'] ?? null);
          } else {
-             return $this->featured_image;
+             return $this->attributes['featured_image'] ??  url("storage/app/media/default.png");
          }
      }
 
