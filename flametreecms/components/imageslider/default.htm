@@ -1,8 +1,31 @@
-{% if __SELF__.slide() %}
-<carousel>
-    <h1></h1>
-    <h2></h2>
-    <h3></h3>
+{% set slider = __SELF__.slider %}
+
+
+{% if slider %}
+
+
+    <carousel>
+    {% for slide in slider.slides %}
+        <slide
+            :show="true"
+            image="{{ slide.image }}"
+            title="{{ slide.title }}"
+            caption="{{ slide.caption }}"
+            title-animation="{{ slide.titleAnimation }}"
+            caption-animation="{{ slide.captionAnimation }}"
+            show-primary-action-button="{{ slide.showPrimaryActionButton }}"
+            primary-action-button-text="{{ slide.primaryActionButtonText }}"
+            primary-action-button-link="{{ slide.primaryActionButtonLink }}"
+            primary-action-button-type="{{ slide.primaryActionButtonType }}"
+            show-secondary-action-button="{{ slide.showSecondaryActionButton }}"
+            secondary-action-button-text="{{ slide.secondaryActionButtonText }}"
+            secondary-action-button-type="{{ slide.secondaryActionButtonType }}"
+            secondary-action-button-link="{{ slide.secondaryActionButtonLink }}"
+        >
+
+        </slide>
+
+    {%  endfor %}
 </carousel>
 
 {% else %}

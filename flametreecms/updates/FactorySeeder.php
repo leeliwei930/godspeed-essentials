@@ -3,6 +3,7 @@
 use GodSpeed\FlametreeCMS\Models\Faq;
 use GodSpeed\FlametreeCMS\Models\FaqCategory;
 use GodSpeed\FlametreeCMS\Models\Playlist;
+use GodSpeed\FlametreeCMS\Models\SpecialOrder;
 use GodSpeed\FlametreeCMS\Models\Video;
 use October\Rain\Support\Collection;
 use Seeder;
@@ -24,5 +25,8 @@ class FactorySeeder extends Seeder
             $videos = factory(Video::class, 3)->create()->pluck('id')->toArray();
             $playlist->videos()->attach($videos);
         });
+
+        //create special orders
+        factory(SpecialOrder::class,50)->create();
     }
 }

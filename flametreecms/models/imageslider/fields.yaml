@@ -58,13 +58,19 @@ tabs:
             span: left
             default: true
             tab: Slides Preferences
+        prev_slide_animation:
+            type: dropdown
+            label: Navigate to Previous Slide Animation
+            default: fadeIn
+            span: left
 
         navigation_control_bg_color:
             type: colorpicker
             label: Navigation Control Background Color
             span: right
-            default: "#ffffff"
+            default: "#7f8c8d"
             tab: Slides Preferences
+
 
 
         size_w:
@@ -93,6 +99,11 @@ tabs:
                 action: show
                 field: responsive_size
                 condition: unchecked
+        next_slide_animation:
+            type: dropdown
+            label: Navigate to Next Slide Animation
+            default: fadeIn
+            span: left
         navigation_color:
             type: colorpicker
             label: Navigation Control Icon Color
@@ -102,7 +113,24 @@ tabs:
         show_indicator:
             type: switch
             label: Show Indicator
+            default: checked
             tab: Slides Preferences
+        indicator_active_class:
+            type: dropdown
+            label: Indicator Active Class
+            span: left
+            trigger:
+                action: show
+                field: show_indicator
+                condition: checked
+        indicator_inactive_class:
+            type: dropdown
+            label: Indicator Active Class
+            span: right
+            trigger:
+                action: show
+                field: show_indicator
+                condition: checked
         slides:
             label: Images
             type: repeater

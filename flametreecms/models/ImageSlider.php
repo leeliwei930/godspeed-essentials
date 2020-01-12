@@ -1,5 +1,6 @@
 <?php namespace GodSpeed\FlametreeCMS\Models;
 
+use Cms\Classes\Page;
 use Illuminate\Validation\Rule;
 use Model;
 use October\Rain\Database\Traits\Validation;
@@ -21,13 +22,15 @@ class ImageSlider extends Model
     protected $guarded = ['*'];
 
     public $jsonable = ['slides'];
+
     /**
      * @var array Fillable fields
      */
     protected $fillable = [
         'label', 'autoplay', 'interval', 'show_navigation', 'responsive_size', 'size_w', 'size_h',
         'navigation_control_shape', 'show_navigation', 'autohide_navigation_control', 'navigation_control_bg_color',
-        'navigation_color', 'show_indicator', "slides"
+        'navigation_color', 'show_indicator', "slides", "prev_slide_animation", "next_slide_animation",
+        'indicator_active_class', 'indicator_inactive_class'
     ];
 
     /**
@@ -157,9 +160,8 @@ class ImageSlider extends Model
                 )
             )
         );
-
-
     }
+
     public function getTitleAnimationOptions()
     {
         return \Config::get('godspeed.flametreecms::animate');
@@ -170,6 +172,15 @@ class ImageSlider extends Model
         return \Config::get('godspeed.flametreecms::animate');
     }
 
+    public function getNextSlideAnimationOptions()
+    {
+        return \Config::get('godspeed.flametreecms::animate');
+    }
+
+    public function getPrevSlideAnimationOptions()
+    {
+        return \Config::get('godspeed.flametreecms::animate');
+    }
     public function getNavigationControlShapeOptions()
     {
         return [
@@ -177,4 +188,15 @@ class ImageSlider extends Model
             "square" => "Square"
         ];
     }
+
+    public function getIndicatorActiveClassOptions()
+    {
+        return \Config::get('godspeed.flametreecms::slideIndicatorClass')['active'];
+    }
+
+    public function getIndicatorInactiveClassOptions()
+    {
+        return \Config::get('godspeed.flametreecms::slideIndicatorClass')['inactive'];
+    }
+
 }

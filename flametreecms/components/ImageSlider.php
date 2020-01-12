@@ -4,6 +4,7 @@ use Cms\Classes\ComponentBase;
 
 class ImageSlider extends ComponentBase
 {
+    public $slider;
     public function componentDetails()
     {
         return [
@@ -23,14 +24,21 @@ class ImageSlider extends ComponentBase
         ];
     }
 
+    public function onRun()
+    {
+        $this->slider = $this->loadSlider();
+    }
+
     public function loadSlideOptions()
     {
         return \GodSpeed\FlametreeCMS\Models\ImageSlider::all()->pluck('label', 'id')->toArray();
     }
 
-    public function slide()
+    protected function loadSlider()
     {
         return \GodSpeed\FlametreeCMS\Models\ImageSlider::find($this->property('label'));
     }
+
+
 
 }

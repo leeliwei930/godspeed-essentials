@@ -13,6 +13,8 @@ class CreateImageSlidersTable extends Migration
             $table->increments('id');
             $table->string('label')->unique();
             $table->longText('slides')->nullable();
+            $table->string('prev_slide_animation');
+            $table->string("next_slide_animation");
             $table->boolean('autoplay');
             $table->integer('interval')->nullable();
             $table->boolean('show_navigation');
@@ -24,6 +26,8 @@ class CreateImageSlidersTable extends Migration
             $table->string('navigation_control_bg_color');
             $table->string('navigation_color');
             $table->boolean('show_indicator');
+            $table->string('indicator_active_class');
+            $table->string('indicator_inactive_class');
             $table->timestamps();
         });
     }
