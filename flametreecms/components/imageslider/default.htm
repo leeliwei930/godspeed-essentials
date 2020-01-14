@@ -1,13 +1,28 @@
 {% set slider = __SELF__.slider %}
 
-
 {% if slider %}
 
+    <carousel v-slot:default="carousel"
+        :show-indicator="{{ slider.show_indicator ? 'true' : 'false' }}"
+        indicator-class="{{ slider.indicator_inactive_class }}"
+        indicator-active-class="{{ slider.indicator_active_class }}"
+        :autoplay="{{ slider.autoplay ? 'true' : 'false' }}"
+        :interval="{{ slider.interval }}"
+        :show-navigation="{{ slider.show_navigation ? 'true' : 'false' }}"
+        :auto-hide-navigation="{{ slider.autohide_navigation_control ? 'true' : 'false' }}"
+              navigation-control-shape="{{ slider.navigation_control_shape }}"
+              navigation-next-icon="{{ slider.navigation_next_icon }}"
+              navigation-prev-icon="{{ slider.navigation_prev_icon }}"
+              navigation-icon-color="{{ slider.navigation_color }}"
+              navigation-control-bg-color="{{ slider.navigation_control_bg_color}}"
+              next-slide-animation="{{ slider.next_slide_animation }}"
+              prev-slide-animation="{{ slider.prev_slide_animation }}"
+    >
 
-    <carousel>
-    {% for slide in slider.slides %}
+    {% for index, slide in slider.slides %}
         <slide
-            :show="true"
+            :show="carousel.carouselState.currentSlide == {{ index }}"
+            slide-id="{{ index }}"
             image="{{ slide.image }}"
             title="{{ slide.title }}"
             caption="{{ slide.caption }}"
@@ -26,7 +41,7 @@
         </slide>
 
     {%  endfor %}
-</carousel>
+    </carousel>
 
 {% else %}
     <div class="alert alert-danger mx-3 my-2 mt-5">

@@ -30,7 +30,8 @@ class ImageSlider extends Model
         'label', 'autoplay', 'interval', 'show_navigation', 'responsive_size', 'size_w', 'size_h',
         'navigation_control_shape', 'show_navigation', 'autohide_navigation_control', 'navigation_control_bg_color',
         'navigation_color', 'show_indicator', "slides", "prev_slide_animation", "next_slide_animation",
-        'indicator_active_class', 'indicator_inactive_class'
+        'indicator_active_class', 'indicator_inactive_class', 'navigation_prev_icon',
+        'navigation_next_icon'
     ];
 
     /**
@@ -199,4 +200,13 @@ class ImageSlider extends Model
         return \Config::get('godspeed.flametreecms::slideIndicatorClass')['inactive'];
     }
 
+    public function getNavigationPrevIconOptions()
+    {
+        return \Config::get('godspeed.flametreecms::sliderNavigationIconClass')['prev'];
+    }
+
+    public function getNavigationNextIconOptions()
+    {
+        return \Config::get('godspeed.flametreecms::sliderNavigationIconClass')['next'];
+    }
 }

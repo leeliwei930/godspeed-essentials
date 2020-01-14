@@ -18,6 +18,8 @@ class CreateImageSlidersTable extends Migration
             $table->boolean('autoplay');
             $table->integer('interval')->nullable();
             $table->boolean('show_navigation');
+            $table->string('navigation_prev_icon');
+            $table->string('navigation_next_icon');
             $table->boolean('responsive_size');
             $table->integer("size_w")->nullable();
             $table->integer("size_h")->nullable();

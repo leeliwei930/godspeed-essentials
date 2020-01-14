@@ -41,7 +41,6 @@ tabs:
             span: right
             comment: If enable, navigation control will be displayed when the sliders is hovered by mouse cursor
             tab: Slides Preferences
-
         interval:
             type: number
             label: Slide changed interval
@@ -52,6 +51,25 @@ tabs:
                 action: hide
                 field: autoplay
                 condition: unchecked
+        navigation_prev_icon:
+            type: dropdown
+            label: Navigation Prev Icon
+            default: "fas fa-chevron-left"
+            span: right
+            trigger:
+                action: show
+                field: show_navigation
+                condition: checked
+        navigation_next_icon:
+            type: dropdown
+            label: Navigation Next Icon
+            default: "fas fa-chevron-right"
+            span: right
+            trigger:
+                action: show
+                field: show_navigation
+                condition: checked
+
         responsive_size:
             type: switch
             label: Enable responsive size image sliders
