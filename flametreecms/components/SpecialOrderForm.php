@@ -11,7 +11,7 @@ class SpecialOrderForm extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'SpecialOrderForm Component',
+            'name'        => 'Special Order Form',
             'description' => 'No description provided yet...'
         ];
     }

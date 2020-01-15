@@ -64,7 +64,7 @@ class ImageSlider extends Model
             "required", "boolean"
         ],
         "interval" => [
-            "required_if:autoplay,true", "numeric", "between:850,10000"
+            "required_if:autoplay,true", "numeric", "between:3200,10000"
         ],
         "navigation_control_bg_color" => [
             'required',

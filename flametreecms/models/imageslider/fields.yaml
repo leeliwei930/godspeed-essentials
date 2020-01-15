@@ -45,7 +45,7 @@ tabs:
             type: number
             label: Slide changed interval
             span: left
-            default: 1500
+            default: 3200
             tab: Slides Preferences
             trigger:
                 action: hide

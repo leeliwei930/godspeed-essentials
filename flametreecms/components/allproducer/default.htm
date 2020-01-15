@@ -1,0 +1,20 @@
+{% set producers = __SELF__.producers  %}
+
+{% if producers %}
+    <div class="d-flex flex-wrap justify-content-around">
+    {% for producer in producers %}
+        <producer-card
+            origin="{{ producer.origin }}"
+            name="{{ producer.name }}"
+        >
+
+        </producer-card>
+    {% endfor %}
+    </div>
+{% else %}
+
+
+{% endif %}
+{#<producer-card>#}
+
+{#</producer-card>#}

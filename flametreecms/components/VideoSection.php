@@ -21,7 +21,7 @@ class VideoSection extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'Video Section',
+            'name'        => 'Video Player',
             'description' => 'Generate a plyr.io videos listing'
         ];
     }

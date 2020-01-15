@@ -8,8 +8,8 @@ class ImageSlider extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'ImageSlider Component',
-            'description' => 'No description provided yet...'
+            'name'        => 'Carousel',
+            'description' => 'Render a image slider or carousel based on the given label property'
         ];
     }
 
