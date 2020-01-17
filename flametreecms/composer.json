@@ -28,7 +28,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "GodSpeed\\FlametreeCMS\\Utils": "utils/"
+            "GodSpeed\\FlametreeCMS\\Utils\\": "utils/"
         }
     },
     "require": {
