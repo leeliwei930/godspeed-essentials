@@ -26,6 +26,11 @@
             "email": "nj547@uowmail.edu.au"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "GodSpeed\\FlametreeCMS\\Utils": "utils/"
+        }
+    },
     "require": {
         "james-heinrich/getid3": "dev-master"
     }

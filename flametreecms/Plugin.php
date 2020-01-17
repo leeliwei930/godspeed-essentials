@@ -31,7 +31,7 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name' => 'flametreeCMS',
+            'name' => 'FlametreeCMS',
             'description' => 'No description provided yet...',
             'author' => 'GodSpeed',
             'icon' => 'icon-leaf'
