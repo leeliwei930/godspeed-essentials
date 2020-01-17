@@ -3,8 +3,10 @@
 use Backend;
 use BackendMenu;
 use GodSpeed\FlametreeCMS\Models\FaqCategory;
+use GodSpeed\FlametreeCMS\Models\ProducerCategory;
 use GodSpeed\FlametreeCMS\Utils\VideoMeta\Video;
 use GodSpeed\FlametreeCMS\Models\Video as VideoModel;
+use GodSpeed\FlametreeCMS\Models\ProducerCategory as ProducerCategoryModel;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -24,7 +26,7 @@ class Plugin extends PluginBase
      *
      * @return array
      */
-    public $require = ['RainLab.User'];
+    public $require = ['RainLab.User', 'RainLab.Blog', 'RainLab.Pages'];
 
     public function pluginDetails()
     {
@@ -56,6 +58,7 @@ class Plugin extends PluginBase
         // extend users importer
         $this->extendingRainLabUserPlugin();
         $this->extendControllerBehaviour();
+        $this->extendPagesMenuPluginBehavior();
     }
 
     /**
@@ -71,7 +74,8 @@ class Plugin extends PluginBase
             "GodSpeed\FlametreeCMS\Components\VideoSection" => "VideoSection",
             "GodSpeed\FlametreeCMS\Components\ImageSlider" => "ImageSlider",
             "GodSpeed\FlametreeCMS\Components\ProducerCategory" => "ProducerCategory",
-            "GodSpeed\FlametreeCMS\Components\AllProducer" => "AllProducer"
+            "GodSpeed\FlametreeCMS\Components\AllProducer" => "AllProducer",
+            "GodSpeed\FlametreeCMS\Components\TrendingAnnouncement" => "TrendingAnnouncement"
         ]; // Remove this line to activate
 
 //        return [
@@ -226,6 +230,20 @@ class Plugin extends PluginBase
         });
     }
 
+    public function extendPagesMenuPluginBehavior()
+    {
+        Event::listen('pages.menuitem.listTypes', function () {
+            return [
+                'all-producer-category' => "All Producer Category"
+            ];
+        });
+
+        Event::listen('pages.menuitem.resolveItem', function ($type, $item, $url, $theme) {
+            if ($type == 'all-producer-category') {
+               return ProducerCategoryModel::resolveMenuItem($item, $url, $theme);
+            }
+        });
+    }
     public function extendControllerBehaviour()
     {
         VideoModel::extend(function ($model) {

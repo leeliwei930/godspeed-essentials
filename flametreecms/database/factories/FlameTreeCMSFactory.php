@@ -3,6 +3,9 @@
 namespace GodSpeed\FlametreeCMS\Database\Factories;
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
+
+use Backend\Facades\BackendAuth;
+use Backend\Models\User as BackendUser;
 use Faker\Generator as Faker;
 use Faker\Provider\en_AU\Address;
 use Faker\Provider\Internet;
@@ -16,6 +19,7 @@ use GodSpeed\FlametreeCMS\Models\SpecialOrder;
 use GodSpeed\FlametreeCMS\Models\Video;
 use GodSpeed\FlametreeCMS\Utils\Providers\YoutubeVideoProvider;
 use Illuminate\Support\Str;
+use RainLab\Blog\Models\Post;
 
 $factory->define(Producer::class, function (Faker $faker) {
     $faker->addProvider(new Address($faker));
@@ -82,5 +86,19 @@ $factory->define(FaqCategory::class, function(Faker $faker){
         'name' => $name,
         'slug' => Str::slug($name)
     ];
+});
+
+$factory->define(Post::class, function(Faker $faker){
+    BackendAuth::impersonate(BackendUser::first());
+
+    $title = $faker->text(50);
+    return [
+        'title' => $title,
+        'excerpt' => $faker->paragraph(3),
+        'content' => $faker->paragraph(3),
+        'slug' => Str::slug($title),
+        'published_at' => now()
+    ];
+
 });
 

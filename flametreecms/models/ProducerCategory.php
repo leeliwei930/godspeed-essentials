@@ -1,5 +1,7 @@
 <?php namespace GodSpeed\FlametreeCMS\Models;
 
+use Cms\Classes\Page;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Model;
 
@@ -49,4 +51,38 @@ class ProducerCategory extends Model
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
+
+
+    public static function resolveMenuItem($item, $url, $theme)
+    {
+        $items = ProducerCategory::with('producers')->get();
+
+        $items = collect($items)->map(function ($_item) {
+            return [
+                'title' => $_item->name,
+                'url' => Page::url('our-producers') . "#".Str::slug($_item->name),
+                'isActive' => 0,
+                'items' => collect($_item['producers'])->map(function ($producer) {
+                    return [
+                        'title' => $producer->name,
+
+                        'url' => $producer->website,
+                        'viewBag' => [
+
+                            'origin' => $producer->origin
+                        ]
+                    ];
+                })->toArray()
+            ];
+        })->toArray();
+
+        $pageURL = Page::url('our-producers');
+        $isActive = (Page::url('our-producers') === $url) ? 1 : 0;
+        return [
+            'title' => "Producers",
+            'url' => $pageURL,
+            'isActive' => $isActive,
+            'items' => $items
+        ];
+    }
 }

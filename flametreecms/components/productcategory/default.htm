@@ -1,23 +1,4 @@
 {%  if __SELF__.all()  %}
-<mega-menu>
-    {%  for product_category in __SELF__.all() %}
-    <sidebar-menu-item title="{{ product_category.name }}" link="{{ "/products/#"~product_category.name  }}">
-        {%  if product_category.producers %}
-            {%  for product in product_category.producers %}
-                <menu-item
-                    leading-icon="fas fa-chevron-circle-right"
-                    parent="{{ product_category.name }}"
-                    title="{{ product.name }}"
-                    description="{{ product.origin }}"
-                    icon="fas fa-map-marker-alt fa-2x"
-                >
-                </menu-item>
 
-            {% endfor %}
-        {%  endif %}
-    </sidebar-menu-item>
-    {%  endfor %}
-
-</mega-menu>
 
 {% endif %}
