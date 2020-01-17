@@ -6,6 +6,7 @@ use GodSpeed\FlametreeCMS\Models\Playlist;
 use GodSpeed\FlametreeCMS\Models\SpecialOrder;
 use GodSpeed\FlametreeCMS\Models\Video;
 use October\Rain\Support\Collection;
+use RainLab\Blog\Models\Post;
 use Seeder;
 
 class FactorySeeder extends Seeder
@@ -28,5 +29,7 @@ class FactorySeeder extends Seeder
 
         //create special orders
         factory(SpecialOrder::class,50)->create();
+
+        factory(Post::class, 5)->create();
     }
 }

@@ -97,7 +97,8 @@ $factory->define(Post::class, function(Faker $faker){
         'excerpt' => $faker->paragraph(3),
         'content' => $faker->paragraph(3),
         'slug' => Str::slug($title),
-        'published_at' => now()
+        'published_at' => now(),
+        'published' => true
     ];
 
 });

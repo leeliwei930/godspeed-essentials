@@ -19,11 +19,12 @@ class Youtube extends Video
 
     public function get()
     {
-        $youtubeRes = Http::get($this->getConfig('api_base') . '?' . http_build_query([
-            'part' => 'contentDetails,snippet',
-            'id' => $this->request['embed_id'],
-            'key' => Settings::get('youtube_data_api_key')
-        ]))->send();
+        $endpoint = $this->getConfig('api_base') . '?' . http_build_query([
+                'part' => 'contentDetails,snippet',
+                'id' => $this->request['embed_id'],
+                'key' => (string) Settings::get('youtube_data_api_key')
+            ]);
+        $youtubeRes = Http::get($endpoint)->send();
 
         $response = json_decode($youtubeRes, true);
 
