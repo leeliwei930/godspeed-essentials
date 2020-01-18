@@ -1,7 +1,7 @@
 {% set posts = __SELF__.posts %}
 
 
-<div class="d-flex flex-row justify-content-lg-between justify-content-around p-5 flex-wrap">
+<div class="d-flex flex-row mx-auto justify-content-around flex-wrap ">
     {% for post in posts %}
         <announcement-basic-card
             :key="{{ post.id }}"
