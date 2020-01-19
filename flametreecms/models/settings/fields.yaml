@@ -1,4 +1,60 @@
-fields:
-    youtube_data_api_key:
-        label: YouTube Data API Key
-        type: text
+tabs:
+    stretch: true
+    defaultTab: "Business Contact"
+    fields:
+        business_email:
+            type: text
+            label: Email
+            span: left
+            tab: "Business Contact"
+
+        business_phone_number:
+            type: text
+            label: Phone Number
+            span: right
+            tab: "Business Contact"
+
+        buiness_address:
+            type: richeditor
+            label: Business Address
+            span: left
+            tab: "Business Contact"
+
+        business_po_box_address:
+            type: richeditor
+            label: Business PO Box
+            span : right
+            tab: "Business Contact"
+
+
+
+
+        facebook_link:
+            label: Facebook Page URL
+            type: text
+            span: left
+
+        twitter_link:
+            label: Twitter URL
+            type: text
+            span: right
+
+        instagram_link:
+            label: Instagram Page URL
+            type: text
+            span: left
+
+        _youtube_data_api_key_hint:
+            type: hint
+            path: $/godspeed/flametreecms/models/settings/views/_youtube_data_api_key_hint.htm
+            tab: Advanced
+
+        youtube_data_api_key:
+            label: YouTube Data API Key
+            type: text
+            span: left
+            tab: Advanced
+
+
+
+
