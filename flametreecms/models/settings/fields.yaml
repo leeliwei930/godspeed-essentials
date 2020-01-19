@@ -14,7 +14,7 @@ tabs:
             span: right
             tab: "Business Contact"
 
-        buiness_address:
+        business_address:
             type: richeditor
             label: Business Address
             span: left
