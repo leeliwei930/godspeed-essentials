@@ -23,7 +23,7 @@
         <slide
             :show="carousel.carouselState.currentSlide == {{ index }}"
             slide-id="{{ index }}"
-            image="{{ slide.image }}"
+            image="{{ slide.image | media }}"
             title="{{ slide.title }}"
             caption="{{ slide.caption }}"
             title-animation="{{ slide.titleAnimation }}"
