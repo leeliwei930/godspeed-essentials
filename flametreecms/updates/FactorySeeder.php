@@ -30,6 +30,6 @@ class FactorySeeder extends Seeder
         //create special orders
         factory(SpecialOrder::class,50)->create();
 
-        factory(Post::class, 5)->create();
+        factory(Post::class, 120)->create();
     }
 }
