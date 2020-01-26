@@ -17,3 +17,7 @@
 - create_image_sliders_table.php
 - FactorySeeder.php
 - ImageSliderSeeder.php
+
+
+1.0.4:
+- ScaffoldTeamMember.php

@@ -26,7 +26,7 @@ class Plugin extends PluginBase
      *
      * @return array
      */
-    public $require = ['RainLab.User', 'RainLab.Blog', 'RainLab.Pages'];
+    public $require = ['RainLab.User', 'RainLab.Blog', 'RainLab.Pages', 'SureSoftware.PowerSEO', 'RainLab.MailChimp'];
 
     public function pluginDetails()
     {
@@ -56,7 +56,11 @@ class Plugin extends PluginBase
     public function boot()
     {
         // extend users importer
-        $this->extendingRainLabUserPlugin();
+        if (class_exists(\RainLab\User\Controllers\Users::class)) {
+            $this->extendingRainLabUserPlugin();
+        }
+
+
         $this->extendControllerBehaviour();
         $this->extendPagesMenuPluginBehavior();
     }
@@ -76,6 +80,7 @@ class Plugin extends PluginBase
             "GodSpeed\FlametreeCMS\Components\ProducerCategory" => "ProducerCategory",
             "GodSpeed\FlametreeCMS\Components\AllProducer" => "AllProducer",
             "GodSpeed\FlametreeCMS\Components\TrendingAnnouncement" => "TrendingAnnouncement",
+            "GodSpeed\FlametreeCMS\Components\Announcements" => "Announcements",
             "GodSpeed\FlametreeCMS\Components\BusinessContact" => "BusinessContact"
 
         ]; // Remove this line to activate
@@ -200,7 +205,6 @@ class Plugin extends PluginBase
                 ]
             ]);
         });
-
         RainLabUsersController::extend(function ($controller) {
             $controller->implement[] = 'Backend.Behaviors.ImportExportController';
             $controller->addDynamicProperty(
@@ -242,7 +246,7 @@ class Plugin extends PluginBase
 
         Event::listen('pages.menuitem.resolveItem', function ($type, $item, $url, $theme) {
             if ($type == 'all-producer-category') {
-               return ProducerCategoryModel::resolveMenuItem($item, $url, $theme);
+                return ProducerCategoryModel::resolveMenuItem($item, $url, $theme);
             }
         });
     }
