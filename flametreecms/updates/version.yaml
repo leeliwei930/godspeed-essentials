@@ -1,23 +1,34 @@
 1.0.0:
+- Create producers and producer_categories table
 - create_producers_table.php
 - create_producer_categories_table.php
 - ProductsSeeder.php
 - create_special_orders_table.php
 
 1.0.1:
+- Alter users table for extending RainLab.User Plugin
 - update_users_plugin_table.php
 
 1.0.2:
+- Create videos and video_playlists table
 - create_videos_table.php
 - create_video_playlists_table.php
 
 1.0.3:
+- Create faqs and faqs categories table
 - create_faqs_table.php
 - create_faq_categories_table.php
-- create_image_sliders_table.php
-- FactorySeeder.php
-- ImageSliderSeeder.php
 
 
 1.0.4:
+- Create image slider table and load the image slider seeder
+- create_image_sliders_table.php
+- ImageSliderSeeder.php
+
+
+1.0.5:
+- Load factory seeder, scaffold team member alter rainlab_blog_categories for extending RainLab.Blog Plugin
+- update_blog_plugin_table.php
+- AnnouncementCategoriesSeeder.php
+- FactorySeeder.php
 - ScaffoldTeamMember.php

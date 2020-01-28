@@ -1,7 +1,12 @@
 tabs:
     stretch: true
-    defaultTab: "Business Contact"
+    defaultTab: "Plugin Status"
     fields:
+        plugin_status:
+            type: partial
+            path: $/godspeed/flametreecms/views/settings/PluginDependenciesState.htm
+            tab: "Plugin Status"
+
         business_email:
             type: text
             label: Email
@@ -33,16 +38,19 @@ tabs:
             label: Facebook Page URL
             type: text
             span: left
+            tab: "Business Contact"
 
         twitter_link:
             label: Twitter URL
             type: text
             span: right
+            tab: "Business Contact"
 
         instagram_link:
             label: Instagram Page URL
             type: text
             span: left
+            tab: "Business Contact"
 
         _youtube_data_api_key_hint:
             type: hint

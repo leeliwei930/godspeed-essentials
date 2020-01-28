@@ -1,0 +1,41 @@
+<?php
+
+    use GodSpeed\FlametreeCMS\Plugin;
+    $pluginStates = Plugin::pluginDependenciesState();
+
+
+
+
+?>
+
+
+
+
+<h3>Plugin Dependencies Boot Check</h3>
+<div class="control-status-list">
+    <ul>
+        <?php foreach($pluginStates as $key => $plugin) : ?>
+            <?php if($plugin) : ?>
+
+        <li>
+            <span class="status-icon success"><i class="icon-check"></i></span>
+            <span class="status-text success"><?= $key ?></span>
+            <span class="status-label">Installed</span>
+
+        </li>
+
+            <?php else : ?>
+        <li>
+            <span class="status-icon warning"><i class="icon-exclamation"></i></span>
+            <span class="status-text warning"><?= $key ?></span>
+            <span class="status-label">Not Installed</span>
+        </li>
+
+            <?php endif; ?>
+
+
+
+        <?php endforeach; ?>
+
+    </ul>
+</div>

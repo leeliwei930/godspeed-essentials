@@ -28,6 +28,35 @@ class Plugin extends PluginBase
      */
     public $require = ['RainLab.User', 'RainLab.Blog', 'RainLab.Pages', 'SureSoftware.PowerSEO', 'RainLab.MailChimp'];
 
+    /**
+     * @return array
+     */
+    public static function pluginDependenciesState()
+    {
+        return [
+            "RainLab.Blog" => class_exists(\RainLab\Blog\Plugin::class),
+            "RainLab.User" => class_exists(\RainLab\User\Plugin::class),
+            "RainLab.Pages" => class_exists(\RainLab\Pages\Plugin::class),
+            "SureSoftware.PowerSEO" => class_exists(\SureSoftware\PowerSEO\Plugin::class),
+        ];
+    }
+
+    /**
+     * @param $pluginName
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function hasDependenciesPlugin($pluginName)
+    {
+        $pluginStatus = self::pluginDependenciesState();
+
+        if ( !array_key_exists($pluginName, $pluginStatus)) {
+            throw new \Exception("Invalid plugin dependencies name $pluginName given");
+        } else {
+            return $pluginStatus[$pluginName];
+        }
+    }
+
     public function pluginDetails()
     {
         return [
@@ -52,17 +81,24 @@ class Plugin extends PluginBase
      * Boot method, called right before the request route.
      *
      * @return array
+     * @throws \Exception
      */
     public function boot()
     {
         // extend users importer
-        if (class_exists(\RainLab\User\Controllers\Users::class)) {
+        if (self::hasDependenciesPlugin('RainLab.User')) {
             $this->extendingRainLabUserPlugin();
         }
 
 
         $this->extendControllerBehaviour();
-        $this->extendPagesMenuPluginBehavior();
+        if (self::hasDependenciesPlugin('RainLab.Pages')) {
+            $this->extendPagesMenuPluginBehavior();
+        }
+
+        if(self::hasDependenciesPlugin('RainLab.Blog')) {
+            $this->extendBlogCategoriesFormField();
+        }
     }
 
     /**
@@ -80,7 +116,6 @@ class Plugin extends PluginBase
             "GodSpeed\FlametreeCMS\Components\ProducerCategory" => "ProducerCategory",
             "GodSpeed\FlametreeCMS\Components\AllProducer" => "AllProducer",
             "GodSpeed\FlametreeCMS\Components\TrendingAnnouncement" => "TrendingAnnouncement",
-            "GodSpeed\FlametreeCMS\Components\Announcements" => "Announcements",
             "GodSpeed\FlametreeCMS\Components\BusinessContact" => "BusinessContact"
 
         ]; // Remove this line to activate
@@ -250,6 +285,29 @@ class Plugin extends PluginBase
             }
         });
     }
+
+    public function extendBlogCategoriesFormField()
+    {
+        Event::listen('backend.form.extendFields', function ($widget) {
+            if (!$widget->getController() instanceof \RainLab\Blog\Controllers\Categories) {
+                return;
+            }
+
+            if (!$widget->model instanceof \RainLab\Blog\Models\Category) {
+                return;
+            }
+
+            $widget->addFields([
+                'featured_image'=> [
+                'label' => 'Featued Image',
+                'type' => 'mediafinder'
+                ]
+            ]);
+
+
+        });
+    }
+
     public function extendControllerBehaviour()
     {
         VideoModel::extend(function ($model) {
