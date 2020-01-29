@@ -1,0 +1,21 @@
+{% set teams = __SELF__.teamMembers %}
+
+{% if teams is not empty %}
+    <div class="d-flex flex-row flex-wrap justify-content-start mx-auto w-75">
+
+        {% for index, team in teams %}
+            <div class="col-lg-4 col-md-6 col-12  p-0 d-flex justify-content-center">
+                <producer-card
+                    width="320px"
+
+                    name="{{ team.full_name }}"
+                    subheading="{{ team.role.name }}"
+                    background-image="{{ (team.avatar) ? team.avatar | media : '' }}"
+                >
+
+                </producer-card>
+            </div>
+
+        {% endfor %}
+    </div>
+{% endif %}

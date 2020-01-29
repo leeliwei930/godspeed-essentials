@@ -116,7 +116,8 @@ class Plugin extends PluginBase
             "GodSpeed\FlametreeCMS\Components\ProducerCategory" => "ProducerCategory",
             "GodSpeed\FlametreeCMS\Components\AllProducer" => "AllProducer",
             "GodSpeed\FlametreeCMS\Components\TrendingAnnouncement" => "TrendingAnnouncement",
-            "GodSpeed\FlametreeCMS\Components\BusinessContact" => "BusinessContact"
+            "GodSpeed\FlametreeCMS\Components\BusinessContact" => "BusinessContact",
+            "GodSpeed\FlametreeCMS\Components\TeamMember" => "TeamMember"
 
         ]; // Remove this line to activate
 

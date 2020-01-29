@@ -1,21 +1,21 @@
 {% set posts = __SELF__.posts %}
 
 
-<div class="d-flex flex-row mx-auto justify-content-around flex-wrap ">
+<div class="d-flex flex-row  justify-content-around flex-wrap mx-3">
     {% for post in posts %}
-        <announcement-basic-card
-            :key="{{ post.id }}"
-            title="{{ post.title }}"
-            author="{{ post.user.full_name }}"
-            published-on="{{ post.created_at | date("D, Y-M-d. h:i:s a")}}"
-            description="{{ str_words(post.summary, 20) }}"
-        >
-            <div class="flametree-theme d-flex flex-grow-1 flex-sm-grow-0">
-                <a class="btn btn-primary hover-move-right w-100 my-2" target="_blank" href="{{ "blog/announcement" | page({slug: post.slug}) }}">READ MORE
-                <i class="fas fa-chevron-right"></i>
-                </a>
-            </div>
+            <announcement-basic-card
+                :key="{{ post.id }}"
+                title="{{ post.title }}"
+                author="{{ post.user.full_name }}"
+                published-on="{{ post.created_at | date("D, Y-M-d. h:i:s a")}}"
+                description="{{ str_words(post.summary, 20) }}"
+            >
+                <div class="flametree-theme d-flex flex-grow-1 flex-sm-grow-0">
+                    <a class="btn btn-primary rounded hover-move-right w-100 my-2" target="_blank" href="{{ "blog/announcement" | page({slug: post.slug}) }}">READ MORE
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </div>
 
-        </announcement-basic-card>
+            </announcement-basic-card>
     {% endfor %}
 </div>
