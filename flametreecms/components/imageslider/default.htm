@@ -1,7 +1,6 @@
 {% set slider = __SELF__.slider %}
 
 {% if slider %}
-
     <carousel v-slot:default="carousel"
         :show-indicator="{{ slider.show_indicator ? 'true' : 'false' }}"
         indicator-class="{{ slider.indicator_inactive_class }}"
@@ -21,9 +20,11 @@
 
     {% for index, slide in slider.slides %}
         <slide
+
             :show="carousel.carouselState.currentSlide == {{ index }}"
             slide-id="{{ index }}"
-            image="{{ slide.image | media }}"
+            data-image="{{ slide.image | media  }}"
+            image="{{ slide.image | placeholder_image }}"
             title="{{ slide.title }}"
             caption="{{ slide.caption }}"
             title-animation="{{ slide.titleAnimation }}"
@@ -42,7 +43,6 @@
 
     {%  endfor %}
     </carousel>
-
 {% else %}
     <div class="alert alert-danger mx-3 my-2 mt-5">
         <h6>No Slide get specified in component properties</h6>

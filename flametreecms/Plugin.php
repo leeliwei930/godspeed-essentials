@@ -2,14 +2,15 @@
 
 use Backend;
 use BackendMenu;
-use GodSpeed\FlametreeCMS\Models\FaqCategory;
 use GodSpeed\FlametreeCMS\Models\ProducerCategory;
 use GodSpeed\FlametreeCMS\Utils\VideoMeta\Video;
 use GodSpeed\FlametreeCMS\Models\Video as VideoModel;
 use GodSpeed\FlametreeCMS\Models\ProducerCategory as ProducerCategoryModel;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
+use Intervention\Image\ImageManagerStatic as Image;
 use October\Rain\Exception\ValidationException;
 use RainLab\User\Models\User;
 use System\Classes\PluginBase;
@@ -96,7 +97,7 @@ class Plugin extends PluginBase
             $this->extendPagesMenuPluginBehavior();
         }
 
-        if(self::hasDependenciesPlugin('RainLab.Blog')) {
+        if (self::hasDependenciesPlugin('RainLab.Blog')) {
             $this->extendBlogCategoriesFormField();
         }
     }
@@ -304,8 +305,6 @@ class Plugin extends PluginBase
                 'type' => 'mediafinder'
                 ]
             ]);
-
-
         });
     }
 
@@ -347,5 +346,61 @@ class Plugin extends PluginBase
                 }
             });
         });
+    }
+
+    public function registerMarkupTags()
+    {
+        return [
+            'filters' => [
+                'placeholder_image' => [
+                    $this, 'makePlaceholderImage'
+                ]
+            ]
+        ];
+    }
+
+    public function makePlaceholderImage($filename)
+    {
+        // get the existing image
+        $baseFilePath = "/media".$filename;
+        $exist = Storage::exists($baseFilePath);
+
+        if ($exist) {
+            $placeholderPath = '/media/placeholder' ;
+            $placeholderInfo = $this->placeholderInfo($placeholderPath, $filename);
+            if (!$placeholderInfo['exist']) {
+                if(!Storage::exists('media/placeholder')){
+                    Storage::makeDirectory('media/placeholder');
+                }
+                $file = Storage::get($baseFilePath);
+                $image = Image::make($file)
+                        ->resize(320, null, function ($constraint) {
+                            $constraint->aspectRatio();
+                        })
+                        ->blur(15)->save(storage_path('app'.$placeholderPath.$filename));
+
+
+
+            }
+
+            return Storage::url($placeholderInfo['filename']);
+        } else {
+            return Storage::url($baseFilePath);
+        }
+        // if image has placeholder
+            // return placeholder image
+        // else
+
+        // if the image found put it into image intervention, compress and blur the image
+            // return the image placeholder path
+    }
+
+    private function placeholderInfo($prefix, $filename)
+    {
+
+        return [
+            'exist' =>  Storage::exists($prefix.$filename),
+            'filename' => $prefix.$filename
+        ];
     }
 }
