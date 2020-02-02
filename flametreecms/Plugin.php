@@ -3,19 +3,22 @@
 use Backend;
 use BackendMenu;
 use GodSpeed\FlametreeCMS\Models\ProducerCategory;
+use GodSpeed\FlametreeCMS\Utils\LazyLoad\AttachmentPlaceholderGenerator;
+use GodSpeed\FlametreeCMS\Utils\Lazyload\LazyloadImage;
 use GodSpeed\FlametreeCMS\Utils\VideoMeta\Video;
 use GodSpeed\FlametreeCMS\Models\Video as VideoModel;
 use GodSpeed\FlametreeCMS\Models\ProducerCategory as ProducerCategoryModel;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Intervention\Image\ImageManagerStatic as Image;
+
 use October\Rain\Exception\ValidationException;
+
+use RainLab\Blog\Models\Post;
 use RainLab\User\Models\User;
 use System\Classes\PluginBase;
 use RainLab\User\Controllers\Users as RainLabUsersController;
 use Illuminate\Database\Eloquent\Factory as EloquentFactory;
+use System\Models\File;
 
 /**
  * flametreeCMS Plugin Information File
@@ -51,7 +54,7 @@ class Plugin extends PluginBase
     {
         $pluginStatus = self::pluginDependenciesState();
 
-        if ( !array_key_exists($pluginName, $pluginStatus)) {
+        if (!array_key_exists($pluginName, $pluginStatus)) {
             throw new \Exception("Invalid plugin dependencies name $pluginName given");
         } else {
             return $pluginStatus[$pluginName];
@@ -100,6 +103,7 @@ class Plugin extends PluginBase
         if (self::hasDependenciesPlugin('RainLab.Blog')) {
             $this->extendBlogCategoriesFormField();
         }
+
     }
 
     /**
@@ -229,6 +233,18 @@ class Plugin extends PluginBase
         ];
     }
 
+    public function registerMarkupTags()
+    {
+        return [
+            'filters' => [
+                'resize' => function($file_path, $width = null, $height = null, $options = []) {
+                    $image = new LazyloadImage($file_path);
+                    return $image->resize($width, $height, $options);
+                },
+            ]
+        ];
+    }
+
     public function extendingRainLabUserPlugin()
     {
         Event::listen('backend.menu.extendItems', function ($manager) {
@@ -300,9 +316,9 @@ class Plugin extends PluginBase
             }
 
             $widget->addFields([
-                'featured_image'=> [
-                'label' => 'Featued Image',
-                'type' => 'mediafinder'
+                'featured_image' => [
+                    'label' => 'Featued Image',
+                    'type' => 'mediafinder'
                 ]
             ]);
         });
@@ -310,6 +326,7 @@ class Plugin extends PluginBase
 
     public function extendControllerBehaviour()
     {
+
         VideoModel::extend(function ($model) {
             $model->bindEvent('model.beforeSave', function () use ($model) {
                 $validator = Validator::make(
@@ -348,59 +365,5 @@ class Plugin extends PluginBase
         });
     }
 
-    public function registerMarkupTags()
-    {
-        return [
-            'filters' => [
-                'placeholder_image' => [
-                    $this, 'makePlaceholderImage'
-                ]
-            ]
-        ];
-    }
 
-    public function makePlaceholderImage($filename)
-    {
-        // get the existing image
-        $baseFilePath = "/media".$filename;
-        $exist = Storage::exists($baseFilePath);
-
-        if ($exist) {
-            $placeholderPath = '/media/placeholder' ;
-            $placeholderInfo = $this->placeholderInfo($placeholderPath, $filename);
-            if (!$placeholderInfo['exist']) {
-                if(!Storage::exists('media/placeholder')){
-                    Storage::makeDirectory('media/placeholder');
-                }
-                $file = Storage::get($baseFilePath);
-                $image = Image::make($file)
-                        ->resize(320, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                        })
-                        ->blur(15)->save(storage_path('app'.$placeholderPath.$filename));
-
-
-
-            }
-
-            return Storage::url($placeholderInfo['filename']);
-        } else {
-            return Storage::url($baseFilePath);
-        }
-        // if image has placeholder
-            // return placeholder image
-        // else
-
-        // if the image found put it into image intervention, compress and blur the image
-            // return the image placeholder path
-    }
-
-    private function placeholderInfo($prefix, $filename)
-    {
-
-        return [
-            'exist' =>  Storage::exists($prefix.$filename),
-            'filename' => $prefix.$filename
-        ];
-    }
 }

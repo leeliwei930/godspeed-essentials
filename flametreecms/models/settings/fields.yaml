@@ -63,6 +63,27 @@ tabs:
             span: left
             tab: Advanced
 
+        lazyload_image_quality:
+            label: Image Quality
+            type: dropdown
+            tab: Lazy Load
+            span: left
 
+        lazyload_image_blur_rate:
+            label: Image Blur Rate
+            type: dropdown
+            tab: Lazy Load
+            span: right
+
+        lazyload_image_not_found:
+            label: Not Found Image
+            type: mediafinder
+            tab: Lazy Load
+            span: left
+        lazyload_default_image_extension:
+            label: Default Image Extension
+            type: dropdown
+            tab: Lazy Load
+            span: right
 
 
