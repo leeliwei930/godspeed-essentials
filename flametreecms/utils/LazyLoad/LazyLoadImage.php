@@ -61,8 +61,8 @@ class LazyloadImage
     public function resize($width = false, $height = false, $options = [])
     {
         // Parse the default settings
-        $this->options = $this->parseDefaultSettings($options);
 
+        $this->options = $this->parseDefaultSettings($options);
         // Not a file? Display the not found image
         if (!is_file($this->filePath)) {
             return $this->notFoundImage($width, $height);
@@ -88,14 +88,15 @@ class LazyloadImage
 
             $originalFilePath = $this->file->getLocalPath();
 
-            $file = Image::make($originalFilePath)->resize($width, $height , function ($constraint) {
-                $constraint->aspectRatio();
 
+            $file = Image::make($originalFilePath)->resize($width, $height, function ($constraint) {
+                $constraint->aspectRatio();
             })
                 ->blur($this->options['blur'])
                 ->encode($this->options['extension'], $this->options['quality'])
                 ->save($this->getCachedImagePath());
 
+            touch($this->getCachedImagePath(), filemtime($this->filePath));
 
             // Touch the cached image with the original mtime to align them
 
@@ -123,7 +124,10 @@ class LazyloadImage
 
     protected function deleteTempFile()
     {
-        unlink(storage_path('app/' . $this->file->getStorageDirectory() . $this->getPartitionDirectory() . $this->file->disk_name));
+        $targetFile = storage_path('app/' . $this->file->getStorageDirectory() . $this->getPartitionDirectory() . $this->file->disk_name);
+        if (file_exists($targetFile)) {
+            unlink($targetFile);
+        }
     }
 
     /**
@@ -205,7 +209,7 @@ class LazyloadImage
 
         // If we do not have an existing custom not found image, use the default from this plugin
         if (!isset($imagePath) || !file_exists($imagePath)) {
-            $imagePath = plugins_path('godspeed/flametreecms/assets/default-not-found.jpg');
+            $imagePath = plugins_path('godspeed/flametreecms/assets/default-not-found.jpeg');
         }
 
         // Create a new Image object to resize

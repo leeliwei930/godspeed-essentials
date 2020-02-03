@@ -12,6 +12,10 @@ class Settings extends Model
     // Reference to field configuration
     public $settingsFields = 'fields.yaml';
 
+    public $casts = [
+        'lazyload_image_blur_rate' => 'int',
+        'lazyload_image_quality' => 'int'
+    ];
 
     public function getLazyLoadImageQualityOptions()
     {
