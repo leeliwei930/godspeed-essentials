@@ -1,0 +1,11 @@
+<?php if (!is_null($record->icon)) :?>
+<img height="50px" width="50px" src="<?= $record->icon->getThumb(50,50, ['mode' => 'fit'])?>" alt="<?= 'Icon of ' . $record->name ?>">
+
+<?php else:?>
+
+Unavailable
+
+<?php endif; ?>
+
+
+

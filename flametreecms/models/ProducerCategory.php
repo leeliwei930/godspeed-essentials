@@ -49,7 +49,11 @@ class ProducerCategory extends Model
     public $morphTo = [];
     public $morphOne = [];
     public $morphMany = [];
-    public $attachOne = [];
+    public $attachOne = [
+        'icon' => [
+            'System\Models\File'
+        ]
+    ];
     public $attachMany = [];
 
 

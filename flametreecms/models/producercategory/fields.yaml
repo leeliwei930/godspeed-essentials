@@ -6,6 +6,15 @@ fields:
     name:
         label: Name
         type: text
+        span: left
+    icon:
+        label: Icon
+        span: right
+        fileTypes: svg,jpeg,jpg,gif,png
+        type: fileupload
+        imageHeight: 150px
+        imageWidth: 150px
+
 tabs:
     defaultTab: Producer Manager
     fields:

@@ -114,11 +114,10 @@ class Plugin extends PluginBase
     public function registerComponents()
     {
         return [
-            "GodSpeed\FlametreeCMS\Components\ProductCategory" => "ProductCategory",
+            "GodSpeed\FlametreeCMS\Components\ProducerCategoryList" => "ProducerCategoryList",
             "GodSpeed\FlametreeCMS\Components\SpecialOrderForm" => "SpecialOrderForm",
             "GodSpeed\FlametreeCMS\Components\VideoSection" => "VideoSection",
             "GodSpeed\FlametreeCMS\Components\ImageSlider" => "ImageSlider",
-            "GodSpeed\FlametreeCMS\Components\ProducerCategory" => "ProducerCategory",
             "GodSpeed\FlametreeCMS\Components\AllProducer" => "AllProducer",
             "GodSpeed\FlametreeCMS\Components\TrendingAnnouncement" => "TrendingAnnouncement",
             "GodSpeed\FlametreeCMS\Components\BusinessContact" => "BusinessContact",
