@@ -32,3 +32,4 @@
 - AnnouncementCategoriesSeeder.php
 - FactorySeeder.php
 - ScaffoldTeamMember.php
+- FrontendUserGroupSeeder.php

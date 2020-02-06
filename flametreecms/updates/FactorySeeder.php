@@ -31,9 +31,16 @@ class FactorySeeder extends Seeder
         //create special orders
         factory(SpecialOrder::class, 50)->create();
 
+        $this->tearDown();
+
         factory(Post::class, 120)->create()->each(function ($post) {
             $categories = Category::all()->random(3);
             $post->categories()->attach($categories);
         });
+    }
+
+    public function tearDown()
+    {
+        Post::where('slug', '!=', 'first-blog-post')->delete();
     }
 }

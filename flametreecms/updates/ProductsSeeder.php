@@ -106,6 +106,7 @@ Black tea"
            ]
         ];
 
+
        foreach($productCategories as $key => $item){
             $product_category = ProducerCategory::create(["name" => $key]);
             if(count($productCategories[$key])){

@@ -11,10 +11,13 @@ use GodSpeed\FlametreeCMS\Models\ProducerCategory as ProducerCategoryModel;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 
+use October\Rain\Database\Builder;
 use October\Rain\Exception\ValidationException;
 
-use RainLab\Blog\Models\Post;
+use RainLab\Blog\Models\Category;
+use RainLab\User\Facades\Auth;
 use RainLab\User\Models\User;
+use RainLab\User\Models\UserGroup;
 use System\Classes\PluginBase;
 use RainLab\User\Controllers\Users as RainLabUsersController;
 use Illuminate\Database\Eloquent\Factory as EloquentFactory;
@@ -103,7 +106,6 @@ class Plugin extends PluginBase
         if (self::hasDependenciesPlugin('RainLab.Blog')) {
             $this->extendBlogCategoriesFormField();
         }
-
     }
 
     /**
@@ -236,7 +238,7 @@ class Plugin extends PluginBase
     {
         return [
             'filters' => [
-                'resize' => function($file_path, $width = null, $height = null, $options = []) {
+                'resize' => function ($file_path, $width = null, $height = null, $options = []) {
                     $image = new LazyloadImage($file_path);
                     return $image->resize($width, $height, $options);
                 },
@@ -292,7 +294,8 @@ class Plugin extends PluginBase
     {
         Event::listen('pages.menuitem.listTypes', function () {
             return [
-                'all-producer-category' => "All Producer Category"
+                'all-producer-category' => "All Producer Category",
+
             ];
         });
 
@@ -302,9 +305,67 @@ class Plugin extends PluginBase
             }
         });
     }
+    public function guardBlogCategory($model)
+    {
+        if (!\App::runningInBackend()) {
+            $frontendUser = Auth::check() ? Auth::user() : null;
+            $frontendUserGroup = (!is_null($frontendUser)) ? $frontendUser->groups : [];
+            if (is_null($frontendUser)) {
+                $model::addGlobalScope('id', function (Builder $builder) {
+                    $builder->where('user_group', null);
+                });
+            } else {
+                $model::addGlobalScope('id', function (Builder $builder) use ($frontendUserGroup) {
+                    $groups = array_merge($frontendUserGroup->pluck('id')->toArray());
+                    $builder->whereIn('user_group', $groups)->orWhere('user_group', '=', null);
+                });
+            }
+        }
+    }
 
     public function extendBlogCategoriesFormField()
     {
+
+        Category::extend(function ($model) {
+
+            $this->guardBlogCategory($model);
+
+            $model->bindEvent('model.form.filterFields', function ($widget, $fields, $context) use ($model) {
+                switch ($context) {
+                    case "create":
+                        if ($fields->required_auth->value === "0") {
+                            $fields->user_group->value = null;
+                            $fields->user_group->hidden = true;
+                        } else {
+                            $model->user_group = null;
+                            $fields->user_group->hidden = false;
+                        }
+                        break;
+
+                    case "update":
+                        if ($fields->user_group->value != null) {
+                                $fields->required_auth->value = "1";
+                        }
+                        if ($fields->required_auth->value === "0") {
+                            $fields->user_group->value = null;
+                            $fields->user_group->hidden = true;
+                        } else {
+                            $fields->user_group->hidden = false;
+                        }
+                        break;
+                }
+            });
+            $model->bindEvent('model.beforeValidate', function () use ($model) {
+                if ($model->required_auth == 0) {
+                    $model->user_group = null;
+                }
+                $model->rules['user_group'] = 'nullable|exists:user_groups,id';
+
+                unset($model->required_auth);
+            });
+        });
+
+
         Event::listen('backend.form.extendFields', function ($widget) {
             if (!$widget->getController() instanceof \RainLab\Blog\Controllers\Categories) {
                 return;
@@ -314,10 +375,32 @@ class Plugin extends PluginBase
                 return;
             }
 
+
             $widget->addFields([
                 'featured_image' => [
-                    'label' => 'Featued Image',
+                    'label' => 'Featured Image',
                     'type' => 'mediafinder'
+                ],
+                'required_auth' => [
+                    "type" => "checkbox",
+                    "label" => "Restricted Access",
+                    'span' => "left"
+
+                ],
+                'user_group' => [
+                    'label' => "Only visible to",
+                    "type" => "dropdown",
+                    "options" => UserGroup::pluck('name', 'id'),
+                    'span' => 'right',
+
+
+                    "trigger" => [
+
+                        'action' => 'show',
+                        'field' => "required_auth",
+                        'condition' => "checked"
+                    ]
+
                 ]
             ]);
         });
@@ -363,6 +446,4 @@ class Plugin extends PluginBase
             });
         });
     }
-
-
 }
