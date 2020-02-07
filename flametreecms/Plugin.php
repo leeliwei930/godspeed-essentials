@@ -3,6 +3,8 @@
 use Backend;
 use BackendMenu;
 use GodSpeed\FlametreeCMS\Models\ProducerCategory;
+use GodSpeed\FlametreeCMS\Policies\PortalBlogCategoryPolicy;
+use GodSpeed\FlametreeCMS\Policies\PortalBlogPostPolicy;
 use GodSpeed\FlametreeCMS\Utils\LazyLoad\AttachmentPlaceholderGenerator;
 use GodSpeed\FlametreeCMS\Utils\Lazyload\LazyloadImage;
 use GodSpeed\FlametreeCMS\Utils\VideoMeta\Video;
@@ -15,13 +17,14 @@ use October\Rain\Database\Builder;
 use October\Rain\Exception\ValidationException;
 
 use RainLab\Blog\Models\Category;
+use RainLab\Blog\Models\Post;
 use RainLab\User\Facades\Auth;
 use RainLab\User\Models\User;
 use RainLab\User\Models\UserGroup;
 use System\Classes\PluginBase;
 use RainLab\User\Controllers\Users as RainLabUsersController;
 use Illuminate\Database\Eloquent\Factory as EloquentFactory;
-use System\Models\File;
+use System\Classes\PluginManager;
 
 /**
  * flametreeCMS Plugin Information File
@@ -38,31 +41,13 @@ class Plugin extends PluginBase
     /**
      * @return array
      */
-    public static function pluginDependenciesState()
-    {
-        return [
-            "RainLab.Blog" => class_exists(\RainLab\Blog\Plugin::class),
-            "RainLab.User" => class_exists(\RainLab\User\Plugin::class),
-            "RainLab.Pages" => class_exists(\RainLab\Pages\Plugin::class),
-            "SureSoftware.PowerSEO" => class_exists(\SureSoftware\PowerSEO\Plugin::class),
-        ];
-    }
 
     /**
      * @param $pluginName
      * @return mixed
      * @throws \Exception
      */
-    public static function hasDependenciesPlugin($pluginName)
-    {
-        $pluginStatus = self::pluginDependenciesState();
 
-        if (!array_key_exists($pluginName, $pluginStatus)) {
-            throw new \Exception("Invalid plugin dependencies name $pluginName given");
-        } else {
-            return $pluginStatus[$pluginName];
-        }
-    }
 
     public function pluginDetails()
     {
@@ -92,19 +77,21 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
+        $pluginManagerInstance = PluginManager::instance();
         // extend users importer
-        if (self::hasDependenciesPlugin('RainLab.User')) {
+        if ($pluginManagerInstance->hasPlugin('RainLab.User')) {
             $this->extendingRainLabUserPlugin();
         }
 
 
         $this->extendControllerBehaviour();
-        if (self::hasDependenciesPlugin('RainLab.Pages')) {
+        if ($pluginManagerInstance->hasPlugin('RainLab.Pages')) {
             $this->extendPagesMenuPluginBehavior();
         }
 
-        if (self::hasDependenciesPlugin('RainLab.Blog')) {
+        if ($pluginManagerInstance->hasPlugin('RainLab.Blog')) {
             $this->extendBlogCategoriesFormField();
+            $this->extendBlogPostModel();
         }
     }
 
@@ -305,31 +292,18 @@ class Plugin extends PluginBase
             }
         });
     }
-    public function guardBlogCategory($model)
+
+    public function extendBlogPostModel()
     {
-        if (!\App::runningInBackend()) {
-            $frontendUser = Auth::check() ? Auth::user() : null;
-            $frontendUserGroup = (!is_null($frontendUser)) ? $frontendUser->groups : [];
-            if (is_null($frontendUser)) {
-                $model::addGlobalScope('id', function (Builder $builder) {
-                    $builder->where('user_group', null);
-                });
-            } else {
-                $model::addGlobalScope('id', function (Builder $builder) use ($frontendUserGroup) {
-                    $groups = array_merge($frontendUserGroup->pluck('id')->toArray());
-                    $builder->whereIn('user_group', $groups)->orWhere('user_group', '=', null);
-                });
-            }
-        }
+        Post::extend(function ($model) {
+            PortalBlogPostPolicy::check($model);
+        });
     }
 
     public function extendBlogCategoriesFormField()
     {
 
         Category::extend(function ($model) {
-
-            $this->guardBlogCategory($model);
-
             $model->bindEvent('model.form.filterFields', function ($widget, $fields, $context) use ($model) {
                 switch ($context) {
                     case "create":
