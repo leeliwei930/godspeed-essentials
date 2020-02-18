@@ -90,7 +90,7 @@ class Plugin extends PluginBase
 
         if ($pluginManagerInstance->hasPlugin('RainLab.Blog')) {
 
-            $this->extendBlogPostModel();
+
             $this->extendBlogCategoriesFormField();
         }
     }
@@ -294,12 +294,7 @@ class Plugin extends PluginBase
         });
     }
 
-    public function extendBlogPostModel()
-    {
-        Post::extend(function ($model) {
-            PortalBlogPostPolicy::check($model);
-        });
-    }
+
 
     public function extendBlogCategoriesFormField()
     {

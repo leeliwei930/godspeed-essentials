@@ -6,10 +6,17 @@ namespace GodSpeed\FlametreeCMS\Policies;
 use Backend\Models\User;
 use Backend\Models\UserGroup;
 use October\Rain\Database\Builder;
+use RainLab\Blog\Models\Category;
+use RainLab\Blog\Models\Post;
 use RainLab\User\Facades\Auth;
 
 class PortalBlogPostPolicy extends PolicyBase
 {
+    public static  function guard(){
+        Post::extend(function($model){
+           PortalBlogPostPolicy::check($model);
+        });
+    }
     public static function check($resourceModel)
     {
 
@@ -47,12 +54,12 @@ class PortalBlogPostPolicy extends PolicyBase
             },
             'user' => function (Builder $builder) {
                 $groups = $this->subjectModel->groups->pluck('id')->toArray();
-                $publicGroups = UserGroup::where('code', 'registered')->orWhere('guest')->pluck('id')->toArray();
-                 $builder->whereHas('categories', function (Builder $query) use ($groups, $publicGroups) {
+                $publicCategories = Category::where('user_group', null)->pluck('id')->toArray();
+                 $builder->whereHas('categories', function (Builder $query) use ($groups, $publicCategories) {
                     $query->whereIn(
                         'user_group',
-                        array_merge([null ], $groups, $publicGroups)
-                    )->get();
+                        array_merge($groups, $publicCategories)
+                    );
                  })->orWhereDoesntHave('categories');
             }
 

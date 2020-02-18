@@ -5,6 +5,7 @@ namespace GodSpeed\FlametreeCMS\Policies;
 
 use October\Rain\Database\Builder;
 use RainLab\User\Facades\Auth;
+use RainLab\Blog\Models\Category;
 
 class PortalBlogCategoryPolicy extends PolicyBase
 {
@@ -15,6 +16,14 @@ class PortalBlogCategoryPolicy extends PolicyBase
      *
      * @param $resourceModel
      */
+
+    public static function guard()
+    {
+
+        Category::extend(function ($model) {
+            PortalBlogCategoryPolicy::check($model);
+        });
+    }
     public static function check($resourceModel)
     {
         $instance = self::make($resourceModel);
@@ -59,8 +68,7 @@ class PortalBlogCategoryPolicy extends PolicyBase
             'user' => function (Builder $builder) {
                 $groups = $this->subjectModel->groups->pluck('id')->toArray();
 
-                $builder->whereIn('user_group', $groups)
-                    ->orWhere('user_group', '=', null);
+                $builder->orWhereNull('user_group')->orWhereIn('user_group', array_merge([null], $groups));
             }
 
         ];
