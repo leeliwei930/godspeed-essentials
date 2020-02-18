@@ -8,7 +8,7 @@ use Backend\Models\UserGroup;
 use October\Rain\Database\Builder;
 use RainLab\User\Facades\Auth;
 
-class PortalBlogPostPolicy extends PortalBlogCategoryPolicy
+class PortalBlogPostPolicy extends PolicyBase
 {
     public static function check($resourceModel)
     {

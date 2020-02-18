@@ -3,7 +3,6 @@
 use Backend;
 use BackendMenu;
 use GodSpeed\FlametreeCMS\Models\ProducerCategory;
-use GodSpeed\FlametreeCMS\Policies\PortalBlogCategoryPolicy;
 use GodSpeed\FlametreeCMS\Policies\PortalBlogPostPolicy;
 use GodSpeed\FlametreeCMS\Utils\LazyLoad\AttachmentPlaceholderGenerator;
 use GodSpeed\FlametreeCMS\Utils\Lazyload\LazyloadImage;
@@ -90,8 +89,9 @@ class Plugin extends PluginBase
         }
 
         if ($pluginManagerInstance->hasPlugin('RainLab.Blog')) {
-            $this->extendBlogCategoriesFormField();
+
             $this->extendBlogPostModel();
+            $this->extendBlogCategoriesFormField();
         }
     }
 
@@ -110,7 +110,8 @@ class Plugin extends PluginBase
             "GodSpeed\FlametreeCMS\Components\AllProducer" => "AllProducer",
             "GodSpeed\FlametreeCMS\Components\TrendingAnnouncement" => "TrendingAnnouncement",
             "GodSpeed\FlametreeCMS\Components\BusinessContact" => "BusinessContact",
-            "GodSpeed\FlametreeCMS\Components\TeamMember" => "TeamMember"
+            "GodSpeed\FlametreeCMS\Components\TeamMember" => "TeamMember",
+            "GodSpeed\FlametreeCMS\Components\VolunteerResetPassword" => "VolunteerResetPassword"
 
         ]; // Remove this line to activate
 

@@ -1,0 +1,8 @@
+
+    <h2 class="text-primary headline-light-bold small py-2">PASSWORD RECOVERY</h2>
+    {% if __SELF__.code == null %}
+        {% partial __SELF__ ~ '::restore' %}
+    {% else %}
+        {% partial __SELF__ ~ '::reset' %}
+    {% endif %}
+
