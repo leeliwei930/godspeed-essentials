@@ -1,7 +1,7 @@
 <form
 
     data-request="{{ __SELF__ }}::onResetPassword"
-    data-request-update="'{{ __SELF__ }}::complete': '#partialUserResetForm'">
+    data-request-redirect="{{ __SELF__.getRedirectUrl() }}">
 
     <div class="text-field-control my-1">
         <label  for="reset_password_code">CODE</label>
@@ -24,5 +24,5 @@
 
         <a href="#" class="text-link">How To Register?</a>
     </div>
-    <button class="btn btn-primary rounded w-100 my-3">SEND RESET PASSWORD INSTRUCTION</button>
+    <button class="btn btn-primary rounded w-100 my-3">CHANGE PASSWORD</button>
 </form>

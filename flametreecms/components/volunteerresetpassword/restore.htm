@@ -1,7 +1,7 @@
 <form
 
     data-request="{{ __SELF__ }}::onRestorePassword"
-    data-request-update="'{{ __SELF__ }}::reset': '#partialUserResetForm'">
+    data-request-redirect="{{ __SELF__.getResetPasswordMailSentRedirectUrl() }}">
     <div class="text-field-control my-1">
         <label  for="volunteer_login_email">EMAIL</label>
 

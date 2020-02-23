@@ -1,0 +1,63 @@
+{{ form_ajax(__SELF__~'::onUpdate', ['data-request-validate', 'data-request-flash']) }}
+
+<div class="d-flex flex-shrink-1 flex-column flametree-theme align-items-center flex-wrap ">
+
+
+    <div class="d-flex justify-content-around col">
+        <upload-avatar
+            default-avatar-url="{{ __SELF__.user.getAvatarThumb(150) }}"
+        >
+
+        </upload-avatar>
+    </div>
+    <div class="d-flex flex-column justify-content-between">
+        <h4 class="headline-light-bold small my-5 align-self-center">VOLUNTEER PROFILE</h4>
+
+        <div class="text-field-control my-1">
+            <label for="name" class="text-uppercase">Name</label>
+            <input type="text" id="name" name="name" class="text-field" value="{{ __SELF__.user.name }}">
+        </div>
+        <small class="text-danger" data-validate-for="name"></small>
+
+        <div class="text-field-control my-1">
+            <label for="surname" class="text-uppercase">Surname</label>
+            <input type="text" id="surname" name="surname" class="text-field" value="{{ __SELF__.user.surname }}">
+        </div>
+        <small class="text-danger" data-validate-for="surname"></small>
+
+        <div class="text-field-control my-1">
+            <label for="email" class="text-uppercase">Email</label>
+
+            <input type="text" id="email" class="text-field" value="{{ __SELF__.user.email }}" readonly>
+
+        </div>
+
+        <small class="text-primary">For security reason the email only can be updated by the administrator</small>
+        <div class="text-field-control my-1">
+            <label for="phone_number" class="text-uppercase">Phone Number</label>
+
+            <input type="text" id="phone_number" name="phone_number" class="text-field"
+                   value="{{ __SELF__.user.phone_number }}">
+
+        </div>
+        <small class="text-danger" data-validate-for="phone_number"></small>
+
+        <div  id="change-password-form"></div>
+
+        <div class="checkbox-field-control my-3">
+            <input type="checkbox" name="reset_password" id="reset_password"
+                   data-request="{{ __SELF__ ~"::onToggleShowPasswordForm" }}"/>
+            <label for="reset_password" class="text-uppercase">I would like to change my password</label>
+
+        </div>
+        <div class="d-flex justify-content-center my-3 flex-row flex-wrap">
+            <button class="btn btn-primary  rounded-pill mx-1 col ">Save Changes</button>
+            <button class="btn btn-secondary rounded-pill mx-1 col text-uppercase" type="reset"> Reset</button>
+        </div>
+
+    </div>
+
+
+</div>
+{{ form_close() }}
+
