@@ -1,13 +1,13 @@
-{{ form_ajax(__SELF__~'::onUpdate', ['data-request-validate', 'data-request-flash']) }}
+{{ form_ajax(__SELF__~'::onUpdate', { 'data-request-validate' : true, 'data-request-flash': true , 'files' : true}) }}
 
 <div class="d-flex flex-shrink-1 flex-column flametree-theme align-items-center flex-wrap ">
 
 
-    <div class="d-flex justify-content-around col">
+    <div class="d-flex justify-content-around " id="upload-field">
         <upload-avatar
             default-avatar-url="{{ __SELF__.user.getAvatarThumb(150) }}"
+            field-name="avatar"
         >
-
         </upload-avatar>
     </div>
     <div class="d-flex flex-column justify-content-between">

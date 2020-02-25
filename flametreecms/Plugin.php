@@ -89,8 +89,6 @@ class Plugin extends PluginBase
         }
 
         if ($pluginManagerInstance->hasPlugin('RainLab.Blog')) {
-
-
             $this->extendBlogCategoriesFormField();
         }
     }
@@ -258,7 +256,9 @@ class Plugin extends PluginBase
             $controller->addViewPath("$/godspeed/flametreecms/views/rainlabUser");
             BackendMenu::setContext('RainLab.User', 'user', 'imports');
         });
-
+        User::extend(function ($model) {
+            $model->addFillable('phone_number');
+        });
         RainLabUsersController::extendFormFields(function ($form, $model, $context) {
             if (!$model instanceof User) {
                 return;

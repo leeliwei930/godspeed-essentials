@@ -1,5 +1,6 @@
 <?php namespace GodSpeed\FlametreeCMS\Components;
 
+use Auth;
 use Cms\Classes\ComponentBase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -7,6 +8,7 @@ use ValidationException;
 use Input;
 use Lang;
 use RainLab\User\Components\Account;
+use Intervention\Image\Facades\Image;
 
 class UpdateProfile extends Account
 {
@@ -32,7 +34,7 @@ class UpdateProfile extends Account
     {
         $isAuthorised = Hash::check($value, $this->user()->password);
         if (!$isAuthorised) {
-            $fail($attribute . ' is not correct');
+            $fail('The current password is not correct');
         }
     }
 
@@ -43,9 +45,6 @@ class UpdateProfile extends Account
             return;
         }
 
-        if (Input::hasFile('avatar')) {
-            $user->avatar = Input::file('avatar');
-        }
 
         $validationRules = [
             'name' => [
@@ -55,7 +54,7 @@ class UpdateProfile extends Account
                 'required', 'between:2,255'
             ],
             'reset_password' => [
-                 'boolean'
+                 'in:on,off'
             ],
 
             'phone_number' => [
@@ -63,18 +62,38 @@ class UpdateProfile extends Account
             ],
             'current_password' => [
                 'required_if:reset_password,on' ,
-                $this->verifyOldPassword
+                function($attribute, $value, $fail)
+                {
+                    return $this->verifyOldPassword($attribute, $value, $fail);
+                }
             ],
             'new_password' => [
-                'required_if:reset_password,true' , 'between:4,255', 'confirmed'
+                'required_if:reset_password,on' , 'between:4,255', 'confirmed'
             ]
         ];
         $validation = \Validator::make(post(), $validationRules);
         if ($validation->fails()) {
             throw new ValidationException($validation);
         }
+        $user->update([
+            'name' => post('name'),
+            'surname' => post('surname'),
+            'phone_number' => post('phone_number'),
+        ]);
 
 
+        if (post('reset_password') === 'on') {
+            $user->password = post('password_confirmation');
+            Auth::login($user->reload(), true);
+        }
+
+        if (post('avatar') !== '') {
+            $avatar = Image::make(post('avatar'))->resize(150,150)->encode('jpg', 90);
+            $filename =  md5(time().$avatar->getEncoded()).".jpg";
+            $file = new \System\Models\File();
+            $file->fromData($avatar->getEncoded(), $filename);
+            $user->avatar = $file;
+        }
         $user->save();
 
 
@@ -83,12 +102,6 @@ class UpdateProfile extends Account
 
 
 
-        /*
-         * Password has changed, reauthenticate the user
-         */
-        if (strlen(post('password'))) {
-            Auth::login($user->reload(), true);
-        }
 
         \Flash::success(post('flash', Lang::get(/*Settings successfully saved!*/'rainlab.user::lang.account.success_saved')));
         /*
