@@ -111,7 +111,8 @@ class Plugin extends PluginBase
             "GodSpeed\FlametreeCMS\Components\TeamMember" => "TeamMember",
             "GodSpeed\FlametreeCMS\Components\VolunteerResetPassword" => "VolunteerResetPassword",
             "GodSpeed\FlametreeCMS\Components\PrivateAnnouncements" => "PrivateAnnouncements",
-            "GodSpeed\FlametreeCMS\Components\UpdateProfile" => "UpdateProfile"
+            "GodSpeed\FlametreeCMS\Components\UpdateProfile" => "UpdateProfile",
+            "GodSpeed\FlametreeCMS\Components\PortalRecentPrivateAnnouncements" => "PortalRecentPrivateAnnouncements"
 
         ]; // Remove this line to activate
 

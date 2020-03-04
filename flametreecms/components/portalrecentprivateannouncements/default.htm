@@ -1,0 +1,34 @@
+{% set announcements = __SELF__.announcements %}
+{% if announcements is not empty %}
+    <div class="post-list-view">
+    {% for  index,announcement in announcements %}
+
+
+        <div class="p-2 d-flex flex-column flex-wrap flex-shrink-0 post-list-item {{ (index != (announcements.count -1)) ? "separator" : null }}">
+            <p class="post-title">{{ announcement.title }}</p>
+            <div class="d-flex flex-row justify-content-start align-items-center">
+                <img src="{{ announcement.user.getAvatarThumb(50) }}" alt="" class="rounded-circle">
+                <div class="d-flex flex-column flex-wrap justify-content-start align-content-start ">
+                    <strong class="mx-2 post-author">{{ announcement.user.full_name }}</strong>
+                    <span class="text-uppercase mx-2">{{ announcement.user.role.name }}</span>
+                </div>
+            </div>
+            <p class="post-excerpt my-2">{{ announcement.excerpt }}</p>
+            <div class="d-flex justify-content-between my-2 align-items-baseline">
+                <p class="post-published-at">Posted on: {{ announcement.published_at | date }}</p>
+                <a class="btn btn-outline-primary hover-move-right" href="{{ "volunteer/announcement" | page({ 'slug': announcement.slug}) }}">
+                    READ MORE
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+            </div>
+
+
+    {% endfor %}
+
+    </div>
+{% else %}
+    <div class="d-flex justify-content-center">
+        <p>There is no recent announcements.</p>
+    </div>
+{% endif %}

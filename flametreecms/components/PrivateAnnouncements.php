@@ -28,9 +28,9 @@ class PrivateAnnouncements extends Posts
         $isPublished = !$this->checkEditor();
         $groups = Auth::check() ? Auth::user()->groups->pluck('id')->toArray() : [];
 
-        $posts = BlogPost::whereHas('categories', function( Builder $query) use($groups) {
+        $posts = BlogPost::whereHas('categories', function (Builder $query) use ($groups) {
             $query = $query->whereNotNull('user_group');
-            if(count($groups) > 0){
+            if (count($groups) > 0) {
                 $query->whereIn('user_group', $groups);
             }
         })->with('categories')->listFrontEnd([
@@ -51,15 +51,14 @@ class PrivateAnnouncements extends Posts
         /*
          * Add a "url" helper attribute for linking to each post and category
          */
-        $posts->each(function($post) {
+        $posts->each(function ($post) {
             $post->setUrl($this->postPage, $this->controller);
 
-            $post->categories->each(function($category) {
+            $post->categories->each(function ($category) {
                 $category->setUrl($this->categoryPage, $this->controller);
             });
         });
 
         return $posts;
     }
-
 }

@@ -1,4 +1,4 @@
-<div class="flametree-theme">
+<div class="flametree-theme ">
 {%  if __SELF__.posts %}
     {% for announcement in __SELF__.posts %}
         <announcement-list-card
@@ -18,7 +18,7 @@
                     <div class="d-flex align-items-center flex-row">
                         <i class="text-primary fas fa-tags mr-2"></i>
                         {% for index, category in announcement.categories %}
-                            <a target="_blank" class="text-link" href="{{ 'blog/announcement-category' | page({category: category.slug}) }}">
+                            <a target="_blank" class="text-link" href="{{ 'volunteer/announcement-category' | page({category: category.slug}) }}">
                                 {{ category.name }}
                             </a>
                             {% if index != announcement.categories | length -1 %}
@@ -28,7 +28,7 @@
                     </div>
                 {% endif %}
 
-                <a class="btn btn-primary text-uppercase hover-move-right my-2 rounded" href="{{ "blog/announcement" | page({slug: announcement.slug}) }}">
+                <a class="btn btn-primary text-uppercase hover-move-right my-2 rounded" href="{{ "volunteer/announcement" | page({slug: announcement.slug}) }}">
                     READ MORE
                     <i class="fas fa-chevron-right"></i>
                 </a>

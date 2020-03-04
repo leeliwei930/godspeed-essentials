@@ -1,17 +1,19 @@
 {{ form_ajax(__SELF__~'::onUpdate', { 'data-request-validate' : true, 'data-request-flash': true , 'files' : true}) }}
 
-<div class="d-flex flex-shrink-1 flex-column flametree-theme align-items-center flex-wrap ">
+<div class="d-flex flex-shrink-1 flex-column flametree-theme align-items-center flex-wrap  p-5 ">
 
 
-    <div class="d-flex justify-content-around " id="upload-field">
+
+    <div class="d-flex flex-column justify-content-between">
+
         <upload-avatar
+
             default-avatar-url="{{ __SELF__.user.getAvatarThumb(150) }}"
             field-name="avatar"
         >
         </upload-avatar>
-    </div>
-    <div class="d-flex flex-column justify-content-between">
-        <h4 class="headline-light-bold small my-5 align-self-center">VOLUNTEER PROFILE</h4>
+
+        <h4 class="headline-light-bold small my-5 align-self-center">{{ __SELF__.user.surname }} {{ __SELF__.user.name }}</h4>
 
         <div class="text-field-control my-1">
             <label for="name" class="text-uppercase">Name</label>

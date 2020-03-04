@@ -62,8 +62,7 @@ class UpdateProfile extends Account
             ],
             'current_password' => [
                 'required_if:reset_password,on' ,
-                function($attribute, $value, $fail)
-                {
+                function ($attribute, $value, $fail) {
                     return $this->verifyOldPassword($attribute, $value, $fail);
                 }
             ],
@@ -75,6 +74,8 @@ class UpdateProfile extends Account
         if ($validation->fails()) {
             throw new ValidationException($validation);
         }
+
+
         $user->update([
             'name' => post('name'),
             'surname' => post('surname'),
@@ -83,27 +84,24 @@ class UpdateProfile extends Account
 
 
         if (post('reset_password') === 'on') {
-            $user->password = post('password_confirmation');
+            $user->password = post('new_password_confirmation');
+            // Force update the password without any default model validation level
+            $user->forceSave();
+
             Auth::login($user->reload(), true);
         }
 
         if (post('avatar') !== '') {
-            $avatar = Image::make(post('avatar'))->resize(150,150)->encode('jpg', 90);
+            $avatar = Image::make(post('avatar'))->resize(150, 150)->encode('jpg', 90);
             $filename =  md5(time().$avatar->getEncoded()).".jpg";
             $file = new \System\Models\File();
             $file->fromData($avatar->getEncoded(), $filename);
             $user->avatar = $file;
         }
-        $user->save();
+        $user->forceSave();
 
+        \Flash::success(post('flash', "Profile updated successfully."));
 
-
-
-
-
-
-
-        \Flash::success(post('flash', Lang::get(/*Settings successfully saved!*/'rainlab.user::lang.account.success_saved')));
         /*
          * Redirect
          */
@@ -112,5 +110,6 @@ class UpdateProfile extends Account
         }
 
         $this->prepareVars();
+
     }
 }
