@@ -1,0 +1,51 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+tabs:
+    defaultTab: General
+    fields:
+        title:
+            label: Event Name
+            type: text
+            tab: General
+            span: left
+        slug:
+            label: Slug
+            span: right
+            preset:
+                field: title
+                type: slug
+
+        description:
+            label: Event Description
+            type: text
+            tab: General
+
+        started_at:
+            label: Started At
+            type: datepicker
+            mode: datetime
+            format: Y-m-d
+            ignoreTimezone: true
+
+        ended_at:
+            label: Ended At
+            type: datepicker
+            mode: datetime
+            format: Y-m-d
+            ignoreTimezone: true
+
+        content_html:
+            label: Content
+            type: richeditor
+            tab: General
+
+        documents:
+            context: update
+            label: File Resources
+            type: fileupload
+            tab: Files
+            mode: file
+
+

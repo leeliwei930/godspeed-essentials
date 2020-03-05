@@ -1,0 +1,26 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+    title:
+        label: Title
+        searchable: true
+    created_at:
+        label: Created At
+        searchable: true
+    updated_at:
+        label: Updated At
+        searchable: true
+    video_playlist:
+        label: Training Video Playlist
+        relation: video_playlist
+        select: name
+        default: Not Available
+    documents_count:
+        label: Documents Count
+        relation: documents
+        useRelationCount: true

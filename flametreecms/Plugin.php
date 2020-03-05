@@ -112,7 +112,8 @@ class Plugin extends PluginBase
             "GodSpeed\FlametreeCMS\Components\VolunteerResetPassword" => "VolunteerResetPassword",
             "GodSpeed\FlametreeCMS\Components\PrivateAnnouncements" => "PrivateAnnouncements",
             "GodSpeed\FlametreeCMS\Components\UpdateProfile" => "UpdateProfile",
-            "GodSpeed\FlametreeCMS\Components\PortalRecentPrivateAnnouncements" => "PortalRecentPrivateAnnouncements"
+            "GodSpeed\FlametreeCMS\Components\PortalRecentPrivateAnnouncements" => "PortalRecentPrivateAnnouncements",
+            "GodSpeed\FlametreeCMS\Components\Meetings" => "Meetings"
 
         ]; // Remove this line to activate
 
@@ -164,6 +165,16 @@ class Plugin extends PluginBase
                         'icon' => 'icon-inbox',
                         'url' => Backend::url('godspeed/flametreecms/specialorders'),
                     ],
+                    "meetings" => [
+                        'label' => "Meetings",
+                        'icon' => 'icon-calendar',
+                        'url' => Backend::url('godspeed/flametreecms/meetings')
+                    ],
+                    "trainings" => [
+                        'label' => "Trainings",
+                        'icon' => 'icon-rocket',
+                        'url' => Backend::url('godspeed/flametreecms/trainings')
+                    ],
                     "videos" => [
                         'label' => "Videos",
                         'icon' => 'icon-film',
@@ -178,7 +189,8 @@ class Plugin extends PluginBase
                         "label" => "Carousel/Image Slider",
                         "icon" => 'icon-picture-o',
                         "url" => Backend::url("godspeed/flametreecms/imagesliders")
-                    ]
+                    ],
+
                 ]
             ],
         ];
@@ -298,7 +310,6 @@ class Plugin extends PluginBase
     }
 
 
-
     public function extendBlogCategoriesFormField()
     {
 
@@ -317,7 +328,7 @@ class Plugin extends PluginBase
 
                     case "update":
                         if ($fields->user_group->value != null) {
-                                $fields->required_auth->value = "1";
+                            $fields->required_auth->value = "1";
                         }
                         if ($fields->required_auth->value === "0") {
                             $fields->user_group->value = null;

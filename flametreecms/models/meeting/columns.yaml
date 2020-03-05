@@ -6,12 +6,13 @@ columns:
     id:
         label: ID
         searchable: true
-    name:
-        label: Producer Name
+    title:
+        label: Title
         searchable: true
-    origin:
-        label: Producer Origin
-        searchable: true
-    website:
-        label: Producer Website
-        searchable: true
+    started_at:
+        label: Started At
+        sortable: true
+    ended_at:
+        label: Ended At
+        sortable: true
+

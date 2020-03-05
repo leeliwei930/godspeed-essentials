@@ -2,6 +2,7 @@
 
 use GodSpeed\FlametreeCMS\Models\Faq;
 use GodSpeed\FlametreeCMS\Models\FaqCategory;
+use GodSpeed\FlametreeCMS\Models\Meeting;
 use GodSpeed\FlametreeCMS\Models\Playlist;
 use GodSpeed\FlametreeCMS\Models\SpecialOrder;
 use GodSpeed\FlametreeCMS\Models\Video;
@@ -37,6 +38,7 @@ class FactorySeeder extends Seeder
             $categories = Category::all()->random(3);
             $post->categories()->attach($categories);
         });
+
     }
 
     public function tearDown()

@@ -2,9 +2,9 @@
 
 namespace GodSpeed\FlametreeCMS\Updates;
 
-
 use RainLab\User\Models\UserGroup;
 use RainLab\User\Facades\Auth;
+
 class FrontendUserGroupSeeder extends \Seeder
 {
 
@@ -51,20 +51,23 @@ class FrontendUserGroupSeeder extends \Seeder
 
     public function tearDown()
     {
-        if(!env('production')){
+        if (!env('production')) {
             $volunteer = UserGroup::where('code', 'volunteer')->first();
             $member = UserGroup::where('code', 'member')->first();
 
-            $volunteer->users()->each(function($user){
-                $user->forceDelete();
-            });
+            if (!is_null($volunteer)) {
+                $volunteer->users()->each(function ($user) {
+                    $user->forceDelete();
+                });
+                $volunteer->delete();
+            }
+            if (!is_null($member)) {
+                $member->users()->each(function ($user) {
+                    $user->forceDelete();
+                });
 
-            $member->users()->each(function($user){
-                $user->forceDelete();
-            });
-
-            $volunteer->delete();
-            $member->delete();
+                $member->delete();
+            }
         }
     }
 }

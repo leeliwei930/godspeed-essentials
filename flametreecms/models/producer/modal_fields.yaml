@@ -4,14 +4,14 @@
 
 fields:
     name:
-        label: Producer Name
+        label: Name
         type: text
     origin:
-        label: Producer Origin
+        label: Origin
         type: text
     website:
-        label: Producer Websites
+        label: Websites
         type: text
-    logo:
-        label: Producer Company Logo
+    featured_image:
+        label: Featured Image
         type: mediafinder

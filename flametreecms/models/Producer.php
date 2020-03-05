@@ -21,7 +21,7 @@ class Producer extends Model
      * @var array Fillable fields
      */
     protected $fillable = [
-        'name' , "origin", "website", "logo"
+        'name' , "origin", "website", "featured_image"
     ];
 
     protected $rules = [
@@ -29,7 +29,7 @@ class Producer extends Model
             "required", "between:5,255"
         ],
         "origin" => 'max:255',
-        "logo" => "max:255",
+        "featured_image" => "max:255",
         "website" => 'max:255'
     ];
     /**

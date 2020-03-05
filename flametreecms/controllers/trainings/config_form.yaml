@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Training
+
+# Model Form Field configuration
+form: $/godspeed/flametreecms/models/training/fields.yaml
+
+# Model Class name
+modelClass: GodSpeed\FlametreeCMS\Models\Training
+
+# Default redirect location
+defaultRedirect: godspeed/flametreecms/trainings
+
+# Create page
+create:
+    title: Create Training
+    redirect: godspeed/flametreecms/trainings/update/:id
+    redirectClose: godspeed/flametreecms/trainings
+
+# Update page
+update:
+    title: Edit Training
+    redirect: godspeed/flametreecms/trainings
+    redirectClose: godspeed/flametreecms/trainings
+
+# Preview page
+preview:
+    title: Preview Training

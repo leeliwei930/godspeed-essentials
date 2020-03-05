@@ -9,8 +9,9 @@ fields:
         span: left
     icon:
         label: Icon
-        span: right
         fileTypes: svg,jpeg,jpg,gif,png
+        mode: file
+        span: right
         type: fileupload
         imageHeight: 150px
         imageWidth: 150px

@@ -6,6 +6,7 @@ namespace GodSpeed\FlametreeCMS\Database\Factories;
 
 use Backend\Facades\BackendAuth;
 use Backend\Models\User as BackendUser;
+use Carbon\Carbon;
 use Faker\Generator as Faker;
 use Faker\Provider\en_AU\Address;
 use Faker\Provider\Internet;
@@ -16,6 +17,7 @@ use GodSpeed\FlametreeCMS\Models\Playlist;
 use GodSpeed\FlametreeCMS\Models\Producer;
 use GodSpeed\FlametreeCMS\Models\ProducerCategory;
 use GodSpeed\FlametreeCMS\Models\SpecialOrder;
+use GodSpeed\FlametreeCMS\Models\Meeting;
 use GodSpeed\FlametreeCMS\Models\Video;
 use GodSpeed\FlametreeCMS\Utils\Providers\YoutubeVideoProvider;
 use Illuminate\Support\Str;
@@ -33,14 +35,14 @@ $factory->define(Producer::class, function (Faker $faker) {
 });
 
 
-$factory->define(ProducerCategory::class, function(Faker $faker){
+$factory->define(ProducerCategory::class, function (Faker $faker) {
     return [
         'name' => $faker->text(25)
     ];
 });
 
 
-$factory->define(SpecialOrder::class, function(Faker $faker){
+$factory->define(SpecialOrder::class, function (Faker $faker) {
     $faker->addProvider(new Address($faker));
     $faker->addProvider(new Lorem($faker));
     $faker->addProvider(new Internet($faker));
@@ -52,7 +54,7 @@ $factory->define(SpecialOrder::class, function(Faker $faker){
     ];
 });
 
-$factory->define(Video::class, function(Faker $faker){
+$factory->define(Video::class, function (Faker $faker) {
 
     $faker->addProvider(new YoutubeVideoProvider($faker));
 
@@ -63,7 +65,7 @@ $factory->define(Video::class, function(Faker $faker){
 });
 
 
-$factory->define(Playlist::class, function (Faker $faker){
+$factory->define(Playlist::class, function (Faker $faker) {
 
     return [
         'name' => $faker->word
@@ -71,7 +73,7 @@ $factory->define(Playlist::class, function (Faker $faker){
 });
 
 
-$factory->define(Faq::class, function(Faker $faker){
+$factory->define(Faq::class, function (Faker $faker) {
     return [
         'question' => $faker->sentence(12) . "?",
         'answer' => $faker->sentence
@@ -79,7 +81,7 @@ $factory->define(Faq::class, function(Faker $faker){
 });
 
 
-$factory->define(FaqCategory::class, function(Faker $faker){
+$factory->define(FaqCategory::class, function (Faker $faker) {
 
     $name = $faker->unique()->text(5);
     return [
@@ -88,7 +90,7 @@ $factory->define(FaqCategory::class, function(Faker $faker){
     ];
 });
 
-$factory->define(Post::class, function(Faker $faker){
+$factory->define(Post::class, function (Faker $faker) {
     BackendAuth::impersonate(BackendUser::first());
 
     $title = $faker->text(50);
@@ -100,6 +102,20 @@ $factory->define(Post::class, function(Faker $faker){
         'published_at' => now(),
         'published' => true
     ];
-
 });
 
+
+$factory->define(Meeting::class, function (Faker $faker) {
+    $title = $faker->unique()->sentence(15);
+    $description = $faker->paragraph(3);
+    $now = Carbon::parse($faker->dateTimeThisYear->format("Y-m-d h:i:s a"));
+    $content = $faker->sentence(15);
+    return [
+        'title' => $title,
+        'description' => $description,
+        'slug' => Str::slug($title),
+        'started_at' => $now->addMonths(1)->toDateTimeString(),
+        'ended_at' => $now->addHours(2)->toDateTimeString(),
+        'content_html' => "<p>$content</p>"
+    ];
+});

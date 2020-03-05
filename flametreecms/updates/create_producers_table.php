@@ -14,7 +14,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('origin');
             $table->string('website')->nullable();
-            $table->string('logo')->default('default.png');
+            $table->string('featured_image')->default('default.png');
             $table->timestamps();
         });
 

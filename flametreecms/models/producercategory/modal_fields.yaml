@@ -9,6 +9,7 @@ fields:
         span: left
     icon:
         label: Icon
+        mode: file
         span: right
         fileTypes: svg,jpeg,jpg,gif,png
         type: fileupload

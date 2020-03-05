@@ -88,8 +88,8 @@ class PortalRecentPrivateAnnouncements extends ComponentBase
                 $query->whereIn('user_group', $groups);
             }
         })
-//        ->whereDate('published_at', ">=", $fromDate)
-            ->whereDate('published_at', "<=", $toDate)->limit($this->property('max_records'));
+        ->whereDate('published_at', ">=", $fromDate)
+        ->whereDate('published_at', "<=", $toDate)->limit($this->property('max_records'));
 
         return $posts->get();
     }
@@ -102,3 +102,5 @@ class PortalRecentPrivateAnnouncements extends ComponentBase
         return "Recent " . $this->property('duration') . " " . $this->property('duration_unit') . " announcements";
     }
 }
+
+

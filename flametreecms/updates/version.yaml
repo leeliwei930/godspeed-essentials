@@ -33,3 +33,9 @@
 - FactorySeeder.php
 - ScaffoldTeamMember.php
 - FrontendUserGroupSeeder.php
+
+1.0.6:
+- Create Meeting Minutes Table and Trainings Table
+- create_meetings_table.php
+- create_trainings_table.php
+- MeetingSeeder.php

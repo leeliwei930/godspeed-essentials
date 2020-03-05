@@ -1,0 +1,38 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+
+tabs:
+    defaultTab: General
+
+    fields:
+        title:
+            label: Title
+            type: text
+            span: left
+            tab: General
+        slug:
+            label: Slug
+            span: right
+            tab: General
+            preset:
+                field: title
+                type: slug
+
+        content_html:
+            label: Content
+            type: richeditor
+            tab: General
+        video_playlist:
+            context: update
+            label: Training Video Playlist
+            type: dropdown
+            tab: Resources
+
+        documents:
+            context: update
+            label: Documents
+            type: fileupload
+            tab: Resources
+            mode: file
