@@ -17,7 +17,7 @@ use GodSpeed\FlametreeCMS\Models\Playlist;
 use GodSpeed\FlametreeCMS\Models\Producer;
 use GodSpeed\FlametreeCMS\Models\ProducerCategory;
 use GodSpeed\FlametreeCMS\Models\SpecialOrder;
-use GodSpeed\FlametreeCMS\Models\Meeting;
+use GodSpeed\FlametreeCMS\Models\event;
 use GodSpeed\FlametreeCMS\Models\Video;
 use GodSpeed\FlametreeCMS\Utils\Providers\YoutubeVideoProvider;
 use Illuminate\Support\Str;
@@ -105,7 +105,7 @@ $factory->define(Post::class, function (Faker $faker) {
 });
 
 
-$factory->define(Meeting::class, function (Faker $faker) {
+$factory->define(event::class, function (Faker $faker) {
     $title = $faker->unique()->sentence(15);
     $description = $faker->paragraph(3);
     $now = Carbon::parse($faker->dateTimeThisYear->format("Y-m-d h:i:s a"));

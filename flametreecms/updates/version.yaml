@@ -32,10 +32,12 @@
 - AnnouncementCategoriesSeeder.php
 - FactorySeeder.php
 - ScaffoldTeamMember.php
+- Create Events Table and Trainings Table
+- create_events_table.php
+- EventSeeder.php
 - FrontendUserGroupSeeder.php
 
 1.0.6:
-- Create Meeting Minutes Table and Trainings Table
-- create_meetings_table.php
+- Create Trainings Table
 - create_trainings_table.php
-- MeetingSeeder.php
+

@@ -26,16 +26,22 @@ tabs:
             label: Started At
             type: datepicker
             mode: datetime
-            format: Y-m-d
             ignoreTimezone: true
 
         ended_at:
             label: Ended At
             type: datepicker
             mode: datetime
-            format: Y-m-d
             ignoreTimezone: true
 
+        timezone:
+            label: Time Zone
+            type: dropdown
+            comment: Please ensure that when you update a timezone, the system will convert the started at and ended at to the specific timezone
+        location:
+            label: Location
+            type: textarea
+            tab: General
         content_html:
             label: Content
             type: richeditor
@@ -47,5 +53,10 @@ tabs:
             type: fileupload
             tab: Files
             mode: file
+
+        user_group:
+            label: Target Member Type
+            type: relation
+            tab: General
 
 

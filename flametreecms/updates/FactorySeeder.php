@@ -2,7 +2,7 @@
 
 use GodSpeed\FlametreeCMS\Models\Faq;
 use GodSpeed\FlametreeCMS\Models\FaqCategory;
-use GodSpeed\FlametreeCMS\Models\Meeting;
+use GodSpeed\FlametreeCMS\Models\event;
 use GodSpeed\FlametreeCMS\Models\Playlist;
 use GodSpeed\FlametreeCMS\Models\SpecialOrder;
 use GodSpeed\FlametreeCMS\Models\Video;

@@ -1,6 +1,6 @@
 <?php Block::put('breadcrumb') ?>
     <ul>
-        <li><a href="<?= Backend::url('godspeed/flametreecms/meetings') ?>">Meetings</a></li>
+        <li><a href="<?= Backend::url('godspeed/flametreecms/events') ?>">Events</a></li>
         <li><?= e($this->pageTitle) ?></li>
     </ul>
 <?php Block::endPut() ?>
@@ -14,6 +14,6 @@
 <?php else: ?>
 
     <p class="flash-message static error"><?= e($this->fatalError) ?></p>
-    <p><a href="<?= Backend::url('godspeed/flametreecms/meetings') ?>" class="btn btn-default">Return to meetings list</a></p>
+    <p><a href="<?= Backend::url('godspeed/flametreecms/events') ?>" class="btn btn-default">Return to meetings list</a></p>
 
 <?php endif ?>

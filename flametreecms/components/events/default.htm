@@ -1,0 +1,24 @@
+{%  set events = __SELF__.events %}
+
+
+{% if events %}
+    {% for index,event in events %}
+        <event-card
+            class="my-3"
+            day="{{ event.started_at | date("j") }}"
+            started-at="{{ event.started_at }}"
+            day-name="{{ event.started_at | date("l") }}"
+            month-name="{{ event.started_at | date("M") }}"
+            name="{{ event.title }}"
+            timezone="{{ event.timezone }}"
+            link="{{ "volunteer/event" | page }}"
+        >
+            <p class="description">
+                {{ event.description }}
+            </p>
+        </event-card>
+    {% endfor %}
+{% else %}
+    <p>There is no upcoming events at the moment</p>
+
+{% endif %}

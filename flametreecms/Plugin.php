@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 
 use October\Rain\Database\Builder;
+use October\Rain\Database\Model;
 use October\Rain\Exception\ValidationException;
 
 use RainLab\Blog\Models\Category;
@@ -113,7 +114,7 @@ class Plugin extends PluginBase
             "GodSpeed\FlametreeCMS\Components\PrivateAnnouncements" => "PrivateAnnouncements",
             "GodSpeed\FlametreeCMS\Components\UpdateProfile" => "UpdateProfile",
             "GodSpeed\FlametreeCMS\Components\PortalRecentPrivateAnnouncements" => "PortalRecentPrivateAnnouncements",
-            "GodSpeed\FlametreeCMS\Components\Meetings" => "Meetings"
+            "GodSpeed\FlametreeCMS\Components\Events" => "Events"
 
         ]; // Remove this line to activate
 
@@ -165,10 +166,10 @@ class Plugin extends PluginBase
                         'icon' => 'icon-inbox',
                         'url' => Backend::url('godspeed/flametreecms/specialorders'),
                     ],
-                    "meetings" => [
-                        'label' => "Meetings",
+                    "events" => [
+                        'label' => "Events",
                         'icon' => 'icon-calendar',
-                        'url' => Backend::url('godspeed/flametreecms/meetings')
+                        'url' => Backend::url('godspeed/flametreecms/events')
                     ],
                     "trainings" => [
                         'label' => "Trainings",
@@ -269,9 +270,18 @@ class Plugin extends PluginBase
             $controller->addViewPath("$/godspeed/flametreecms/views/rainlabUser");
             BackendMenu::setContext('RainLab.User', 'user', 'imports');
         });
+
+        UserGroup::extend(function ($model) {
+            $model->belongsToMany['events'] = [
+                \GodSpeed\FlametreeCMS\Models\Event::class,
+                'table' => 'godspeed_flametreecms_events_roles', 'key' => 'member_role_id', 'other_key' => 'event_id'
+            ];
+        });
         User::extend(function ($model) {
             $model->addFillable('phone_number');
         });
+
+
         RainLabUsersController::extendFormFields(function ($form, $model, $context) {
             if (!$model instanceof User) {
                 return;

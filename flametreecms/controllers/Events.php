@@ -6,7 +6,7 @@ use Backend\Classes\Controller;
 /**
  * Meetings Back-end Controller
  */
-class Meetings extends Controller
+class Events extends Controller
 {
     public $implement = [
         'Backend.Behaviors.FormController',
@@ -20,6 +20,6 @@ class Meetings extends Controller
     {
         parent::__construct();
 
-        BackendMenu::setContext('GodSpeed.FlametreeCMS', 'flametreecms', 'meetings');
+        BackendMenu::setContext('GodSpeed.FlametreeCMS', 'flametreecms', 'events');
     }
 }

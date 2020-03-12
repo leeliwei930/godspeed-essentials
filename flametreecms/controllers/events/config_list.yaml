@@ -3,16 +3,16 @@
 # ===================================
 
 # Model List Column configuration
-list: $/godspeed/flametreecms/models/meeting/columns.yaml
+list: $/godspeed/flametreecms/models/event/columns.yaml
 
 # Model Class name
-modelClass: GodSpeed\FlametreeCMS\Models\Meeting
+modelClass: GodSpeed\FlametreeCMS\Models\Event
 
 # List Title
-title: Manage Meetings
+title: Manage Events
 
 # Link URL for each record
-recordUrl: godspeed/flametreecms/meetings/update/:id
+recordUrl: godspeed/flametreecms/events/update/:id
 
 # Message to display if the list is empty
 noRecordsMessage: backend::lang.list.no_records

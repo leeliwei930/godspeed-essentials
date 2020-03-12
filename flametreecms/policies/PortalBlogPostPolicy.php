@@ -12,9 +12,10 @@ use RainLab\User\Facades\Auth;
 
 class PortalBlogPostPolicy extends PolicyBase
 {
-    public static  function guard(){
-        Post::extend(function($model){
-           PortalBlogPostPolicy::check($model);
+    public static function guard()
+    {
+        Post::extend(function ($model) {
+            PortalBlogPostPolicy::check($model);
         });
     }
     public static function check($resourceModel)
@@ -49,14 +50,14 @@ class PortalBlogPostPolicy extends PolicyBase
             'guest' => function (Builder $builder) {
                 $publicGroups = UserGroup::where('code', 'guest')->pluck('id')->toArray();
                  $builder->whereHas('categories', function ($query) use ($publicGroups) {
-                    $query->whereIn('user_group', $publicGroups)->orWhereNull('user_group');
+                    $query->orWhereIn('user_group', $publicGroups)->orWhereNull('user_group');
                  })->orWhereDoesntHave('categories');
             },
             'user' => function (Builder $builder) {
                 $groups = $this->subjectModel->groups->pluck('id')->toArray();
                 $publicCategories = Category::where('user_group', null)->pluck('id')->toArray();
                  $builder->whereHas('categories', function (Builder $query) use ($groups, $publicCategories) {
-                    $query->whereIn(
+                    $query->orWhereIn(
                         'user_group',
                         array_merge($groups, $publicCategories)
                     );
