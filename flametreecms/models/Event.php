@@ -131,7 +131,7 @@ class Event extends Model
      */
     public $attachMany = [
         'documents' => [
-            'System\Models\File'
+            'System\Models\File', 'public' => false
         ]
     ];
 

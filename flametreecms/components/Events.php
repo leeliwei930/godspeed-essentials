@@ -89,7 +89,10 @@ class Events extends ComponentBase
         $this->events = $this->page['events'] = $this->makeEventsCollection($events);
     }
 
-
+    public function getScope()
+    {
+        return $this->property('list_only');
+    }
     public function makeEventsCollection($records)
     {
         return collect($records)->flatMap(function ($roles) {
@@ -148,8 +151,15 @@ class Events extends ComponentBase
     private function getEventsQuery()
     {
         $member = $this->getCurrentMemberSession();
+        $period = $this->property('period');
+        $scope = $this->property('max_period');
+        $scopeStartDate = now()->sub(CarbonInterval::$period($scope));
+        $scopeEndDate = now()->add(CarbonInterval::$period($scope));
         if (!is_null($member)) {
-            return $member->groups()->with('events');
+            return $member->groups()->with(['events' => function(BelongsToMany $query) use($scopeStartDate, $scopeEndDate) {
+                return $query->whereDate('started_at', "<", $scopeEndDate->toDateTimeString())
+                    ->whereDate('started_at', ">", $scopeStartDate->toDateTimeString());
+            }]);
         }
         return [];
     }

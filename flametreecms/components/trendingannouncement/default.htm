@@ -7,8 +7,8 @@
                 :key="{{ post.id }}"
                 title="{{ post.title }}"
                 author="{{ post.user.full_name }}"
-                published-on="{{ post.created_at | date("D, Y-M-d. h:i:s a")}}"
-                description="{{ str_words(post.summary, 20) }}"
+                :published-on="$tzConverter.convert('{{  post.created_at }}', 'dddd, MMM D Y hh:mm a')"
+                description="{{ str_limit(post.summary, 120) }}"
             >
                 <div class="flametree-theme d-flex flex-grow-1 flex-sm-grow-0">
                     <a class="btn btn-primary rounded hover-move-right w-100 my-2" target="_blank" href="{{ "blog/announcement" | page({slug: post.slug}) }}">READ MORE

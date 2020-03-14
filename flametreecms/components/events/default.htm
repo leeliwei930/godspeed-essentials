@@ -1,24 +1,26 @@
 {%  set events = __SELF__.events %}
 
-
-{% if events %}
+{% if events.count > 0 %}
     {% for index,event in events %}
         <event-card
             class="my-3"
-            day="{{ event.started_at | date("j") }}"
             started-at="{{ event.started_at }}"
-            day-name="{{ event.started_at | date("l") }}"
-            month-name="{{ event.started_at | date("M") }}"
+            ended-at="{{ event.ended_at }}"
+
             name="{{ event.title }}"
             timezone="{{ event.timezone }}"
-            link="{{ "volunteer/event" | page }}"
+            link="{{ "volunteer/event" | page({slug: event.slug}) }}"
+            location="{{ event.location }}"
         >
             <p class="description">
-                {{ event.description }}
+                {{ str_limit(event.description, 100)}}
             </p>
         </event-card>
     {% endfor %}
 {% else %}
-    <p>There is no upcoming events at the moment</p>
+    <div class="d-flex flex-column bg-white shadow rounded align-items-center p-5 my-5" style="width: 480px">
+        <i class="fas fa-calendar fa-3x text-primary"></i>
+        <p class="my-3">There is no events at the moment.</p>
+    </div>
 
 {% endif %}

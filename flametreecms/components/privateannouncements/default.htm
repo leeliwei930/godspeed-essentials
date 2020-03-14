@@ -10,7 +10,7 @@
             author="{{ announcement.user.full_name }}"
             author-avatar-image="{{ announcement.user.getAvatarThumb(35) }}"
             author-role="{{ announcement.user.role.name }}"
-            published-on="{{ announcement.published_at | date("D, d M Y. h:i a") }}"
+            :published-on="$tzConverter.convert('{{  announcement.published_at }}', 'dddd, MMM D Y hh:mm a')"
         >
             <div class="d-flex flex-column flex-wrap justify-content-between mt-5">
                 {% if announcement.categories is not empty %}
