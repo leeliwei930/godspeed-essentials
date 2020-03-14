@@ -1,7 +1,9 @@
 <?php namespace GodSpeed\FlametreeCMS\Models;
 
 use Carbon\Carbon;
+use Cms\Classes\Page;
 use Model;
+use October\Rain\Database\Attach\File;
 
 /**
  * Meeting Model
@@ -125,19 +127,69 @@ class Event extends Model
     /**
      * @var array
      */
-    public $attachOne = [];
+    public $attachOne = [
+        'ics' => [
+            'System\Models\File'
+        ]
+    ];
     /**
      * @var array
      */
     public $attachMany = [
+
         'documents' => [
-            'System\Models\File', 'public' => false
+            'System\Models\File'
         ]
     ];
 
     /**
      * @return array
      */
+
+
+
+    public function afterValidate()
+    {
+
+        if (!$this->hasCreatedICSFileBefore()) {
+            $icalEvent = $this->makeiCalEvent();
+            $filename =str_limit($this->slug, 10, '').'.ics';
+            $file =  new \System\Models\File();
+            $file->fromData($this->makeCalendarInstance($icalEvent)->render(), $filename);
+            $file->save();
+            $this->ics = $file;
+            $this->forceSave();
+        } else {
+            $icalEvent = $this->makeiCalEvent();
+            $filename = str_limit($this->slug, 10, '').'.ics';
+            $this->ics->fromData($this->makeCalendarInstance($icalEvent)->render(), $filename);
+            $this->ics->save();
+        }
+    }
+
+    public function hasCreatedICSFileBefore()
+    {
+        return $this->ics !== null;
+    }
+
+    private function makeCalendarInstance($event)
+    {
+
+        $calendar = new \Eluceo\iCal\Component\Calendar($this->title);
+        $calendar->addComponent($event);
+        return $calendar;
+    }
+
+    private function makeiCalEvent()
+    {
+        $event = new \Eluceo\iCal\Component\Event();
+        $event->setTimezoneString($this->timezone);
+        $event->setDtStart($this->started_at);
+        $event->setDtEnd($this->ended_at);
+        $event->setSummary($this->title);
+        return $event;
+    }
+
     public function getTimezoneOptions()
     {
         $timezones = collect(timezone_identifiers_list())->mapWithKeys(function ($value) {
@@ -164,8 +216,6 @@ class Event extends Model
         if ($context === "create") {
             $fields->timezone->value = $this->getSystemTimezone();
         }
-
-
     }
 
 

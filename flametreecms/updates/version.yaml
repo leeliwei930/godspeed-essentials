@@ -30,12 +30,11 @@
 - Load factory seeder, scaffold team member alter rainlab_blog_categories for extending RainLab.Blog Plugin
 - update_blog_plugin_table.php
 - AnnouncementCategoriesSeeder.php
+- FrontendUserGroupSeeder.php
+- create_events_table.php
 - FactorySeeder.php
 - ScaffoldTeamMember.php
-- Create Events Table and Trainings Table
-- create_events_table.php
 - EventSeeder.php
-- FrontendUserGroupSeeder.php
 
 1.0.6:
 - Create Trainings Table

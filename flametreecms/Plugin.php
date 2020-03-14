@@ -278,6 +278,8 @@ class Plugin extends PluginBase
                 'table' => 'godspeed_flametreecms_events_roles', 'key' => 'member_role_id', 'other_key' => 'event_id'
             ];
         });
+
+
         User::extend(function ($model) {
             $model->addFillable('phone_number');
         });

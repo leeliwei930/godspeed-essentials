@@ -2,6 +2,7 @@
 
 namespace GodSpeed\FlametreeCMS\Updates;
 
+use RainLab\User\Models\User;
 use RainLab\User\Models\UserGroup;
 use RainLab\User\Facades\Auth;
 
@@ -12,7 +13,6 @@ class FrontendUserGroupSeeder extends \Seeder
     public function run()
     {
 
-        $this->tearDown();
 
         $groups = [
             [
@@ -40,11 +40,16 @@ class FrontendUserGroupSeeder extends \Seeder
             ]
         ];
 
-        collect($groups)->each(function ($group) {
-            $_group = UserGroup::create(['name' => $group['name'] , 'code' => $group['code']]);
+        collect($groups)->each(function ($group) use ($groups) {
+            $_group = UserGroup::firstOrCreate(['name' => $group['name'] , 'code' => $group['code']]);
             $group['users']['password_confirmation'] = $group['users']['password'];
-            $user = Auth::register($group['users'], true);
-            $user->addGroup($_group->id);
+            $testUsers = User::where('email', $groups[0]['users']['email'])->orWhere('email', $groups[1]['users']['email'])->get();
+
+            if ($testUsers->count()  == 0) {
+                $user = Auth::register($group['users'], true);
+                $user->addGroup($_group->id);
+
+            }
         });
     }
 
@@ -59,14 +64,11 @@ class FrontendUserGroupSeeder extends \Seeder
                 $volunteer->users()->each(function ($user) {
                     $user->forceDelete();
                 });
-                $volunteer->delete();
             }
             if (!is_null($member)) {
                 $member->users()->each(function ($user) {
                     $user->forceDelete();
                 });
-
-                $member->delete();
             }
         }
     }

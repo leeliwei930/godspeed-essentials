@@ -1,15 +1,25 @@
 {% set event =  __SELF__.event %}
 <hero>
-    <div class="d-flex flex-row align-items-center p-5 mx-auto">
-        <calendar
-            date-time="{{event.started_at}}"
-        >
-        </calendar>
-        <i class=" fas fa-long-arrow-alt-right"></i>
-        <calendar
-            date-time="{{event.ended_at}}"
-        >
-        </calendar>
+    <div class="d-flex flex-column flex-grow-1">
+        <div class="d-flex flex-row align-items-center p-2 mx-auto">
+            <calendar
+                date-time="{{event.started_at}}"
+            >
+            </calendar>
+            <i class=" fas fa-long-arrow-alt-right"></i>
+            <calendar
+                date-time="{{event.ended_at}}"
+            >
+            </calendar>
+
+        </div>
+
+        <div class="d-flex justify-content-center">
+                <a target="_blank" href="{{ event.ics.getPath() }}" class="btn btn-outline-default">
+                    <i class="fas fa-calendar-plus mx-2"></i>
+                    Download iCal File
+                </a>
+        </div>
     </div>
 </hero>
 

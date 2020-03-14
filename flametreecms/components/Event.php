@@ -2,6 +2,7 @@
 
 use Cms\Classes\ComponentBase;
 use Cms\Classes\Page;
+
 use October\Rain\Database\Relations\BelongsToMany;
 use RainLab\User\Models\User;
 
@@ -59,6 +60,7 @@ class Event extends ComponentBase
     public function onRun()
     {
         $this->prepareVars();
+
     }
 
     /**
@@ -117,4 +119,9 @@ class Event extends ComponentBase
             return collect($group['events']);
         })->unique('id')->first();
     }
+
+
+
+
+
 }

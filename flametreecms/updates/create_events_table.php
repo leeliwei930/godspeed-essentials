@@ -23,7 +23,7 @@ class CreateMeetingsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('godspeed_flametreecms_events_roles', function(Blueprint $table){
+        Schema::create('godspeed_flametreecms_events_roles', function (Blueprint $table) {
             $table->unsignedInteger('member_role_id');
             $table->unsignedInteger('event_id');
 
