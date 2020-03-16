@@ -151,7 +151,9 @@ class Event extends Model
     public function afterValidate()
     {
 
+        // check is there any ics file that have been created before
         if (!$this->hasCreatedICSFileBefore()) {
+            // create a new ics file and save it.
             $icalEvent = $this->makeiCalEvent();
             $filename =str_limit($this->slug, 10, '').'.ics';
             $file =  new \System\Models\File();
@@ -162,16 +164,26 @@ class Event extends Model
         } else {
             $icalEvent = $this->makeiCalEvent();
             $filename = str_limit($this->slug, 10, '').'.ics';
+            // replace the new data to the existing file
             $this->ics->fromData($this->makeCalendarInstance($icalEvent)->render(), $filename);
             $this->ics->save();
         }
     }
 
+    /**
+     * Check wehter there is existing ics file records
+     * @return bool
+     */
     public function hasCreatedICSFileBefore()
     {
         return $this->ics !== null;
     }
 
+    /**
+     * Generate a calendar instance that allow event can be added to it
+     * @param $event
+     * @return \Eluceo\iCal\Component\Calendar
+     */
     private function makeCalendarInstance($event)
     {
 
@@ -180,6 +192,10 @@ class Event extends Model
         return $calendar;
     }
 
+    /**
+     * Create and return the ical event
+     * @return \Eluceo\iCal\Component\Event
+     */
     private function makeiCalEvent()
     {
         $event = new \Eluceo\iCal\Component\Event();
@@ -190,6 +206,10 @@ class Event extends Model
         return $event;
     }
 
+    /**
+     * Return a dropdown list of timezone into the event management form
+     * @return array
+     */
     public function getTimezoneOptions()
     {
         $timezones = collect(timezone_identifiers_list())->mapWithKeys(function ($value) {
@@ -199,6 +219,7 @@ class Event extends Model
     }
 
     /**
+     * Get the system preset timezone that is located in the app configuration file
      * @return \Illuminate\Config\Repository|mixed
      */
     public function getSystemTimezone()
@@ -207,6 +228,7 @@ class Event extends Model
     }
 
     /**
+     * Prefill the default system timezone mostly UTC
      * @param $fields
      * @param null $context
      */
@@ -223,32 +245,37 @@ class Event extends Model
 
 
     /**
+     * Started At field value getter
      * @param $date
      * @return \DateTime
      */
     public function getStartedAtAttribute($date)
     {
-
+        // if the system timezone is match with the record timezone, don't convert it
         if ($this->getSystemTimezone() === $this->timezone) {
             return $date;
         }
 
-
+        // Get the system timezone and use the started at date parameters
         $startedAt = Carbon::parse($date, $this->getSystemTimezone());
 
+        // return to a converted date time based on the timezone
         return $startedAt->setTimezone($this->timezone);
     }
 
     /**
+     * Started At Time Setter
      * @param $date
      */
     public function setStartedAtAttribute($date)
     {
 
+        // if the selected timezone is match with the system timezone, just save the record
         if ($this->getSystemTimezone() === $this->timezone) {
             $this->attributes['started_at'] = $date;
             return;
         }
+        // convert the time to UTC
         $startedAt = Carbon::parse($date, $this->timezone);
         $this->attributes['started_at'] = $startedAt->setTimezone($this->getSystemTimezone())->toDateTimeString();
     }

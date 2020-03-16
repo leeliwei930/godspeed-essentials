@@ -2,6 +2,7 @@
     "name": "godspeed/flametreecms",
     "description": "A proprietary CMS designed for Flame Tree Co-op",
     "require-dev": {
+        "laravel/dusk": "^2.0"
     },
     "license": "Proprietary",
     "authors": [

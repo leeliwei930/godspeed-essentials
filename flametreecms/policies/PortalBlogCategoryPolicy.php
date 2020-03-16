@@ -28,10 +28,11 @@ class PortalBlogCategoryPolicy extends PolicyBase
     {
         $instance = self::make($resourceModel);
 
-        // Enforce this policy when the env meet the condition
+        // Enforce this policy when the env meet the condition, when it is running on frontend
         if ($instance->appRunningEnv) {
             // restrict the blog categories based on the predefine rule
             $instance->conditionClosure = $instance->getRuleConditionClosure();
+            // provide the scope that filter the data can be seen by the user with the closure passed in
             $instance->resourceModel::addGlobalScope('id', $instance->conditionClosure);
         }
 
@@ -60,6 +61,7 @@ class PortalBlogCategoryPolicy extends PolicyBase
      */
     public function getRuleConditionClosure()
     {
+        // check against the current user type, guest which mean there is no user logged in
         $userType = (is_null($this->subjectModel))? "guest" : "user";
         $condition = [
             'guest' => function (Builder $builder) {
@@ -67,12 +69,14 @@ class PortalBlogCategoryPolicy extends PolicyBase
             },
             'user' => function (Builder $builder) {
                 $groups = $this->subjectModel->groups->pluck('id')->toArray();
-
+                /** return the category that is no user_group attach (public) +
+                 * include the category that match any current logged in user_group
+                **/
                 $builder->orWhereNull('user_group')->orWhereIn('user_group', array_merge([null], $groups));
             }
 
         ];
-
+        // return a specific closure that based on current logged in user
         return $condition[$userType];
     }
 }
