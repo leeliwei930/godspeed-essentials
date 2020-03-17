@@ -86,18 +86,19 @@ class UpdateProfile extends Account
         if (post('reset_password') === 'on') {
             $user->password = post('new_password_confirmation');
             // Force update the password without any default model validation level
-            $user->forceSave();
 
             Auth::login($user->reload(), true);
         }
 
-        if (post('avatar') !== '') {
-            $avatar = Image::make(post('avatar'))->resize(150, 150)->encode('jpg', 90);
+        if (\Input::file('avatar') !== '') {
+            $avatar = Image::make(\Input::file('avatar'))->resize(150, 150)->encode('jpg', 90);
             $filename =  md5(time().$avatar->getEncoded()).".jpg";
-            $file = new \System\Models\File();
-            $file->fromData($avatar->getEncoded(), $filename);
+
+            $file =  (new \System\Models\File)->fromData($avatar->getEncoded(), $filename);
+            $file->save();
             $user->avatar = $file;
         }
+
         $user->forceSave();
 
         \Flash::success(post('flash', "Profile updated successfully."));
