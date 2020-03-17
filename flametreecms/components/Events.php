@@ -30,7 +30,7 @@ class Events extends ComponentBase
     public function defineProperties()
     {
         $scope =  $this->getDefaultScopeOptions();
-        trace_log($scope);
+
         return [
             'limit' => [
                 'title' => "Maximum number of records",
@@ -86,18 +86,20 @@ class Events extends ComponentBase
     public function prepareVars()
     {
         $events = $this->fetchEvents()->get();
-        $this->events = $this->page['events'] = $this->makeEventsCollection($events);
+        $this->events = $this->page['events'] =   $this->makeEventsCollection($events);
     }
 
-    public function getScope()
-    {
-        return $this->property('list_only');
-    }
     public function makeEventsCollection($records)
     {
-        return collect($records)->flatMap(function ($roles) {
+        $collection =  collect($records)->flatMap(function ($roles) {
             return collect($roles['events']);
         });
+
+        if($this->hasLimit()){
+            $collection = $this->limitResult($collection);
+        }
+
+        return $collection;
     }
 
     private function getDefaultScopeOptions()
@@ -115,7 +117,6 @@ class Events extends ComponentBase
      */
     protected function fetchEvents()
     {
-        $hasLimit = $this->property('limit') > 0;
         $listOnly = $this->property('list_only');
 
 
@@ -135,10 +136,7 @@ class Events extends ComponentBase
 
 
 
-        if ($hasLimit) {
-            // return limited result
-            return $this->limitResult($query);
-        }
+
 
         // return all meetings
         return $query;
@@ -156,14 +154,19 @@ class Events extends ComponentBase
         $scopeStartDate = now()->sub(CarbonInterval::$period($scope));
         $scopeEndDate = now()->add(CarbonInterval::$period($scope));
         if (!is_null($member)) {
-            return $member->groups()->with(['events' => function(BelongsToMany $query) use($scopeStartDate, $scopeEndDate) {
-                return $query->whereDate('started_at', "<", $scopeEndDate->toDateTimeString())
-                    ->whereDate('started_at', ">", $scopeStartDate->toDateTimeString());
-            }]);
+            return $member->groups()->with([
+                'events' => function (BelongsToMany $query) use ($scopeStartDate, $scopeEndDate) {
+                    return $query->whereDate('started_at', ">", $scopeStartDate->toDateTimeString())
+                        ->whereDate('started_at', "<", $scopeEndDate->toDateTimeString());
+
+                }
+            ]);
         }
         return [];
     }
-
+    public function getScope(){
+        return $this->property('list_only');
+    }
     /**
      * Query that grabs upcoming meetings
      * @return mixed
@@ -195,16 +198,20 @@ class Events extends ComponentBase
 
     /**
      * Limit the query result
-     * @param Collection $query
+     * @param \October\Rain\Support\Collection $collection
      * @return mixed
      */
-    protected function limitResult(Collection $query)
+    protected function limitResult($collection)
     {
         $limit = $this->property('limit');
 
-        return $query->limit($limit);
+        return $collection->take($limit);
     }
 
+    protected function hasLimit()
+    {
+        return $this->property('limit') > 0;
+    }
     /**
      * Get the max scope of the event started date
      * @return Carbon
