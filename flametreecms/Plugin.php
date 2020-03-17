@@ -113,9 +113,13 @@ class Plugin extends PluginBase
             "GodSpeed\FlametreeCMS\Components\VolunteerResetPassword" => "VolunteerResetPassword",
             "GodSpeed\FlametreeCMS\Components\PrivateAnnouncements" => "PrivateAnnouncements",
             "GodSpeed\FlametreeCMS\Components\UpdateProfile" => "UpdateProfile",
+
+
             "GodSpeed\FlametreeCMS\Components\PortalRecentPrivateAnnouncements" => "PortalRecentPrivateAnnouncements",
             "GodSpeed\FlametreeCMS\Components\Events" => "Events",
-            "GodSpeed\FlametreeCMS\Components\Event" => "Event"
+     
+            "GodSpeed\FlametreeCMS\Components\FaqCategories" => "FaqCategories",
+            "GodSpeed\FlametreeCMS\Components\FaqCategory" => "FaqCategory",
 
         ]; // Remove this line to activate
 
