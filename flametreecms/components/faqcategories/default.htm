@@ -1,0 +1,23 @@
+{% set categories = __SELF__.categories %}
+
+{% if categories is not empty %}
+    <div class="d-flex justify-content-start flex-wrap align-content-center my-5 pb-5">
+    {% for category in categories %}
+        <div class="col-12 col-md-3 my-2">
+            <tile-card
+                link="{{ 'faq-category' | page({'slug' : category.slug}) }}"
+                :open-tab="true"
+                :hoverable="true"
+                background-color="linear-gradient(0deg, rgba(var(--primary-color-rgba), 0.3), rgba(var(--accent-color-rgba, 0.8)))"
+            >
+                <h2 class="headline-light-bold font-weight-bold text-uppercase">{{category.name}}</h2>
+                <template slot="trailing">
+                    <h5> {{category.faqs.count}}</h5>
+                </template>
+            </tile-card>
+        </div>
+    {% endfor %}
+    </div>
+
+
+{% endif %}
