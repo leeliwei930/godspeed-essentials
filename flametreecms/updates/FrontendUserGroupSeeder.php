@@ -13,7 +13,7 @@ class FrontendUserGroupSeeder extends \Seeder
     public function run()
     {
 
-
+        $this->tearDown();
         $groups = [
             [
                 'name' => "Volunteer",

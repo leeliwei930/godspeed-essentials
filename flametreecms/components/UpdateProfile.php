@@ -90,7 +90,7 @@ class UpdateProfile extends Account
             Auth::login($user->reload(), true);
         }
 
-        if (\Input::file('avatar') !== '') {
+        if (\Input::has('avatar')) {
             $avatar = Image::make(\Input::file('avatar'))->resize(150, 150)->encode('jpg', 90);
             $filename =  md5(time().$avatar->getEncoded()).".jpg";
 
