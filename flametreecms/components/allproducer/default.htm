@@ -3,6 +3,7 @@
 {% if producers %}
     <div class="d-flex flex-row flex-wrap justify-content-around">
     {% for producer in producers %}
+        <div class="col-12 col-lg-3 col-md-6">
             <producer-card
                 width="320px"
                 origin="{{ producer.origin }}"
@@ -12,6 +13,7 @@
             >
 
             </producer-card>
+        </div>
     {% endfor %}
     </div>
 {% else %}
