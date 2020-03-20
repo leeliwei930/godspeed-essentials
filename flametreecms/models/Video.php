@@ -1,7 +1,10 @@
 <?php namespace GodSpeed\FlametreeCMS\Models;
 
+use GodSpeed\FlametreeCMS\Models\Video as VideoModel;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Model;
+use October\Rain\Exception\ValidationException;
 
 /**
  * Video Model
@@ -56,7 +59,7 @@ class Video extends Model
 
      const VALIDATION_MSG = [
         'embed_id' => "The video path is required when the type is a video",
-    ];
+     ];
 
 
      public function getTypeOptions()
@@ -94,23 +97,78 @@ class Video extends Model
          switch ($context) {
              case "update":
              case "create":
-                 if ($this->type === "video") {
-                        $fields->{'title'}->readonly = false;
-                        $fields->{'description'}->readonly = false;
-                 } else {
+                 $this->renderForm($fields);
+                 break;
+         }
+     }
+
+     private function hasYouTubeDataAPIKey()
+     {
+         $youtubeDataAPIKey = Settings::get('youtube_data_api_key', null);
+
+         return !is_null($youtubeDataAPIKey) && strlen($youtubeDataAPIKey) > 0;
+     }
+
+     private function renderForm($fields)
+     {
+         switch ($this->type) {
+             case "youtube":
+                 if ($this->hasYouTubeDataAPIKey()) {
                      $fields->{'embed_id'}->type = "text";
                      $fields->{'title'}->readOnly = true;
                      $fields->{'description'}->readOnly = true;
-                 }
-                 if ($this->type === "video") {
-                     $fields->{'title'}->readonly = false;
-                     $fields->{'description'}->readonly = false;
                  } else {
                      $fields->{'embed_id'}->type = "text";
-                     $fields->{'title'}->readOnly = true;
-                     $fields->{'description'}->readreadOnlyonly = true;
+                     $fields->{'title'}->readonly = false;
+                     $fields->{'description'}->readonly = false;
                  }
                  break;
+             case "vimeo":
+                 $fields->{'embed_id'}->type = "text";
+                 $fields->{'title'}->readOnly = true;
+                 $fields->{'description'}->readOnly = true;
+                 break;
+             default:
+                 $fields->{'title'}->readonly = false;
+                 $fields->{'description'}->readonly = false;
+         }
+     }
+
+     public function beforeSave()
+     {
+         $validator = Validator::make(
+             $this->toArray(),
+             self::VALIDATION_RULES,
+             self::VALIDATION_MSG
+         );
+
+         if ($validator->fails()) {
+             throw new \ValidationException($validator);
+         }
+         if ($this->hasYouTubeDataAPIKey() || $this->type === "vimeo") {
+             $api = \GodSpeed\FlametreeCMS\Utils\VideoMeta\Video::make($this->toArray());
+             $res = $api->get();
+
+             if ($res['status'] === \GodSpeed\FlametreeCMS\Utils\VideoMeta\Video::OK) {
+                 $data = [
+                     'type' => $this->type,
+                     'embed_id' => $res['embed_id'],
+                     'duration' => $res['duration'],
+                     'featured_image' => $res['featured_image'],
+                     'title' => $res['title'],
+                     'description' => $res['description'],
+                 ];
+
+                 $this->embed_id = $data['embed_id'];
+                 $this->duration = $data['duration'];
+                 $this->featured_image = $data['featured_image'];
+                 $this->title = $data['title'];
+                 $this->description = $data['description'];
+             } else {
+                 throw new ValidationException([
+                     'embed_id' => "Invalid video id or youtube data API Key"
+                 ]);
+             }
          }
      }
 }

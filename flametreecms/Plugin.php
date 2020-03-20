@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Validator;
 
 use October\Rain\Database\Builder;
 use October\Rain\Database\Model;
-use October\Rain\Exception\ValidationException;
 
 use RainLab\Blog\Models\Category;
 use RainLab\Blog\Models\Post;
@@ -36,7 +35,14 @@ class Plugin extends PluginBase
      *
      * @return array
      */
-    public $require = ['RainLab.User', 'RainLab.Blog', 'RainLab.Pages', 'SureSoftware.PowerSEO', 'RainLab.MailChimp'];
+    public $require = [
+        'RainLab.User',
+        'RainLab.Blog',
+        'RainLab.Pages',
+        'SureSoftware.PowerSEO',
+        'RainLab.MailChimp',
+        'AnandPatel.WysiwygEditors'
+    ];
 
     /**
      * @return array
@@ -84,7 +90,6 @@ class Plugin extends PluginBase
         }
 
 
-        $this->extendControllerBehaviour();
         if ($pluginManagerInstance->hasPlugin('RainLab.Pages')) {
             $this->extendPagesMenuPluginBehavior();
         }
@@ -117,7 +122,7 @@ class Plugin extends PluginBase
 
             "GodSpeed\FlametreeCMS\Components\PortalRecentPrivateAnnouncements" => "PortalRecentPrivateAnnouncements",
             "GodSpeed\FlametreeCMS\Components\Events" => "Events",
-     
+
             "GodSpeed\FlametreeCMS\Components\FaqCategories" => "FaqCategories",
             "GodSpeed\FlametreeCMS\Components\FaqCategory" => "FaqCategory",
 
@@ -407,44 +412,5 @@ class Plugin extends PluginBase
         });
     }
 
-    public function extendControllerBehaviour()
-    {
 
-        VideoModel::extend(function ($model) {
-            $model->bindEvent('model.beforeSave', function () use ($model) {
-                $validator = Validator::make(
-                    $model->toArray(),
-                    VideoModel::VALIDATION_RULES,
-                    VideoModel::VALIDATION_MSG
-                );
-
-                if ($validator->fails()) {
-                    throw new \ValidationException($validator);
-                }
-                $api = Video::make($model->toArray());
-                $res = $api->get();
-
-                if ($res['status'] === Video::OK) {
-                    $data = [
-                        'type' => $model->type,
-                        'embed_id' => $res['embed_id'],
-                        'duration' => $res['duration'],
-                        'featured_image' => $res['featured_image'],
-                        'title' => $res['title'],
-                        'description' => $res['description'],
-                    ];
-
-                    $model->embed_id = $data['embed_id'];
-                    $model->duration = $data['duration'];
-                    $model->featured_image = $data['featured_image'];
-                    $model->title = $data['title'];
-                    $model->description = $data['description'];
-                } else {
-                    throw new ValidationException([
-                        'embed_id' => "Invalid video id please make sure the video sources is selected correctly"
-                    ]);
-                }
-            });
-        });
-    }
 }

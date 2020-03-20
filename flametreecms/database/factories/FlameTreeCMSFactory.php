@@ -91,7 +91,11 @@ $factory->define(FaqCategory::class, function (Faker $faker) {
 });
 
 $factory->define(Post::class, function (Faker $faker) {
-    BackendAuth::impersonate(BackendUser::first());
+    $backendUser = BackendUser::first();
+    // if there is a backend user, impersonate that user and create the posts
+    if(!is_null($backendUser)){
+        BackendAuth::impersonate(BackendUser::first());
+    }
 
     $title = $faker->text(50);
     return [
