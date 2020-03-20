@@ -3,6 +3,7 @@
 use Schema;
 use October\Rain\Database\Schema\Blueprint;
 use October\Rain\Database\Updates\Migration;
+use System\Classes\PluginManager;
 
 class UpdateUsersPluginTable extends Migration
 {
@@ -15,10 +16,14 @@ class UpdateUsersPluginTable extends Migration
 
     public function down()
     {
-       Schema::table('users' , function(Blueprint $table){
-           $table->dropColumn([
-               'phone_number'
-           ]);
-       });
+        if (PluginManager::instance()->hasPlugin('RainLab.Blog')) {
+            Schema::table('users', function (Blueprint $table) {
+                if (Schema::hasColumn('users', 'phone_number')) {
+                    $table->dropColumn([
+                        'phone_number'
+                    ]);
+                }
+            });
+        }
     }
 }

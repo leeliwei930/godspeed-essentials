@@ -48,7 +48,7 @@ $factory->define(SpecialOrder::class, function (Faker $faker) {
     $faker->addProvider(new Internet($faker));
     return [
         'name' => $faker->name,
-        'email' => $faker->email,
+        'email' => $faker->unique()->email,
         'phone_number' => $faker->phoneNumber,
         'message' => $faker->paragraph
     ];

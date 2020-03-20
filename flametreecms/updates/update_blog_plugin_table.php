@@ -21,10 +21,14 @@ class UpdateBlogPlugin extends Migration
     {
         if (PluginManager::instance()->hasPlugin('RainLab.Blog')) {
             Schema::table('rainlab_blog_categories', function (Blueprint $table) {
-                $table->dropColumn([
-                    'featured_image',
-                    'user_group',
-                ]);
+                if (
+                    Schema::hasColumn('rainlab_blog_categories', 'featured_image')
+                    && Schema::hasColumn('rainlab_blog_categories', 'user_group')) {
+                    $table->dropColumn([
+                        'featured_image',
+                        'user_group',
+                    ]);
+                }
             });
         }
     }
