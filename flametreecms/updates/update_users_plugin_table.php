@@ -9,9 +9,11 @@ class UpdateUsersPluginTable extends Migration
 {
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('phone_number')->nullable()->after('email');
-        });
+        if (PluginManager::instance()->hasPlugin('RainLab.Blog')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->string('phone_number')->nullable()->after('email');
+            });
+        }
     }
 
     public function down()
