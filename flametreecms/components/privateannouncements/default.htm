@@ -36,7 +36,9 @@
 
     {% endfor %}
 
-    <div class="d-flex justify-content-around mx-5">
+    <div class="d-flex justify-content-around my-5">
+        <div class="col-lg-4 col-12">
+
         <dropdown-pagination
             current-page="{{ __SELF__.posts.currentPage() }}"
             page-param="page"
@@ -51,6 +53,7 @@
         >
 
         </dropdown-pagination>
+        </div>
     </div>
 
 

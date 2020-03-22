@@ -14,9 +14,9 @@
                 </div>
             </div>
             <p class="post-excerpt my-2">{{ announcement.excerpt }}</p>
-            <div class="d-flex justify-content-between my-2 align-items-baseline">
+            <div class="d-flex justify-content-between my-2 align-items-baseline flex-wrap">
                 <p class="post-published-at" v-text="'Posted on: ' + $tzConverter.convert('{{  announcement.published_at }}', 'dddd, MMM D Y hh:mm a')"></p>
-                <a class="btn btn-outline-primary hover-move-right" href="{{ "volunteer/announcement" | page({ 'slug': announcement.slug}) }}">
+                <a class="btn btn-outline-primary hover-move-right ml-auto" href="{{ "volunteer/announcement" | page({ 'slug': announcement.slug}) }}">
                     READ MORE
                     <i class="fas fa-chevron-right"></i>
                 </a>

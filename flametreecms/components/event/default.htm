@@ -24,13 +24,13 @@
 </hero>
 
 <div class="d-flex flex-row flex-wrap justify-content-around">
-    <div class="d-flex flex-column p-5 col-12 col-lg-6">
+    <div class="d-flex flex-column p-3 col-12 col-lg-6">
         <h3 class="post-title">{{ event.title }}</h3>
         <p class="post-description">{{ event.description }}</p>
         <hr>
         {{ event.content_html | raw }}
     </div>
-    <div class="d-flex flex-column p-5 col-12 col-lg-6">
+    <div class="d-flex flex-column p-3 col-12 col-lg-6">
 
     <accordion-view v-slot="{accordianCtrl}" :show-all="false" :toggle-mode="true">
             <accordion :show="accordianCtrl.isActive(0)" @click="accordianCtrl.show(0)">

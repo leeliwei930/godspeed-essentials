@@ -122,6 +122,7 @@ class Plugin extends PluginBase
 
             "GodSpeed\FlametreeCMS\Components\PortalRecentPrivateAnnouncements" => "PortalRecentPrivateAnnouncements",
             "GodSpeed\FlametreeCMS\Components\Events" => "Events",
+            "GodSpeed\FlametreeCMS\Components\Event" => "Event",
             "GodSpeed\FlametreeCMS\Components\Trainings" => "Trainings",
 
             "GodSpeed\FlametreeCMS\Components\FaqCategories" => "FaqCategories",

@@ -44,7 +44,7 @@ class Trainings extends ComponentBase
 
     public function prepareVars()
     {
-        $this->page['trainings'] =  $this->trainings = $this->fetchTrainings();
+        $this->page['trainings'] = $this->trainings = $this->fetchTrainings();
     }
 
     public function fetchTrainings()
@@ -64,8 +64,9 @@ class Trainings extends ComponentBase
     public function getLoggedInUserTrainings()
     {
         $paginationInfo = [];
-        $userRoles = optional(\Auth::user())->groups()->with('trainings')->get()->toArray() ?? collect();
-
+        $userRoles = optional(\Auth::user())->groups()
+                        ->with(['trainings.video_playlist.videos', 'trainings.documents'])
+                        ->get() ?? collect();
 
 
         $trainings = collect();
@@ -80,7 +81,8 @@ class Trainings extends ComponentBase
 
         $response = $this->paginate($records, $this->property('perPage'), $this->getCurrentPage(), [
             'path' => url($this->page->url)
-        ])->toArray();
+        ]);
+        trace_log($response);
         return $response;
     }
 
@@ -93,7 +95,6 @@ class Trainings extends ComponentBase
     {
         return (\Input::has('page')) ? \Input::get('page') : 1;
     }
-
 
 
     public function paginate($items, $perPage = 15, $page = null, $options = [])

@@ -1,3 +1,42 @@
-<p>This is the default markup for component Trainings</p>
+{% if __SELF__.trainings %}
+    {% for training in __SELF__.trainings %}
 
-<small>You can delete this file if you want</small>
+            <training-card
+                title="{{ training.title }}"
+                primary-link="{{ "volunteer/training" | page({'slug' : training.slug}) }}"
+                :posted-at="$tzConverter.convert('{{ training.created_at }}', 'dddd, MMM D Y hh:mm a')"
+            >
+                <div class="d-flex flex-row justify-content-end">
+                    <div
+                        class="d-inline-flex justify-content-between align-items-baseline text-uppercase pill pill-primary-light mx-1 font-weight-bold">
+                        <i class="fas fa-video mx-2"></i>
+                        <small>{{ training.video_playlist.videos.count }} Videos</small>
+                    </div>
+                    <div
+                        class="d-inline-flex justify-content-between align-items-baseline  text-uppercase pill pill-primary-light mx-1 font-weight-bold">
+                        <i class="fas fa-file mx-2"></i>
+                        <small>{{ training.documents.count }} Documents</small>
+                    </div>
+                </div>
+            </training-card>
+
+    {% endfor %}
+        <div class="col-12 col-lg-4 my-5 ">
+        <dropdown-pagination
+            current-page="{{ __SELF__.trainings.currentPage() }}"
+            page-param="page"
+            per-page="{{ __SELF__.trainings.perPage() }}"
+            prev-page-url="{{ __SELF__.trainings.prevPageUrl() }}"
+            next-page-url="{{ __SELF__.trainings.nextPageUrl() }}"
+            url="{{ this.page.url | app }}"
+            total="{{ __SELF__.trainings.total() }}"
+            @change="(e) => {
+                    $window.location.href = e.target.value;
+                }"
+        >
+        </dropdown-pagination>
+        </div>
+{% else %}
+
+
+{% endif %}

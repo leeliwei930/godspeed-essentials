@@ -34,6 +34,7 @@ class CreateTrainingsTable extends Migration
                         ->references('id')
                         ->on('godspeed_flametreecms_trainings')
                         ->onDelete('cascade');
+
                 $table->foreign('role_id', 'godspeed_flametreecms_roles_training')
                     ->references('id')
                     ->on('user_groups')
