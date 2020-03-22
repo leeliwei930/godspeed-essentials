@@ -2,6 +2,7 @@
 
 use Model;
 use GodSpeed\FlametreeCMS\Models\Playlist;
+
 /**
  * Training Model
  */
@@ -81,7 +82,14 @@ class Training extends Model
             \GodSpeed\FlametreeCMS\Models\Playlist::class
         ]
     ];
-    public $belongsToMany = [];
+    public $belongsToMany = [
+        'user_group' => [
+            'RainLab\User\Models\UserGroup',
+            'table' => "godspeed_flametreecms_roles_trainings",
+            'otherKey' => 'role_id'
+
+        ]
+    ];
     public $morphTo = [];
     public $morphOne = [];
     public $morphMany = [];
@@ -92,7 +100,8 @@ class Training extends Model
         ]
     ];
 
-    public function getVideoPlaylistOptions(){
-        return Playlist::all()->pluck('name' , 'id');
+    public function getVideoPlaylistOptions()
+    {
+        return Playlist::all()->pluck('name', 'id');
     }
 }

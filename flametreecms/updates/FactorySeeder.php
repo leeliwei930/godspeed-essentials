@@ -4,10 +4,12 @@ use GodSpeed\FlametreeCMS\Models\Faq;
 use GodSpeed\FlametreeCMS\Models\FaqCategory;
 use GodSpeed\FlametreeCMS\Models\Playlist;
 use GodSpeed\FlametreeCMS\Models\SpecialOrder;
+use GodSpeed\FlametreeCMS\Models\Training;
 use GodSpeed\FlametreeCMS\Models\Video;
 use October\Rain\Support\Collection;
 use RainLab\Blog\Models\Category;
 use RainLab\Blog\Models\Post;
+use RainLab\User\Models\UserGroup;
 use Seeder;
 
 class FactorySeeder extends Seeder
@@ -38,6 +40,10 @@ class FactorySeeder extends Seeder
             $post->categories()->attach($categories);
         });
 
+        factory(Training::class, 50)->create()->each(function ($training) {
+            $roles = UserGroup::all()->random(3)->pluck('id');
+            $training->user_group()->attach($roles);
+        });
     }
 
     public function tearDown()

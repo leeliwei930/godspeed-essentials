@@ -36,3 +36,7 @@ tabs:
             type: fileupload
             tab: Resources
             mode: file
+        user_group:
+            label: Target Member
+            type: relation
+            tab: General

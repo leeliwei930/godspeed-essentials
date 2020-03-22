@@ -1,6 +1,6 @@
 <?php namespace GodSpeed\FlametreeCMS\Updates;
 
-use GodSpeed\FlametreeCMS\Models\event;
+use GodSpeed\FlametreeCMS\Models\Event;
 
 use RainLab\User\Models\UserGroup;
 use Seeder;

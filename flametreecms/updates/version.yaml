@@ -32,11 +32,11 @@
 - AnnouncementCategoriesSeeder.php
 - FrontendUserGroupSeeder.php
 - create_events_table.php
-- FactorySeeder.php
 - ScaffoldTeamMember.php
 - EventSeeder.php
 
 1.0.6:
 - Create Trainings Table
 - create_trainings_table.php
+- FactorySeeder.php
 

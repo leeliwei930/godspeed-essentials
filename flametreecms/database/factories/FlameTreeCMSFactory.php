@@ -18,6 +18,7 @@ use GodSpeed\FlametreeCMS\Models\Producer;
 use GodSpeed\FlametreeCMS\Models\ProducerCategory;
 use GodSpeed\FlametreeCMS\Models\SpecialOrder;
 use GodSpeed\FlametreeCMS\Models\Event;
+use GodSpeed\FlametreeCMS\Models\Training;
 use GodSpeed\FlametreeCMS\Models\Video;
 use GodSpeed\FlametreeCMS\Utils\Providers\YoutubeVideoProvider;
 use Illuminate\Support\Str;
@@ -121,5 +122,15 @@ $factory->define(Event::class, function (Faker $faker) {
         'started_at' => $now->addHours(1)->toDateTimeString(),
         'ended_at' => $now->addDays(1)->toDateTimeString(),
         'content_html' => "<p>$content</p>"
+    ];
+});
+
+$factory->define(Training::class, function(Faker $faker){
+    $title = $faker->words(10, true);
+    return [
+        'title' => $title,
+        'slug' => Str::slug($title),
+        'content_html' => $faker->sentences(10, true),
+        'video_playlist_id' => Playlist::all()->random()->id
     ];
 });

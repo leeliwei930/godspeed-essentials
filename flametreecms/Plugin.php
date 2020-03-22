@@ -122,6 +122,7 @@ class Plugin extends PluginBase
 
             "GodSpeed\FlametreeCMS\Components\PortalRecentPrivateAnnouncements" => "PortalRecentPrivateAnnouncements",
             "GodSpeed\FlametreeCMS\Components\Events" => "Events",
+            "GodSpeed\FlametreeCMS\Components\Trainings" => "Trainings",
 
             "GodSpeed\FlametreeCMS\Components\FaqCategories" => "FaqCategories",
             "GodSpeed\FlametreeCMS\Components\FaqCategory" => "FaqCategory",
@@ -285,6 +286,11 @@ class Plugin extends PluginBase
             $model->belongsToMany['events'] = [
                 \GodSpeed\FlametreeCMS\Models\Event::class,
                 'table' => 'godspeed_flametreecms_events_roles', 'key' => 'member_role_id', 'other_key' => 'event_id'
+            ];
+
+            $model->belongsToMany['trainings'] = [
+                \GodSpeed\FlametreeCMS\Models\Training::class,
+                'table' => 'godspeed_flametreecms_roles_trainings', 'key' => 'role_id', 'other_key' => 'training_id'
             ];
         });
 
