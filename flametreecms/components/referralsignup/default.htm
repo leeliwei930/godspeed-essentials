@@ -1,0 +1,55 @@
+{{ form_ajax(__SELF__~"::onRegister" ,  { 'data-request-validate' : true, 'data-request-flash': true }) }}
+<div class="flametree-theme">
+
+    <h2 class="text-primary headline-light-bold small py-2">MEMBER REGISTRATION</h2>
+    <div class="text-field-control my-1">
+        <label for="name">FULL NAME</label>
+
+        <input name="name" id="name" type="text" class="text-field"/>
+
+    </div>
+    <small class="text-danger" data-validate-for="name"></small>
+    <div class="text-field-control my-1">
+        <label for="email">EMAIL</label>
+
+        <input name="email" id="email" type="text" class="text-field"/>
+    </div>
+    <small class="text-danger" data-validate-for="email"></small>
+
+    {% if loginAttribute == "username" %}
+        <div class="text-field-control my-1">
+            <label for="username">USERNAME</label>
+
+            <input name="username" id="username" type="text" class="text-field"/>
+        </div>
+        <small class="text-danger" data-validate-for="username"></small>
+
+    {% endif %}
+
+    <div class="text-field-control my-1">
+        <label for="new_password">NEW PASSWORD</label>
+        <input name="password" id="new_password" type="password" class="text-field"/>
+
+    </div>
+    <small class="text-danger" data-validate-for="username"></small>
+
+    <div class="text-field-control my-1">
+        <label for="new_password_confirmation">PASSWORD CONFIRMATION</label>
+        <input name="password_confirmation" id="new_password_confirmation" type="password" class="text-field"/>
+
+    </div>
+    <small class="text-danger" data-validate-for="password_confirmation"></small>
+
+    <div class="text-field-control my-1">
+        <label for="referral_code">REFERRAL CODE</label>
+        <input name="referral_code" id="referral_code" type="text" class="text-field"/>
+
+    </div>
+    <small class="text-danger" data-validate-for="referral_code"></small>
+    <div class="d-flex flex-row justify-content-between my-2">
+
+        <a href="{{ 'login/volunteer' | page }}" class="text-link">Already have an account?</a>
+    </div>
+    <button class="btn btn-primary rounded w-100 my-3">SIGN UP</button>
+</div>
+{{ form_close() }}

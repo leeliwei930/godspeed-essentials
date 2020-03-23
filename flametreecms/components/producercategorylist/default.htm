@@ -4,15 +4,15 @@
     {% for producerCategory in producerCategories %}
         <div class="d-flex flex-row align-items-center">
             <img height="50px" width="50px" src="{{ producerCategory.icon.getThumb(50,50,{mode: 'fit'}) }}" alt="Icon of {{  producerCategory.name }}">
-            <h5 class="my-auto text-primary font-weight-bold text-uppercase mx-2">
+            <h5 class="my-auto text-primary font-weight-bold text-uppercase mx-3">
                 {{ producerCategory.name }}
             </h5>
         </div>
 
         {% if producerCategory.producers is not empty %}
-            <div class="d-flex flex-row justify-content-start mx-auto flex-wrap my-3 w-75">
+            <div class="d-flex flex-row justify-content-start flex-wrap my-3 mx-3">
                 {% for producer in producerCategory.producers %}
-                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 d-flex justify-content-center">
+                    <div class="col-xl-4 col-lg-6 col-md-6 col-12 d-flex justify-content-center">
                         <producer-card
                             origin="{{ producer.origin }}"
                             name="{{ producer.name }}"

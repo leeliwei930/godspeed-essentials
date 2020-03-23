@@ -1,0 +1,6 @@
+users:
+    label: User Who use this referral
+    view:
+        list: $/rainlab/user/models/user/columns.yaml
+        toolbarButtons: remove
+

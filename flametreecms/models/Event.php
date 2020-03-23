@@ -261,6 +261,7 @@ class Event extends Model
 
         // return to a converted date time based on the timezone
         return $startedAt->setTimezone($this->timezone);
+
     }
 
     /**

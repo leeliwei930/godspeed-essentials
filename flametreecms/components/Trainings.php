@@ -78,6 +78,7 @@ class Trainings extends ComponentBase
     }
 
     /**
+     * Return all paginated trainings
      * @return mixed
      */
     public function paginateAllTrainings()
@@ -86,11 +87,11 @@ class Trainings extends ComponentBase
     }
 
     /**
+     * Fetch all the trainings based on current logged in user's roles
      * @return LengthAwarePaginator
      */
     public function getLoggedInUserTrainings()
     {
-        $paginationInfo = [];
         $userRoles = optional(\Auth::user())->groups()
                 ->with(['trainings.video_playlist.videos', 'trainings.documents'])
                 ->get() ?? collect();
@@ -114,6 +115,7 @@ class Trainings extends ComponentBase
     }
 
     /**
+     * Determine return the result should be based on user's roles
      * @return bool
      */
     public function requireAuth()
@@ -131,6 +133,7 @@ class Trainings extends ComponentBase
 
 
     /**
+     * Generate pagination wrapper response
      * @param $items
      * @param int $perPage
      * @param null $page

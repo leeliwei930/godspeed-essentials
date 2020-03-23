@@ -3,6 +3,7 @@
 use GodSpeed\FlametreeCMS\Models\Faq;
 use GodSpeed\FlametreeCMS\Models\FaqCategory;
 use GodSpeed\FlametreeCMS\Models\Playlist;
+use GodSpeed\FlametreeCMS\Models\Referral;
 use GodSpeed\FlametreeCMS\Models\SpecialOrder;
 use GodSpeed\FlametreeCMS\Models\Training;
 use GodSpeed\FlametreeCMS\Models\Video;
@@ -43,6 +44,10 @@ class FactorySeeder extends Seeder
         factory(Training::class, 50)->create()->each(function ($training) {
             $roles = UserGroup::all()->random(3)->pluck('id');
             $training->user_group()->attach($roles);
+        });
+
+        factory(Referral::class, 80)->create()->each(function($referral){
+
         });
     }
 

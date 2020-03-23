@@ -121,6 +121,8 @@ class Plugin extends PluginBase
 
 
             "GodSpeed\FlametreeCMS\Components\PortalRecentPrivateAnnouncements" => "PortalRecentPrivateAnnouncements",
+            "GodSpeed\FlametreeCMS\Components\ReferralSignUp" => "ReferralSignUp",
+
             "GodSpeed\FlametreeCMS\Components\Events" => "Events",
             "GodSpeed\FlametreeCMS\Components\Event" => "Event",
             "GodSpeed\FlametreeCMS\Components\Trainings" => "Trainings",
@@ -178,6 +180,11 @@ class Plugin extends PluginBase
                         'label' => 'Special Orders',
                         'icon' => 'icon-inbox',
                         'url' => Backend::url('godspeed/flametreecms/specialorders'),
+                    ],
+                    "referrals" => [
+                        'label' => "Referrals",
+                        'icon' => 'icon-ticket',
+                        'url' => Backend::url('godspeed/flametreecms/referrals')
                     ],
                     "events" => [
                         'label' => "Events",
@@ -294,11 +301,20 @@ class Plugin extends PluginBase
                 \GodSpeed\FlametreeCMS\Models\Training::class,
                 'table' => 'godspeed_flametreecms_roles_trainings', 'key' => 'role_id', 'other_key' => 'training_id'
             ];
+            $model->hasOne['referral'] = [
+                \GodSpeed\FlametreeCMS\Models\Referral::class
+            ];
+
         });
 
 
         User::extend(function ($model) {
             $model->addFillable('phone_number');
+            $model->addFillable('referral_id');
+
+            $model->hasOne['referral'] = [
+                \GodSpeed\FlametreeCMS\Models\Referral::class
+            ];
         });
 
 

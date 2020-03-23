@@ -1,50 +1,64 @@
 <div class="d-flex flex-column align-items-start m-3 justify-content-around">
     <h3 class="post-title">{{ __SELF__.training.title }}</h3>
-    <h5 class="post-published-at" v-text="$tzConverter.convert('{{  __SELF__.training.created_at }}', 'dddd, MMM D Y hh:mm a')"></h5>
+    <h5 class="post-published-at"
+        v-text="$tzConverter.convert('{{ __SELF__.training.created_at }}', 'dddd, MMM D Y hh:mm a')"></h5>
+    <div class="d-inline-flex flex-row">
+        {% for role in __SELF__.training.user_group %}
+            <div class="pill pill-primary-light d-flex justify-content-around mx-1">
+                <i class="fas fa-users mx-2"></i>
+                <small class="text-uppercase font-weight-bold">
+                    {{ role.name }}
+                </small>
+            </div>
+        {% endfor %}
+    </div>
+
     <hr class="w-100">
     <div class="my-5">
         {{ __SELF__.training.content_html | raw }}
     </div>
-        <accordion-view v-slot="{accordianCtrl}" :show-all="true" :toggle-mode="true">
-            <accordion :show="accordianCtrl.isActive(0)" @click="accordianCtrl.show(0)" height="100%">
+    <accordion-view v-slot="{accordianCtrl}" :show-all="true" :toggle-mode="true">
+        <accordion :show="accordianCtrl.isActive(0)" @click="accordianCtrl.show(0)" height="100%">
+            {% if __SELF__.training.video_playlist %}
                 <template slot="header">
                     <strong><i class="fas fa-video mx-2"></i> VIDEOS</strong>
                 </template>
                 <video-gallery
-                    video-list="{{ __SELF__.training.video_playlist.videos | json_encode}}"
+                    video-list="{{ __SELF__.training.video_playlist.videos | json_encode }}"
 
 
                     :autoplay="false"
 
                     playlist-name="{{ __SELF__.training.video_playlist.name }}"
                 ></video-gallery>
-
-
-            </accordion>
-            <accordion :show="accordianCtrl.isActive(1)" @click="accordianCtrl.show(1)">
-                <template slot="header">
-                    <strong><i class="fas fa-folder mx-2"></i> TRAINING RESOURCES</strong>
-                </template>
-                <table class="table table-striped">
+            {% else %}
+                <p>There is no videos at the moment</p>
+            {% endif %}
+        </accordion>
+        <accordion :show="accordianCtrl.isActive(1)" @click="accordianCtrl.show(1)">
+            <template slot="header">
+                <strong><i class="fas fa-folder mx-2"></i> TRAINING RESOURCES</strong>
+            </template>
+            <table class="table table-striped">
+                <tr>
+                    <th>File Name</th>
+                    <th>Uploaded On</th>
+                    <th>Actions</th>
+                </tr>
+                {% for index,document in trainings.documents %}
                     <tr>
-                        <th>File Name</th>
-                        <th>Uploaded On</th>
-                        <th>Actions</th>
-                    </tr>
-                    {% for index,document in trainings.documents %}
-                        <tr>
-                            <td>{{ str_limit(document.filename, 30) }}</td>
-                            <td v-text="$tzConverter.convert('{{ document.created_at }}', 'YYYY-MM-DD h:mm a')">
+                        <td>{{ str_limit(document.filename, 30) }}</td>
+                        <td v-text="$tzConverter.convert('{{ document.created_at }}', 'YYYY-MM-DD h:mm a')">
 
-                            </td>
-                            <td>
-                                <a target="_blank" href="{{ document.path }}" class="btn btn-primary">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            </accordion>
-        </accordion-view>
+                        </td>
+                        <td>
+                            <a target="_blank" href="{{ document.path }}" class="btn btn-primary">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </accordion>
+    </accordion-view>
 </div>

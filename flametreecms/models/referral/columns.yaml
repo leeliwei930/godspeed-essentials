@@ -1,0 +1,27 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+    code:
+        label: Referral Code
+        searchable: true
+    valid_before:
+        label: Valid Before
+        searchable: true
+    valid_after:
+        label: Valid After
+        searchable: true
+
+    timezone:
+        label: Timezone
+        searchable: true
+
+    usage_left:
+        label: Number Of Redemption Left
+        searchable: true
+
+

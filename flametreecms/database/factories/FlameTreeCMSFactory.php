@@ -16,6 +16,7 @@ use GodSpeed\FlametreeCMS\Models\FaqCategory;
 use GodSpeed\FlametreeCMS\Models\Playlist;
 use GodSpeed\FlametreeCMS\Models\Producer;
 use GodSpeed\FlametreeCMS\Models\ProducerCategory;
+use GodSpeed\FlametreeCMS\Models\Referral;
 use GodSpeed\FlametreeCMS\Models\SpecialOrder;
 use GodSpeed\FlametreeCMS\Models\Event;
 use GodSpeed\FlametreeCMS\Models\Training;
@@ -23,6 +24,7 @@ use GodSpeed\FlametreeCMS\Models\Video;
 use GodSpeed\FlametreeCMS\Utils\Providers\YoutubeVideoProvider;
 use Illuminate\Support\Str;
 use RainLab\Blog\Models\Post;
+use RainLab\User\Models\UserGroup;
 
 $factory->define(Producer::class, function (Faker $faker) {
     $faker->addProvider(new Address($faker));
@@ -60,7 +62,7 @@ $factory->define(Video::class, function (Faker $faker) {
     $faker->addProvider(new YoutubeVideoProvider($faker));
 
     return [
-        'embed_id' =>$faker->getVideoEmbedId(),
+        'embed_id' => $faker->getVideoEmbedId(),
         'type' => $faker->getVideoSource()
     ];
 });
@@ -94,7 +96,7 @@ $factory->define(FaqCategory::class, function (Faker $faker) {
 $factory->define(Post::class, function (Faker $faker) {
     $backendUser = BackendUser::first();
     // if there is a backend user, impersonate that user and create the posts
-    if(!is_null($backendUser)){
+    if (!is_null($backendUser)) {
         BackendAuth::impersonate(BackendUser::first());
     }
 
@@ -125,12 +127,30 @@ $factory->define(Event::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(Training::class, function(Faker $faker){
+$factory->define(Training::class, function (Faker $faker) {
     $title = $faker->words(10, true);
     return [
         'title' => $title,
         'slug' => Str::slug($title),
         'content_html' => $faker->sentences(10, true),
         'video_playlist_id' => Playlist::all()->random()->id
+    ];
+});
+
+$factory->define(Referral::class, function (Faker $faker) {
+    $code = bin2hex(openssl_random_pseudo_bytes(10));
+    $validBeforeDate = now()->addDays(25);
+    $validAfterDate = now();
+    $code = Str::upper($code);
+    $role = UserGroup::with('users')->get()->random();
+
+    return [
+        'code' => $code,
+        'valid_before' => $validBeforeDate->toDateTimeString(),
+        'valid_after' => $validAfterDate->toDateTimeString(),
+        'capped' => true,
+        'usage_left' => $faker->numberBetween(30, 80),
+        'timezone' => "Australia/Sydney",
+        'user_group_id' => $role->id
     ];
 });

@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Referral
+
+# Model Form Field configuration
+form: $/godspeed/flametreecms/models/referral/fields.yaml
+
+# Model Class name
+modelClass: GodSpeed\FlametreeCMS\Models\Referral
+
+# Default redirect location
+defaultRedirect: godspeed/flametreecms/referrals
+
+# Create page
+create:
+    title: Create Referral
+    redirect: godspeed/flametreecms/referrals/update/:id
+    redirectClose: godspeed/flametreecms/referrals
+
+# Update page
+update:
+    title: Edit Referral
+    redirect: godspeed/flametreecms/referrals
+    redirectClose: godspeed/flametreecms/referrals
+
+# Preview page
+preview:
+    title: Preview Referral
