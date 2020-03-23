@@ -7,11 +7,20 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use October\Rain\Support\Collection;
 
+/**
+ * Class Trainings
+ * @package GodSpeed\FlametreeCMS\Components
+ */
 class Trainings extends ComponentBase
 {
+    /**
+     * @var
+     */
     public $trainings;
-    public $paginationInfo;
 
+    /**
+     * @return array
+     */
     public function componentDetails()
     {
         return [
@@ -20,6 +29,9 @@ class Trainings extends ComponentBase
         ];
     }
 
+    /**
+     * @return array
+     */
     public function defineProperties()
     {
         return [
@@ -37,16 +49,25 @@ class Trainings extends ComponentBase
         ];
     }
 
+    /**
+     *
+     */
     public function onRun()
     {
         $this->prepareVars();
     }
 
+    /**
+     *
+     */
     public function prepareVars()
     {
         $this->page['trainings'] = $this->trainings = $this->fetchTrainings();
     }
 
+    /**
+     * @return LengthAwarePaginator
+     */
     public function fetchTrainings()
     {
         if ($this->requireAuth()) {
@@ -56,17 +77,23 @@ class Trainings extends ComponentBase
         }
     }
 
+    /**
+     * @return mixed
+     */
     public function paginateAllTrainings()
     {
         return Training::paginate($this->property('perPage'), $this->getCurrentPage())->toArray();
     }
 
+    /**
+     * @return LengthAwarePaginator
+     */
     public function getLoggedInUserTrainings()
     {
         $paginationInfo = [];
         $userRoles = optional(\Auth::user())->groups()
-                        ->with(['trainings.video_playlist.videos', 'trainings.documents'])
-                        ->get() ?? collect();
+                ->with(['trainings.video_playlist.videos', 'trainings.documents'])
+                ->get() ?? collect();
 
 
         $trainings = collect();
@@ -86,17 +113,30 @@ class Trainings extends ComponentBase
         return $response;
     }
 
+    /**
+     * @return bool
+     */
     public function requireAuth()
     {
         return $this->property('requireAuth') == 1;
     }
 
+    /**
+     * @return int|mixed
+     */
     public function getCurrentPage()
     {
         return (\Input::has('page')) ? \Input::get('page') : 1;
     }
 
 
+    /**
+     * @param $items
+     * @param int $perPage
+     * @param null $page
+     * @param array $options
+     * @return LengthAwarePaginator
+     */
     public function paginate($items, $perPage = 15, $page = null, $options = [])
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);

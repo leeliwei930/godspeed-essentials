@@ -124,6 +124,7 @@ class Plugin extends PluginBase
             "GodSpeed\FlametreeCMS\Components\Events" => "Events",
             "GodSpeed\FlametreeCMS\Components\Event" => "Event",
             "GodSpeed\FlametreeCMS\Components\Trainings" => "Trainings",
+            "GodSpeed\FlametreeCMS\Components\Training" => "Training",
 
             "GodSpeed\FlametreeCMS\Components\FaqCategories" => "FaqCategories",
             "GodSpeed\FlametreeCMS\Components\FaqCategory" => "FaqCategory",
