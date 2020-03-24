@@ -84,42 +84,37 @@ class ReferralSignUp extends \RainLab\User\Components\Account
                 $rules['username'] = 'required|between:2,255';
             }
 
-            $referralCodeValidator = \Illuminate\Validation\Rule::exists(
-                'godspeed_flametreecms_referrals',
-                'code'
-            )->where(function ($query) {
-                $query
-                    ->where('valid_before', '>', now('UTC')->toDateTimeString())
-                    ->where('valid_after', '>', now('UTC')->toDateTimeString());
-            });
+            $referralCodeValidator =
 
 
             $rules['referral_code'] = [
-                'required', $referralCodeValidator
+                'required', function ($attribute, $value, $fail) {
+                    $referralCode = Referral::findByCode($value);
+                    if (is_null($referralCode)) {
+                        $fail('The ' . $attribute . ' is not exists');
+                        return;
+                    }
+                    if ($referralCode->isExpired()) {
+                        $fail('The ' . $attribute . ' is expired.');
+                        return;
+
+                    }
+
+                    if ($referralCode->capped) {
+                        if ($referralCode->usage_left <= 0) {
+                            $fail('The ' . $attribute . ' is fully redeemed');
+                            return;
+
+                        }
+                    }
+
+
+                }
             ];
 
 
-            $validation = Validator::make($data, $rules, [
-                'referral_code.exists' => "This referral code is not available."
-            ]);
+            $validation = Validator::make($data, $rules);
 
-            $referralData = Referral::findByCode($data['referral_code']);
-
-            if ($referralData->isExpired()) {
-                trace_log('expired');
-                $validation->getMessageBag()->add('referral_code', "The referral code is expired");
-                throw new ValidationException($validation);
-
-            }
-
-            if ($referralData->capped == 1) {
-
-                if ($referralData->usage_left <= 0) {
-                    $validation->getMessageBag()->add('referral_code', "The referral code is fully redeemed");
-                    throw new ValidationException($validation);
-
-                }
-            }
 
             if ($validation->fails()) {
                 throw new ValidationException($validation);
@@ -130,6 +125,7 @@ class ReferralSignUp extends \RainLab\User\Components\Account
              * Register user
              */
             Event::fire('rainlab.user.beforeRegister', [&$data]);
+            $referralData = Referral::findByCode($data['referral_code']);
 
             unset($data['referral_code']);
 

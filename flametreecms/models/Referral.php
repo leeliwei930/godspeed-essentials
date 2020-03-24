@@ -107,17 +107,42 @@ class Referral extends Model
         return $validBeforeDate->setTimezone($this->timezone);
     }
 
-    public function getValidAfterAttributes()
+    public function getValidAfterAttributes($date)
     {
+        // if the system timezone is match with the record timezone, don't convert it
+        if ($this->getSystemTimezone() === $this->timezone) {
+            return $date;
+        }
 
+        // Get the system timezone and use the started at date parameters
+        $validBeforeDate = Carbon::parse($date, $this->getSystemTimezone());
+
+        // return to a converted date time based on the timezone
+        return $validBeforeDate->setTimezone($this->timezone);
     }
 
-    public function setValidBeforeAttribues()
+    public function setValidBeforeAttribues($date)
     {
+
+        // if the selected timezone is match with the system timezone, just save the record
+        if ($this->getSystemTimezone() === $this->timezone) {
+            $this->attributes['valid_before'] = $date;
+            return;
+        }
+        // convert the time to UTC
+        $startedAt = Carbon::parse($date, $this->timezone);
+        $this->attributes['valid_before'] = $startedAt->setTimezone($this->getSystemTimezone())->toDateTimeString();
     }
 
-    public function setValidAfterAttributes()
+    public function setValidAfterAttributes($date)
     {
+        if ($this->getSystemTimezone() === $this->timezone) {
+            $this->attributes['valid_after'] = $date;
+            return;
+        }
+        // convert the time to UTC
+        $startedAt = Carbon::parse($date, $this->timezone);
+        $this->attributes['valid_after'] = $startedAt->setTimezone($this->getSystemTimezone())->toDateTimeString();
     }
 
     public function getSystemTimezone()
@@ -187,8 +212,18 @@ class Referral extends Model
 
     public function isExpired()
     {
-        return Carbon::parse($this->validBefore)->isAfter(now('UTC')->toDateTimeString()) &&
-            Carbon::parse($this->validAfter)->isBefore(now('UTC')->toDateTimeString());
+
+        $start = Carbon::parse($this->valid_after);
+        $end = Carbon::parse($this->valid_before);
+
+
+        return !now($this->timezone)->isBetween(
+            $start,
+            $end
+
+        );
+
     }
+
 
 }
