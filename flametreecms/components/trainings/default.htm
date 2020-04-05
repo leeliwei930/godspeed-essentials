@@ -2,6 +2,7 @@
     {% for training in __SELF__.trainings %}
 
             <training-card
+                class="my-2"
                 title="{{ training.title }}"
                 primary-link="{{ "volunteer/training" | page({'slug' : training.slug}) }}"
                 :posted-at="$tzConverter.convert('{{ training.created_at }}', 'dddd, MMM D Y hh:mm a')"

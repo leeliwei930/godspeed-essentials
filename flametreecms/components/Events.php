@@ -1,9 +1,12 @@
 <?php namespace GodSpeed\FlametreeCMS\Components;
 
 use Carbon\CarbonInterval;
+use Carbon\Exceptions\InvalidDateException;
 use Cms\Classes\ComponentBase;
 use GodSpeed\FlametreeCMS\Models\Event;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Carbon;
 use October\Rain\Database\Relations\BelongsToMany;
 
@@ -13,6 +16,8 @@ class Events extends ComponentBase
      * @var
      */
     public $events;
+    public $timelines;
+    public $selectedTimeLine;
     /**
      * @return array
      */
@@ -29,45 +34,14 @@ class Events extends ComponentBase
      */
     public function defineProperties()
     {
-        $scope =  $this->getDefaultScopeOptions();
-
+        $defaultMonthNameField = $this->getDefaultMonthNameField();
         return [
-            'limit' => [
-                'title' => "Maximum number of records",
-                "description" => "0 as default, which is unlimited",
-                'validationPattern' => '^[0-9]+$',
-                'default' => "0"
+            'monthname_field' => [
+                "title" => "Scoped Field",
+                "type" => "string",
+                "default" => $defaultMonthNameField
             ],
-            'list_only' => [
-                'title' => "List Only",
-                'type' => "dropdown",
-                "options" => [
-                    "upcoming" => "Upcoming Event",
-                    "past" => "Past Events",
-                    "all" => "All Event"
-                ],
-                'default' => $scope
-            ],
-            'max_period' => [
-                'title' => "Max Period",
-                'type' => "string",
-                'validationPattern' => '^[0-9]+$',
-                "default" => "5",
-                "group"=> "Upcoming Schedule"
 
-            ],
-            'period' => [
-                "title" => "Periodic",
-                "type" => "dropdown",
-                "group"=> "Upcoming Schedule",
-                "options" => [
-                    "days" => "Days",
-                    "weeks" => "Weeks",
-                    "months" => "Months",
-                    "years" => "Years"
-                ],
-                "default" => "days"
-            ]
 
         ];
     }
@@ -85,62 +59,31 @@ class Events extends ComponentBase
      */
     public function prepareVars()
     {
-        $events = $this->fetchEvents()->get();
-        $this->events = $this->page['events'] =   $this->makeEventsCollection($events);
+
+        $this->timelines = $this->page['timelines'] = $this->getTimelineLabel();
+        $this->page['monthname_key'] = $this->getMonthNameKey();
+
+        $events = $this->getEventsQuery()->get();
+        trace_log($events->toArray());
+        $eventCollection = $this->makeEventsCollection($events);
+
+        $this->events = $this->page['events'] = $eventCollection;
+
     }
 
     public function makeEventsCollection($records)
     {
-        $collection =  collect($records)->flatMap(function ($roles) {
-            return collect($roles['events']);
-        });
 
-        if($this->hasLimit()){
-            $collection = $this->limitResult($collection);
-        }
+            $collection =  collect($records)->flatMap(function ($roles) {
+                return collect($roles['events']);
+            });
+
+
+
 
         return $collection;
     }
 
-    private function getDefaultScopeOptions()
-    {
-        if (!is_null(get('scope'))) {
-            return get('scope');
-        } else {
-            return "all";
-        }
-    }
-    /**
-     * Fetch meeting records.
-     *
-     * @return mixed
-     */
-    protected function fetchEvents()
-    {
-        $listOnly = $this->property('list_only');
-
-
-        // show upcoming meeting minutes
-        $query = $this->getEventsQuery();
-
-        switch ($listOnly) {
-            case "upcoming":
-                $query = $this->getUpcomingEventsQuery();
-                break;
-            case "past":
-                $query = $this->getPastEventsQuery();
-                break;
-            default:
-                break;
-        }
-
-
-
-
-
-        // return all meetings
-        return $query;
-    }
 
     /**
      * Query that fetch all meetings
@@ -149,89 +92,34 @@ class Events extends ComponentBase
     private function getEventsQuery()
     {
         $member = $this->getCurrentMemberSession();
-        $period = $this->property('period');
-        $scope = $this->property('max_period');
-        $scopeStartDate = now()->sub(CarbonInterval::$period($scope));
-        $scopeEndDate = now()->add(CarbonInterval::$period($scope));
+
+        $date = $this->getMonthlyScopedValue();
+        $this->selectedTimeLine = $this->page['selectedTimeline'] = $date;
+        try {
+            $lowerBound = Carbon::parse($date)->firstOfMonth();
+            $upperBound = Carbon::parse($date)->lastOfMonth();
+
+        } catch (InvalidDateException $exception){
+
+        }
         if (!is_null($member)) {
             return $member->groups()->with([
-                'events' => function (BelongsToMany $query) use ($scopeStartDate, $scopeEndDate) {
-                    return $query->whereDate('started_at', ">", $scopeStartDate->toDateTimeString())
-                        ->whereDate('started_at', "<", $scopeEndDate->toDateTimeString());
-
+                'events' => function (BelongsToMany $query) use ($lowerBound, $upperBound) {
+                     $query->whereBetween('started_at', [
+                        $lowerBound->toDateString(),
+                        $upperBound->toDateString()
+                    ]);
                 }
             ]);
         }
         return [];
     }
-    public function getScope(){
-        return $this->property('list_only');
-    }
-    /**
-     * Query that grabs upcoming meetings
-     * @return mixed
-     */
-    private function getUpcomingEventsQuery()
+
+    public function getMonthlyScopedValue()
     {
-        $member = $this->getCurrentMemberSession();
-        if (!is_null($member)) {
-            return $member->groups()->with(['events' => function (BelongsToMany $query) {
-                return $query->whereDate('started_at', "<", $this->getDateScope()->toDateTimeString())
-                            ->whereDate('started_at', ">", now()->toDateTimeString());
-            }]);
-        }
-        return [];
-    }
-
-    private function getPastEventsQuery()
-    {
-        $member = $this->getCurrentMemberSession();
-        if (!is_null($member)) {
-            return $member->groups()->with(['events' => function (BelongsToMany $query) {
-
-                return $query->whereDate('started_at', "<", now()->toDateTimeString())
-                    ->whereDate('started_at', ">", $this->getDateScope()->toDateTimeString());
-            }]);
-        }
-        return [];
-    }
-
-    /**
-     * Limit the query result
-     * @param \October\Rain\Support\Collection $collection
-     * @return mixed
-     */
-    protected function limitResult($collection)
-    {
-        $limit = $this->property('limit');
-
-        return $collection->take($limit);
-    }
-
-    protected function hasLimit()
-    {
-        return $this->property('limit') > 0;
-    }
-    /**
-     * Get the max scope of the event started date
-     * @return Carbon
-     */
-    protected function getDateScope()
-    {
-        $maxPeriod = $this->property('max_period');
-        $period = $this->property('period');
-        $list_only = $this->property('list_only');
-        // prepare the interval, it will be called as CarbonInterval::months/days/weeks(value)
-        $maxPeriodInterval = CarbonInterval::$period($maxPeriod);
-
-        // grab the current time and add the interval to get the max scoped event start date.
-        switch ($list_only) {
-            case "all":
-                return now();
-            case "upcoming":
-                return now()->add($maxPeriodInterval);
-            case "past":
-                return now()->sub($maxPeriodInterval);
+        // if there is no monthname presented, pick the latest one
+        if (\Input::has($this->property('monthname_field'))) {
+            return \Input::get($this->property('monthname_field'));
         }
     }
 
@@ -242,5 +130,37 @@ class Events extends ComponentBase
     protected function getCurrentMemberSession()
     {
         return \Auth::user();
+    }
+
+
+    public function getTimelineLabel()
+    {
+        $member = $this->getCurrentMemberSession();
+        $groups =  $member->groups()->with(['events'])->get();
+        $eventID = collect();
+        collect($groups)->each(function ($group) use ($eventID) {
+            collect($group['events'])->each(function ($event) use ($eventID) {
+                $eventID->push($event->id);
+            });
+        });
+
+        $eventID =  $eventID->unique()->toArray();
+        return Event::selectRaw('DATE_FORMAT(started_at, "%M, %Y") as timeline_label, DATE_FORMAT(started_at, "%m-%Y") as timeline_value, COUNT(*) as count'
+                )
+                ->whereIn('id', $eventID)
+                ->groupBy('timeline_label' ,'timeline_value')
+                ->orderByRaw("MIN(started_at) desc")
+                ->get();
+    }
+
+    private function getDefaultMonthNameField()
+    {
+        return 'scope';
+    }
+
+
+    public function getMonthNameKey()
+    {
+        return $this->property('monthname_field');
     }
 }

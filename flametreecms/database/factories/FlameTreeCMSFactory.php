@@ -115,14 +115,14 @@ $factory->define(Post::class, function (Faker $faker) {
 $factory->define(Event::class, function (Faker $faker) {
     $title = $faker->unique()->sentence(15);
     $description = $faker->paragraph(3);
-    $now = now();
+    $now = Carbon::parse( $faker->dateTimeThisDecade()->format("Y-m-d H:i"));
     $content = $faker->sentence(15);
     return [
         'title' => $title,
         'description' => $description,
         'slug' => Str::slug($title),
-        'started_at' => $now->addHours(1)->toDateTimeString(),
-        'ended_at' => $now->addDays(1)->toDateTimeString(),
+        'started_at' => $now->toDateTimeString(),
+        'ended_at' => $now->addHours(1)->toDateTimeString(),
         'content_html' => "<p>$content</p>"
     ];
 });

@@ -110,7 +110,6 @@ class Trainings extends ComponentBase
         $response = $this->paginate($records, $this->property('perPage'), $this->getCurrentPage(), [
             'path' => url($this->page->url)
         ]);
-        trace_log($response);
         return $response;
     }
 

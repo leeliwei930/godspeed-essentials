@@ -1,27 +1,47 @@
 {%  set events = __SELF__.events %}
+<div class="d-flex flex-row flex-wrap">
+    <div class="d-flex flex-column col-12 col-lg-3 ">
+    {% if timelines %}
 
-{% if events.count > 0 %}
-    {% for index,event in events %}
-        <event-card
-            class="my-3"
-            started-at="{{ event.started_at }}"
-            ended-at="{{ event.ended_at }}"
+        <list-view heading="TIMELINE" class=" my-5">
+            {% for timeline in timelines %}
+                <list
+                    leading="{{ timeline.timeline_label }}"
+                    :is-active="{{ (__SELF__.selectedTimeLine == "01-" ~ timeline.timeline_value) ? "true" : "false"  }}"
+                    trailing="{{ timeline.count ~ " events"}}"
+                    link="{{ "volunteer/events" | page ~ "?" ~ monthname_key ~ "=01-" ~ timeline.timeline_value}}"
+                >
 
-            name="{{ event.title }}"
-            timezone="{{ event.timezone }}"
-            link="{{ "volunteer/event" | page({slug: event.slug}) }}"
-            ics-link="{{ event.ics.getPath() }}"
-            location="{{ event.location }}"
-        >
-            <p class="description">
-                {{ str_limit(event.description, 100)}}
-            </p>
-        </event-card>
-    {% endfor %}
+                </list>
+            {% endfor %}
+        </list-view>
+    {% endif %}
+    </div>
+{% if events.count() > 0 %}
+    <div class="d-flex flex-column col-12 col-lg-9">
+        {% for index,event in events %}
+            <event-card
+                class="m-5"
+                started-at="{{ event.started_at }}"
+                ended-at="{{ event.ended_at }}"
+
+                name="{{ event.title }}"
+                timezone="{{ event.timezone }}"
+                link="{{ "volunteer/event" | page({slug: event.slug}) }}"
+                ics-link="{{ event.ics.getPath() }}"
+                location="{{ event.location }}"
+            >
+                <p class="description">
+                    {{ str_limit(event.description, 100)}}
+                </p>
+            </event-card>
+        {% endfor %}
+    </div>
 {% else %}
-    <div class="d-flex flex-column bg-white shadow rounded align-items-center p-5 my-5" style="width: 480px">
+    <div class="d-flex flex-column col-12 col-lg-8">
         <i class="fas fa-calendar fa-3x text-primary"></i>
         <p class="my-3">There is no events at the moment.</p>
     </div>
 
 {% endif %}
+</div>
