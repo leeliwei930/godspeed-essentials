@@ -92,7 +92,6 @@ class Referral extends Model
     public $attachOne = [];
     public $attachMany = [];
 
-
     public function getValidBeforeAttributes($date)
     {
         // if the system timezone is match with the record timezone, don't convert it

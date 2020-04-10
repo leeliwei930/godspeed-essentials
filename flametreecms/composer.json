@@ -35,7 +35,8 @@
     "require": {
         "james-heinrich/getid3": "dev-master",
         "intervention/image": "2.5.1",
-        "eluceo/ical": "^0.16.0"
+        "eluceo/ical": "^0.16.0",
+        "simplesoftwareio/simple-qrcode": "^2.0"
 
     }
 }

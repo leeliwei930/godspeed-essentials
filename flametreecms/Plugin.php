@@ -192,6 +192,11 @@ class Plugin extends PluginBase
                         'icon' => 'icon-calendar',
                         'url' => Backend::url('godspeed/flametreecms/events')
                     ],
+                    'qrcodes' => [
+                        'label' => "QR Codes",
+                        'icon' => 'icon-qrcode',
+                        'url' => Backend::url('godspeed/flametreecms/qrcodes')
+                    ],
                     "trainings" => [
                         'label' => "Trainings",
                         'icon' => 'icon-rocket',

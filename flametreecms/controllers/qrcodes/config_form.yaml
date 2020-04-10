@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: QR Code
+
+# Model Form Field configuration
+form: $/godspeed/flametreecms/models/qrcode/fields.yaml
+
+# Model Class name
+modelClass: GodSpeed\FlametreeCMS\Models\QRCode
+
+# Default redirect location
+defaultRedirect: godspeed/flametreecms/qrcodes
+
+# Create page
+create:
+    title: Create QR Code
+    redirect: godspeed/flametreecms/qrcodes/update/:id
+    redirectClose: godspeed/flametreecms/qrcodes
+
+# Update page
+update:
+    title: Edit QR Code
+    redirect: godspeed/flametreecms/qrcodes
+    redirectClose: godspeed/flametreecms/qrcodes
+
+# Preview page
+preview:
+    title: Preview QR Code

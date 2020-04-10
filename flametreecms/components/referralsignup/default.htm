@@ -42,7 +42,7 @@
 
     <div class="text-field-control my-1">
         <label for="referral_code">REFERRAL CODE</label>
-        <input name="referral_code" id="referral_code" type="text" class="text-field"/>
+        <input name="referral_code" id="referral_code" type="text" {{   __SELF__.hasReferralCode() ? 'readonly' : null  }} class="text-field" value="{{ __SELF__.getReferralCode() }}"/>
 
     </div>
     <small class="text-danger" data-validate-for="referral_code"></small>

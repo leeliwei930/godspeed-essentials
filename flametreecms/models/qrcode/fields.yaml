@@ -1,0 +1,55 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+
+fields:
+    resource_name:
+        type: text
+        label: Resource Name
+    page:
+        type: dropdown
+        label: Page
+
+    _url_preview:
+        label: URL Preview
+        type: partial
+        path: $/godspeed/flametreecms/controllers/qrcodes/url_preview.htm
+        span: full
+        dependsOn:
+            - page
+            - slugs
+            - fields
+
+    slugs:
+        type: repeater
+        label: URL Slugs
+        hint: "Inject the slug value into the url based on the key and value pair below"
+        span: left
+        form:
+            fields:
+                key:
+                    type: text
+                    label: Slug Name
+                    span: left
+                value:
+                    type: text
+                    label: Value
+                    span: right
+
+    fields:
+        type: repeater
+        label: URL Query Parameters
+        span: right
+        form:
+            fields:
+                key:
+                    type: text
+                    label: Parameter Key
+                    span: left
+                value:
+                    type:  text
+                    label: Value
+                    span: right
+
+

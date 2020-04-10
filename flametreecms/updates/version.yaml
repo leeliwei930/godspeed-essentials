@@ -45,3 +45,7 @@
 - ScaffoldTeamMember.php
 - EventSeeder.php
 - FactorySeeder.php
+
+1.0.8:
+- Create QR Code Manager
+- create_q_r_codes_table.php

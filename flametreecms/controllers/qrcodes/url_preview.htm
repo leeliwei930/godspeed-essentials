@@ -1,0 +1,33 @@
+
+
+
+
+            <div class="form-group title-value span-full">
+                <h4>PROTOTYPE LINK</h4>
+                <h3><?= $model->getPrototypeQRUrl(); ?></h3>
+            </div>
+            <div class="form-group title-value span-left">
+
+                <h4>LINK</h4>
+
+                <a href="<?= $model->createQRUrl(); ?>"><h3><?= $model->createQRUrl(); ?></h3></a>
+            </div>
+        <?php if ($model->hasQRCode()) : ?>
+
+        <div class="form-group title-value span-right ">
+                <h4>QR CODE</h4>
+                    <div class="flex-layout-row justify-center">
+                       <div class="flex-layout-column">
+                           <?= $model->makeQRCode() ?>
+                           <a target="_blank" href="<?= $QRCodeDownloadUrl ?>" class="btn btn-primary flex-layout-row justify-center  ">
+                               <i class="oc-icon-download"></i>
+                               DOWNLOAD QR CODE</a>
+                       </div>
+                    </div>
+
+
+            </div>
+        <?php endif;?>
+
+
+

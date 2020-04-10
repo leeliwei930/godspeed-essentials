@@ -1,0 +1,54 @@
+<h3 class="oc-text-gray">Download QR Code</h3>
+
+    <div class="w-350 m-x-auto">
+
+        <div class="form-group span-full">
+            <!-- qr code preview partials  -->
+            <div id="qr-code-preview">
+                <?= $qrCode->makeQRCode() ?>
+
+            </div>
+        </div>
+        <!-- ajax form -->
+
+        <?= Form::open(['request' => 'onDownloadQRCode' ]) ?>
+
+        <div class="form-group span-full">
+            <label for="">QR Code Link</label>
+            <input type="text" readonly value="<?= $qrCode->createQRUrl() ?>" class="form-control">
+        </div>
+        <div class="form-group  radio-field ">
+            <label>Format</label>
+                <div class="radio custom-radio">
+                    <input name="format" value="SVG" type="radio" id="svg" />
+                    <label for="svg">SVG</label>
+                </div>
+                <div class="radio custom-radio">
+                    <input name="format" value="PNG" type="radio" id="png" />
+                    <label for="png">PNG</label>
+                </div>
+                <div class="radio custom-radio">
+                    <input name="format" value="EPS" type="radio" id="eps" />
+                    <label for="eps">EPS</label>
+                </div>
+            <?php if( isset($errors)): ?>
+            <small class="text-danger"><?= $errors->first('format') ?></small>
+            <?php endif; ?>
+        </div>
+        <div class="form-group span-full">
+            <label>Dimensions(width/height)</label>
+            <input class="form-control" type="number" name="dimension"/>
+            <?php if( isset($errors)): ?>
+            <small class="text-danger"><?= $errors->first('dimension') ?></small>
+            <?php endif; ?>
+        </div>
+            <button type="submit" class="w-full flex-layout-row justify-center btn btn-primary btn-lg">
+                <i class="oc-icon-download"></i>
+                Download QR Code
+            </button>
+        <?= Form::close() ?>
+    </div>
+
+<script>
+
+</script>

@@ -1,0 +1,12 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    resource_name:
+        label: QR Code Label
+        sortable: true
+    link:
+        label: QR Code Label
+        sortable: true
+        valueFrom: link
