@@ -1,17 +1,34 @@
-<div class="d-flex flex-column align-items-start m-3 justify-content-around">
-    <h3 class="post-title">{{ __SELF__.training.title }}</h3>
-    <h5 class="post-published-at"
-        v-text="$tzConverter.convert('{{ __SELF__.training.created_at }}', 'dddd, MMM D Y hh:mm a')"></h5>
-    <div class="d-inline-flex flex-row">
-        {% for role in __SELF__.training.user_group %}
-            <div class="pill pill-primary-light d-flex justify-content-around mx-1">
-                <i class="fas fa-users mx-2"></i>
-                <small class="text-uppercase font-weight-bold">
-                    {{ role.name }}
-                </small>
+<div class="d-flex flex-column align-items-between m-3 justify-content-around">
+    <div class="d-flex flex-row flex-wrap justify-content-between align-items-center">
+        <div class="d-flex flex-column">
+            <h3 class="post-title">{{ __SELF__.training.title }}</h3>
+            <h5 class="post-published-at"
+                v-text="$tzConverter.convert('{{ __SELF__.training.created_at }}', 'dddd, MMM D Y hh:mm a')"></h5>
+            <div class="d-inline-flex flex-row">
+                {% for role in __SELF__.training.user_group %}
+                    <div class="pill pill-primary-light d-flex justify-content-around mx-1">
+                        <i class="fas fa-users mx-2"></i>
+                        <small class="text-uppercase font-weight-bold">
+                            {{ role.name }}
+                        </small>
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
+        </div>
+
+            <div class="d-flex flex-row justify-content-start my-3">
+                <img src="{{ training.user.getAvatarThumb(50) }}" class="rounded-circle">
+                <div class="d-flex flex-column mx-2">
+                    <strong class="post-author">
+                        {{ training.user.full_name }}
+                    </strong>
+                    <strong class="text-uppercase">
+                        {{ training.user.role.name }}
+                    </strong>
+                </div>
+            </div>
     </div>
+
 
     <hr class="w-100">
     <div class="my-5">

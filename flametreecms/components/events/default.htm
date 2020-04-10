@@ -1,9 +1,9 @@
 {%  set events = __SELF__.events %}
-<div class="d-flex flex-row flex-wrap-reverse">
-    <div class="d-flex flex-column col-12 col-lg-3 ">
+<div class="d-flex flex-row flex-wrap-reverse align-items-end  m-3">
+    <div class="d-flex flex-column col-12 col-lg-3">
     {% if timelines %}
 
-        <list-view heading="TIMELINE" class=" my-5">
+        <list-view heading="TIMELINE" >
             {% for timeline in timelines %}
                 <list
                     leading="{{ timeline.timeline_label }}"
@@ -17,31 +17,32 @@
         </list-view>
     {% endif %}
     </div>
-{% if events.count() > 0 %}
-    <div class="d-flex flex-column col-12 col-lg-9">
-        {% for index,event in events %}
-            <event-card
-                class="my-3"
-                started-at="{{ event.started_at }}"
-                ended-at="{{ event.ended_at }}"
+        {% if events.count() > 0 %}
+            <div class="d-flex flex-column col-12 col-lg-9 " >
+                {% for index,event in events %}
+                    <event-card
+                        class="my-3"
+                        started-at="{{ event.started_at }}"
+                        ended-at="{{ event.ended_at }}"
 
-                name="{{ event.title }}"
-                timezone="{{ event.timezone }}"
-                link="{{ "volunteer/event" | page({slug: event.slug}) }}"
-                ics-link="{{ event.ics.getPath() }}"
-                location="{{ event.location }}"
-            >
-                <p class="description">
-                    {{ str_limit(event.description, 100)}}
-                </p>
-            </event-card>
-        {% endfor %}
-    </div>
-{% else %}
-    <div class="d-flex flex-column col-12 col-lg-8">
-        <i class="fas fa-calendar fa-3x text-primary"></i>
-        <p class="my-3">There is no events at the moment.</p>
-    </div>
+                        name="{{ event.title }}"
+                        timezone="{{ event.timezone }}"
+                        link="{{ "volunteer/event" | page({slug: event.slug}) }}"
+                        ics-link="{{ event.ics.getPath() }}"
+                        location="{{ event.location }}"
+                    >
+                        <p class="description">
+                            {{ str_limit(event.description, 100)}}
+                        </p>
+                    </event-card>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="d-flex flex-column col-12 col-lg-8 align-items-center">
+                <i class="fas fa-calendar fa-3x text-primary"></i>
+                <p class="my-3">There is no events at the moment.</p>
+            </div>
 
-{% endif %}
+        {% endif %}
+
 </div>

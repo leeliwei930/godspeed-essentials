@@ -1,5 +1,6 @@
 <?php namespace GodSpeed\FlametreeCMS\Models;
 
+use BackendAuth;
 use Model;
 use GodSpeed\FlametreeCMS\Models\Playlist;
 
@@ -80,6 +81,9 @@ class Training extends Model
     public $belongsTo = [
         'video_playlist' => [
             \GodSpeed\FlametreeCMS\Models\Playlist::class
+        ],
+        'user' => [
+            \Backend\Models\User::class
         ]
     ];
     public $belongsToMany = [
@@ -103,5 +107,12 @@ class Training extends Model
     public function getVideoPlaylistOptions()
     {
         return Playlist::all()->pluck('name', 'id');
+    }
+
+    public function beforeSave()
+    {
+        if ($user = BackendAuth::getUser()) {
+            $this->user = $user;
+        }
     }
 }

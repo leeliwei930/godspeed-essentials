@@ -2,28 +2,43 @@
     {% for training in __SELF__.trainings %}
 
             <training-card
-                class="my-2"
+                class="my-3"
                 title="{{ training.title }}"
                 primary-link="{{ "volunteer/training" | page({'slug' : training.slug}) }}"
                 :posted-at="$tzConverter.convert('{{ training.created_at }}', 'dddd, MMM D Y hh:mm a')"
             >
-                <div class="d-flex flex-row justify-content-end">
-                    <div
-                        class="d-inline-flex justify-content-between align-items-baseline text-uppercase pill pill-primary-light mx-1 font-weight-bold">
-                        <i class="fas fa-video mx-2"></i>
-                        <small>{{ training.video_playlist.videos.count }} Videos</small>
+                <div class="d-flex flex-column flex-wrap ">
+
+                    <div class="d-flex flex-row justify-content-start">
+                        <img src="{{ training.user.getAvatarThumb(50) }}" class="rounded-circle">
+                        <div class="d-flex flex-column mx-2">
+                            <strong class="post-author">
+                                {{ training.user.full_name }}
+                            </strong>
+                            <strong class="text-uppercase">
+                                {{ training.user.role.name }}
+                            </strong>
+                        </div>
                     </div>
-                    <div
-                        class="d-inline-flex justify-content-between align-items-baseline  text-uppercase pill pill-primary-light mx-1 font-weight-bold">
-                        <i class="fas fa-file mx-2"></i>
-                        <small>{{ training.documents.count }} Documents</small>
+                    <div class="d-flex flex-row align-self-end">
+                        <div
+                            class="d-inline-flex justify-content-between align-items-baseline text-uppercase pill pill-primary-light mx-1 font-weight-bold">
+                            <i class="fas fa-video mx-2"></i>
+                            <small>{{ training.video_playlist.videos.count }} Videos</small>
+                        </div>
+                        <div
+                            class="d-inline-flex justify-content-between align-items-baseline  text-uppercase pill pill-primary-light mx-1 font-weight-bold">
+                            <i class="fas fa-file mx-2"></i>
+                            <small>{{ training.documents.count }} Documents</small>
+                        </div>
                     </div>
                 </div>
+
             </training-card>
 
     {% endfor %}
-        <div class="col-12 col-lg-4 my-5 ">
         <dropdown-pagination
+            class="my-2"
             current-page="{{ __SELF__.trainings.currentPage() }}"
             page-param="page"
             per-page="{{ __SELF__.trainings.perPage() }}"
@@ -36,7 +51,6 @@
                 }"
         >
         </dropdown-pagination>
-        </div>
 {% else %}
 
 
