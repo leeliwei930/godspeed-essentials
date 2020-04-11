@@ -156,7 +156,9 @@ class ReferralSignUp extends \RainLab\User\Components\Account
 
             $user->referral_id = optional($referralData)->id;
             $referralData->updateUsageLeft();
-
+            // grant the user to specific group based on the referral selected role
+            $referralGroup = $referralData->user_group()->get();
+            $user->addGroup($referralGroup);
             Event::fire('rainlab.user.register', [$user, $data]);
 
             /*

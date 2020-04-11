@@ -93,6 +93,8 @@ class Events extends ComponentBase
         try {
             $lowerBound = Carbon::parse($date)->firstOfMonth();
             $upperBound = Carbon::parse($date)->lastOfMonth();
+            $this->selectedTimeLine = $lowerBound->format("d-m-Y");
+
         } catch (\Exception $exception) {
             // silent any invalid date format get passed in
             $date = now()->format("Y-m-d");
