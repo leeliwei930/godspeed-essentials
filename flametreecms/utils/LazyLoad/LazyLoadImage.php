@@ -160,19 +160,19 @@ class LazyloadImage
 
     /**
      * Works out the default settings
-     * @return string
+     * @return []
      */
     protected function parseDefaultSettings($options = [])
     {
 
-        if (!isset($options['extension']) && $this->settings->lazyload_default_image_extension) {
-            $options['extension'] = $this->settings->lazyload_default_image_extension;
+        if (!isset($options['extension'])) {
+            $options['extension'] = $this->settings->lazyload_default_image_extension ?? "jpg";
         }
-        if (!isset($options['quality']) && is_int($this->settings->lazyload_image_quality)) {
-            $options['quality'] = $this->settings->lazyload_image_quality;
+        if (!isset($options['quality'])) {
+            $options['quality'] = $this->settings->lazyload_image_quality ?? 35;
         }
-        if (!isset($options['blur']) && is_int($this->settings->lazyload_image_blur_rate)) {
-            $options['blur'] = $this->settings->lazyload_image_blur_rate;
+        if (!isset($options['blur'])) {
+            $options['blur'] = $this->settings->lazyload_image_blur_rate ?? 15;
         }
 
         if (!isset($options['image_not_found'])) {

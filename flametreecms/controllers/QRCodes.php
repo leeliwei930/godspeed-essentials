@@ -3,6 +3,7 @@
 use BackendMenu;
 use Backend\Classes\Controller;
 use GodSpeed\FlametreeCMS\Models\QRCode;
+use GodSpeed\FlametreeCMS\Traits\HasBackendPermissions;
 use Illuminate\Http\File;
 
 /**
@@ -11,6 +12,8 @@ use Illuminate\Http\File;
 class QRCodes extends Controller
 {
 
+    use HasBackendPermissions;
+
     public $implement = [
         'Backend.Behaviors.FormController',
         'Backend.Behaviors.ListController'
@@ -18,12 +21,24 @@ class QRCodes extends Controller
 
     public $formConfig = 'config_form.yaml';
     public $listConfig = 'config_list.yaml';
+    public $guarded = ['getQRCodeData' ,'generateQRCodeDownloadURL', 'prepareVars'];
+
+    public $actionPermissions = [
+        'index' => ['godspeed.flametreecms.browse_qrcodes'],
+        'preview' => ['godspeed.flametreecms.browse_qrcodes'],
+        'create' => ['godspeed.flametreecms.create_qrcodes'],
+        'update' => ['godspeed.flametreecms.edit_qrcodes'],
+        'create_onSave' => ['godspeed.flametreecms.create_qrcodes'],
+        'update_onSave' => ['godspeed.flametreecms.edit_qrcodes'],
+        'update_onDelete' => ['godspeed.flametreecms.delete_qrcodes']
+    ];
+
 
     public function __construct()
     {
         parent::__construct();
 
-
+        $this->checkPermissions();
         $this->prepareVars();
 
         BackendMenu::setContext('GodSpeed.FlametreeCMS', 'flametreecms', 'qrcodes');
