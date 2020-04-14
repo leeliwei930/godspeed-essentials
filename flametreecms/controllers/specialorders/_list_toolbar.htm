@@ -1,6 +1,6 @@
 <div data-control="toolbar">
 
-
+    <?php  if($this->user->hasAccess('godspeed.flametreecms.delete_special_orders')): ?>
     <button
         class="btn btn-danger oc-icon-trash-o"
         disabled="disabled"
@@ -14,4 +14,6 @@
         data-stripe-load-indicator>
         Delete selected
     </button>
+    <?php endif; ?>
+
 </div>

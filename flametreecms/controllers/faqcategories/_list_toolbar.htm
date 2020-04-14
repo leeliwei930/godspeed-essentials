@@ -4,23 +4,27 @@
         class="btn btn-primary oc-icon-arrow-left">
         Back
     </a>
-    <a
-        href="<?= Backend::url('godspeed/flametreecms/faqcategories/create') ?>"
-        class="btn btn-primary oc-icon-plus">
-        New Faq Category
-    </a>
+    <?php  if($this->user->hasAccess('godspeed.flametreecms.create_faqs')): ?>
+        <a
+            href="<?= Backend::url('godspeed/flametreecms/faqcategories/create') ?>"
+            class="btn btn-primary oc-icon-plus">
+            New Faq Category
+        </a>
+    <?php endif; ?>
 
-    <button
-        class="btn btn-danger oc-icon-trash-o"
-        disabled="disabled"
-        onclick="$(this).data('request-data', { checked: $('.control-list').listWidget('getChecked') })"
-        data-request="onDelete"
-        data-request-confirm="Are you sure you want to delete the selected Faq Categories?"
-        data-trigger-action="enable"
-        data-trigger=".control-list input[type=checkbox]"
-        data-trigger-condition="checked"
-        data-request-success="$(this).prop('disabled', 'disabled')"
-        data-stripe-load-indicator>
-        Delete selected
-    </button>
+    <?php  if($this->user->hasAccess('godspeed.flametreecms.delete_faqs')): ?>
+        <button
+            class="btn btn-danger oc-icon-trash-o"
+            disabled="disabled"
+            onclick="$(this).data('request-data', { checked: $('.control-list').listWidget('getChecked') })"
+            data-request="onDelete"
+            data-request-confirm="Are you sure you want to delete the selected Faq Categories?"
+            data-trigger-action="enable"
+            data-trigger=".control-list input[type=checkbox]"
+            data-trigger-condition="checked"
+            data-request-success="$(this).prop('disabled', 'disabled')"
+            data-stripe-load-indicator>
+            Delete selected
+        </button>
+    <?php endif;?>
 </div>

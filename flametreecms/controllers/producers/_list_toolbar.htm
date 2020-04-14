@@ -1,28 +1,37 @@
 <div data-control="toolbar">
-    <a
-        href="<?= Backend::url('godspeed/flametreecms/producers/create') ?>"
-        class="btn btn-primary oc-icon-plus">
-        New Producer
-    </a>
+    <?php  if($this->user->hasAccess('godspeed.flametreecms.create_producers')): ?>
 
-    <button
-        class="btn btn-danger oc-icon-trash-o"
-        disabled="disabled"
-        onclick="$(this).data('request-data', { checked: $('.control-list').listWidget('getChecked') })"
-        data-request="onDelete"
-        data-request-confirm="Are you sure you want to delete the selected Producers?"
-        data-trigger-action="enable"
-        data-trigger=".control-list input[type=checkbox]"
-        data-trigger-condition="checked"
-        data-request-success="$(this).prop('disabled', 'disabled')"
-        data-stripe-load-indicator>
-        Delete selected
-    </button>
+        <a
+            href="<?= Backend::url('godspeed/flametreecms/producers/create') ?>"
+            class="btn btn-primary oc-icon-plus">
+            New Producer
+        </a>
+    <?php endif; ?>
+    <?php  if($this->user->hasAccess('godspeed.flametreecms.delete_producers')): ?>
 
-    <a
-        href="<?= Backend::url('godspeed/flametreecms/producercategories')?>"
-        class="btn btn-primary oc-icon-users"
-    >
-        Manage Producer Categories
-    </a>
+
+        <button
+            class="btn btn-danger oc-icon-trash-o"
+            disabled="disabled"
+            onclick="$(this).data('request-data', { checked: $('.control-list').listWidget('getChecked') })"
+            data-request="onDelete"
+            data-request-confirm="Are you sure you want to delete the selected Producers?"
+            data-trigger-action="enable"
+            data-trigger=".control-list input[type=checkbox]"
+            data-trigger-condition="checked"
+            data-request-success="$(this).prop('disabled', 'disabled')"
+            data-stripe-load-indicator>
+            Delete selected
+        </button>
+    <?php endif; ?>
+    <?php if($this->user->hasAccess('godspeed.flametreecms.browse_producers')): ?>
+
+        <a
+            href="<?= Backend::url('godspeed/flametreecms/producercategories')?>"
+            class="btn btn-primary oc-icon-users"
+        >
+            Manage Producer Categories
+        </a>
+    <?php endif; ?>
+
 </div>

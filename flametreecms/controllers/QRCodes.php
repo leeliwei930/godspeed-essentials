@@ -46,11 +46,14 @@ class QRCodes extends Controller
 
     public function QRCodeDownloader($id = null)
     {
+        $this->pageTitle = "QR Code Downloader";
         if (is_null($id)) {
             return \Response::redirectTo($this->actionUrl('index'));
         }
         $qrCode = $this->getQRCodeData($id);
-
+        if (is_null($qrCode)) {
+            abort(404);
+        }
         $this->vars['qrCode'] = $qrCode;
     }
 
