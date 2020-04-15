@@ -3,35 +3,49 @@
 namespace GodSpeed\FlametreeCMS\Models;
 
 use Backend\Models\ImportModel;
-use Backend\Models\UserGroup;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use RainLab\User\Facades\Auth;
 use RainLab\User\Models\User;
 use RainLab\User\Models\User as RainLabUser;
+use RainLab\User\Models\UserGroup;
+use Event;
 
-class VolunteerImport extends ImportModel {
+class VolunteerImport extends ImportModel
+{
 
 
+    protected $rules = [];
 
-    protected $rules =  [];
+
     public function importData($results, $sessionKey = null)
     {
-        $volunteerGroup = UserGroup::whereCode('volunteers')->first();
-        if(is_null($volunteerGroup)){
+        $volunteerGroup = UserGroup::whereCode('volunteer')->first();
+        if (is_null($volunteerGroup)) {
             $volunteerGroup = new UserGroup();
-            $volunteerGroup->name = "Volunteers";
+            $volunteerGroup->name = "Volunteer";
             $volunteerGroup->code = lcfirst($volunteerGroup->name);
             $volunteerGroup->save();
         }
-        $volunteerGroup = UserGroup::whereCode('volunteers')->first();
 
+        $volunteerGroup = UserGroup::where('code', 'volunteer')->first();
+        $guest = UserGroup::where('code' , 'guest')->first();
         foreach ($results as $row => $data) {
             try {
-
                 $volunteer = Auth::registerGuest($data);
+
                 $volunteer->convertToRegistered();
-                $volunteer->groups()->save($volunteerGroup);
+
+
+                $volunteer->groups()->add($volunteerGroup);
+                $volunteer->groups()->remove($guest);
+                $volunteer->is_activated = true;
+                $volunteer->activated_at = now();
+                $volunteer->forceSave();
+
+
+
                 $this->logCreated();
             } catch (\Exception $ex) {
                 $this->logError($row, $ex->getMessage());

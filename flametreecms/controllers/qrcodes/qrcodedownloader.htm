@@ -1,12 +1,15 @@
+<?php
+    $this->bodyClass = "default";
+?>
 <?php Block::put('body') ?>
 
 <h3 class="oc-text-gray">Download QR Code</h3>
 
     <div class="w-350 m-x-auto">
 
-        <div class="form-group span-full">
+        <div class="form-group span-full flex-layout-column">
             <!-- qr code preview partials  -->
-            <div id="qr-code-preview">
+            <div class="m-x-auto" id="qr-code-preview">
                 <?= $qrCode->makeQRCode() ?>
 
             </div>

@@ -304,8 +304,13 @@ class Plugin extends PluginBase
             $manager->addSideMenuItems('RainLab.User', 'user', [
                 'imports' => [
                     "label" => "Import Volunteers",
-                    "icon" => 'icon-list',
+                    "icon" => 'icon-upload',
                     "url" => Backend::url("rainlab/user/users/import"),
+                ],
+                'exports' => [
+                    "label" => "Export Volunteers",
+                    "icon" => 'icon-download',
+                    "url" => Backend::url("rainlab/user/users/export"),
                 ]
             ]);
         });

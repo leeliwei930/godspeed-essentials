@@ -23,7 +23,7 @@ create:
 # Update page
 update:
     title: Edit QR Code
-    redirect: godspeed/flametreecms/qrcodes
+    redirect: godspeed/flametreecms/qrcodes/update/:id
     redirectClose: godspeed/flametreecms/qrcodes
 
 # Preview page

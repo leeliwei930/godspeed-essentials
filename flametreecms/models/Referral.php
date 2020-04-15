@@ -35,6 +35,7 @@ class Referral extends Model
 
     ];
 
+
     /**
      * @var array Attributes to be cast to native types
      */

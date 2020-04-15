@@ -21,8 +21,8 @@ class QRCodes extends Controller
 
     public $formConfig = 'config_form.yaml';
     public $listConfig = 'config_list.yaml';
-    public $guarded = ['getQRCodeData' ,'generateQRCodeDownloadURL', 'prepareVars'];
-
+    public $guarded = ['getQRCodeData', 'generateQRCodeDownloadURL', 'prepareVars'];
+    public $bodyClass = "compact-container";
     public $actionPermissions = [
         'index' => ['godspeed.flametreecms.browse_qrcodes'],
         'preview' => ['godspeed.flametreecms.browse_qrcodes'],
@@ -37,7 +37,6 @@ class QRCodes extends Controller
     public function __construct()
     {
         parent::__construct();
-
         $this->checkPermissions();
         $this->prepareVars();
 
@@ -78,7 +77,7 @@ class QRCodes extends Controller
                 $extension = strtolower($data['format']);
                 $image = $qrCode->makeQRCode($data['dimension'], $extension);
 
-                $outputFileName = md5($image).".$extension";
+                $outputFileName = md5($image) . ".$extension";
                 $outputFileLocation = "temp/qrcodes/$outputFileName";
                 \Storage::disk('local')->put($outputFileLocation, $image);
 
@@ -91,6 +90,7 @@ class QRCodes extends Controller
     {
         return QRCode::find($id);
     }
+
     public function prepareVars()
     {
         $this->vars['QRCodeDownloadUrl'] = null;
@@ -99,8 +99,10 @@ class QRCodes extends Controller
         }
     }
 
-    private function generateQRCodeDownloadURL($id)
+    public function generateQRCodeDownloadURL($id)
     {
         return $this->actionUrl('QRCodeDownloader', $id);
     }
+
+
 }

@@ -1,6 +1,7 @@
 <?php namespace GodSpeed\FlametreeCMS\Models;
 
 use Cms\Classes\Page;
+use Illuminate\Validation\Rule;
 use Model;
 
 use SimpleSoftwareIO\QrCode\Facades\QrCode as QR;
@@ -33,7 +34,6 @@ class QRCode extends Model
      * @var array Validation rules for attributes
      */
     public $rules = [];
-
     /**
      * @var array Attributes to be cast to native types
      */
@@ -78,6 +78,19 @@ class QRCode extends Model
 
     ];
     public $attachMany = [];
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->rules = [
+            'resource_name' => [
+                'required'
+            ],
+            'page' => [
+                'required', Rule::in(array_keys(Page::getNameList()))
+            ]
+        ];
+    }
 
     public function getPageOptions()
     {

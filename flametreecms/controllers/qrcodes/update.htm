@@ -7,10 +7,11 @@
 
 <?php if (!$this->fatalError): ?>
 
-    <?= Form::open(['class' => 'layout']) ?>
+<?= Block::put('form-contents') ?>
 
-        <div class="layout-row">
-            <?= $this->formRender() ?>
+        <div class="layout-row hide-tabs">
+
+            <?= $this->formRenderPrimaryTabs() ?>
         </div>
 
         <div class="form-buttons">
@@ -18,7 +19,7 @@
                 <button
                     type="submit"
                     data-request="onSave"
-                    data-request-data="redirect:0"
+                    data-request-data="redirect:1"
                     data-hotkey="ctrl+s, cmd+s"
                     data-load-indicator="Saving QRCode..."
                     class="btn btn-primary">
@@ -45,8 +46,19 @@
                 </span>
             </div>
         </div>
+<?= Block::endPut() ?>
+    <?= Block::put('form-sidebar') ?>
+        <div class="hide-tabs">
+            <?= $this->formRenderSecondaryTabs() ?>
+        </div>
+    <?= Block::endPut() ?>
+    <?= Block::put('body') ?>
 
-    <?= Form::close() ?>
+        <?= Form::open(['class' => 'layout stretch']) ?>
+            <?= $this->makeLayout('form-with-sidebar') ?>
+        <?= Form::close() ?>
+    <?= Block::endPut() ?>
+
 
 <?php else: ?>
 

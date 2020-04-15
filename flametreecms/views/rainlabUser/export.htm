@@ -1,21 +1,22 @@
 <?php
-        \BackendMenu::setContext('RainLab.User', 'user', 'imports');
+        \BackendMenu::setContext('RainLab.User', 'user', 'exports');
 ?>
 <div class="padded-container">
     <?= Form::open(['class' => 'layout']) ?>
 
+
     <div class="layout-row">
-        <?= $this->importRender() ?>
+        <?= $this->exportRender() ?>
     </div>
 
     <div class="form-buttons">
         <button
             type="submit"
             data-control="popup"
-            data-handler="onImportLoadForm"
+            data-handler="onExportLoadForm"
             data-keyboard="false"
             class="btn btn-primary">
-            Import records
+            Export records
         </button>
     </div>
 

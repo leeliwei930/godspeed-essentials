@@ -1,0 +1,13 @@
+<div class="form-group title-value">
+    <h4>QR CODE</h4>
+    <div class="m-y flex-layout-column">
+    <?php if($model->hasQRCode()) : ?>
+        <?= $model->makeQRCode() ?>
+        <a href="<?= $this->generateQRCodeDownloadURL($model->id) ?>" class="m-y btn btn-primary flex-layout-row justify-center">
+            <i class="oc-icon-download"></i>
+            Download QR Code
+        </a>
+    <?php endif; ?>
+    </div>
+</div>
+

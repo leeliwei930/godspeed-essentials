@@ -1,3 +1,6 @@
+<?php
+    $this->bodyClass = "default";
+?>
 <?php Block::put('breadcrumb') ?>
     <ul>
         <li><a href="<?= Backend::url('godspeed/flametreecms/qrcodes') ?>">QR Codes</a></li>
@@ -9,7 +12,7 @@
 
     <?= Form::open(['class' => 'layout']) ?>
 
-        <div class="layout-row">
+        <div class="layout-row hide-tabs">
             <?= $this->formRender() ?>
         </div>
 

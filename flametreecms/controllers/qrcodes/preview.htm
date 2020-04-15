@@ -6,10 +6,23 @@
 <?php Block::endPut() ?>
 
 <?php if (!$this->fatalError): ?>
+    <?= Block::put('form-contents') ?>
+        <div class="form-preview hide-tabs">
+            <?= $this->formRenderPrimaryTabs() ?>
+        </div>
+    <?= Block::endPut() ?>
 
-    <div class="form-preview">
-        <?= $this->formRenderPreview() ?>
-    </div>
+    <?= Block::put('form-sidebar') ?>
+        <div class="hide-tabs">
+            <?= $this->formRenderSecondaryTabs() ?>
+        </div>
+    <?= Block::endPut() ?>
+
+    <?= Block::put('body') ?>
+        <?= $this->makeLayout('form-with-sidebar') ?>
+    <?= Block::endPut() ?>
+
+
 
 <?php else: ?>
 

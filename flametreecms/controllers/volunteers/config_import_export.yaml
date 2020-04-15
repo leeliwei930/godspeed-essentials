@@ -7,4 +7,4 @@ import:
 export:
     title: Export Volunteers
     modelClass: GodSpeed\FlametreeCMS\Models\VolunteerExport
-    list:  $/rainlab/user/models/user/columns.yaml
+    list: $/godspeed/flametreecms/controllers/volunteers/columns.yaml
