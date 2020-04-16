@@ -1,36 +1,54 @@
 <?php
 
 
+/**
+ * Created by Li Wei Lee, on 16/4/2020.
+ */
+
 namespace GodSpeed\FlametreeCMS\Policies;
 
-use Backend\Models\User;
-use Backend\Models\UserGroup;
 use October\Rain\Database\Builder;
-use RainLab\Blog\Models\Category;
-use RainLab\Blog\Models\Post;
 use RainLab\User\Facades\Auth;
+use RainLab\Blog\Models\Category;
 
 class PortalBlogPostPolicy extends PolicyBase
 {
+
+
+    /**
+     * This method will be place in plugin ModelClass::extend static function closure
+     *
+     * @param $resourceModel
+     */
+
     public static function guard()
     {
-        Post::extend(function ($model) {
-            PortalBlogPostPolicy::check($model);
+
+        Category::extend(function ($model) {
+            PortalBlogCategoriesPolicy::check($model);
         });
     }
+
     public static function check($resourceModel)
     {
-
         $instance = self::make($resourceModel);
 
-        // TODO: Implement check() method.
+        // Enforce this policy when the env meet the condition, when it is running on frontend
         if ($instance->appRunningEnv) {
             // restrict the blog categories based on the predefine rule
             $instance->conditionClosure = $instance->getRuleConditionClosure();
+            // provide the scope that filter the data can be seen by the user with the closure passed in
             $instance->resourceModel::addGlobalScope('id', $instance->conditionClosure);
         }
+
+        // TODO: Implement verify() method.
     }
 
+    /**
+     * create an instance of this policy, and setup the instance attributes
+     * @param $resourceModel
+     * @return PortalBlogCategoryPolicy
+     */
     public static function make($resourceModel)
     {
         // TODO: Implement make() method.
@@ -42,30 +60,30 @@ class PortalBlogPostPolicy extends PolicyBase
         return $instance;
     }
 
-
+    /**
+     * @return mixed
+     * return a rule closure based on a user type
+     */
     public function getRuleConditionClosure()
     {
-        $userType = (is_null($this->subjectModel))? "guest" : "user";
+        // check against the current user type, guest which mean there is no user logged in
+        $userType = (is_null($this->subjectModel)) ? "guest" : "user";
+        $resourceModel = $this->resourceModel;
         $condition = [
-            'guest' => function (Builder $builder) {
-                $publicGroups = UserGroup::where('code', 'guest')->pluck('id')->toArray();
-                 $builder->whereHas('categories', function ($query) use ($publicGroups) {
-                    $query->orWhereIn('user_group', $publicGroups)->orWhereNull('user_group');
-                 })->orWhereDoesntHave('categories');
+            'guest' => function (Builder $builder) use ($resourceModel) {
+                $builder->where('user_group', null)->where('id', $resourceModel->id);
             },
-            'user' => function (Builder $builder) {
+            'user' => function (Builder $builder) use ($resourceModel) {
                 $groups = $this->subjectModel->groups->pluck('id')->toArray();
-                $publicCategories = Category::where('user_group', null)->pluck('id')->toArray();
-                 $builder->whereHas('categories', function (Builder $query) use ($groups, $publicCategories) {
-                    $query->orWhereIn(
-                        'user_group',
-                        array_merge($groups, $publicCategories)
-                    );
-                 })->orWhereDoesntHave('categories');
+                /** return the category that is no user_group attach (public) +
+                 * include the category that match any current logged in user_group
+                 **/
+                $builder->where('id', $resourceModel->id)->orWhereNull('user_group')
+                    ->orWhereIn('user_group', array_merge([null], $groups));
             }
 
         ];
-
+        // return a specific closure that based on current logged in user
         return $condition[$userType];
     }
 }

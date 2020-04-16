@@ -1,14 +1,17 @@
 <?php
+
+
 /**
  * Created by Li Wei Lee, on 16/4/2020.
  */
+
 namespace GodSpeed\FlametreeCMS\Policies;
 
 use October\Rain\Database\Builder;
 use RainLab\User\Facades\Auth;
 use RainLab\Blog\Models\Category;
 
-class PortalBlogCategoryPolicy extends PolicyBase
+class PortalBlogPostsPolicy extends PolicyBase
 {
 
 
@@ -25,6 +28,7 @@ class PortalBlogCategoryPolicy extends PolicyBase
             PortalBlogCategoriesPolicy::check($model);
         });
     }
+
     public static function check($resourceModel)
     {
         $instance = self::make($resourceModel);
@@ -63,19 +67,19 @@ class PortalBlogCategoryPolicy extends PolicyBase
     public function getRuleConditionClosure()
     {
         // check against the current user type, guest which mean there is no user logged in
-        $userType = (is_null($this->subjectModel))? "guest" : "user";
+        $userType = (is_null($this->subjectModel)) ? "guest" : "user";
         $resourceModel = $this->resourceModel;
         $condition = [
-            'guest' => function (Builder $builder) use($resourceModel) {
-                $builder->where('id', $resourceModel->id)->where('user_group', null);
+            'guest' => function (Builder $builder) use ($resourceModel) {
+                $builder->where('user_group', null);
             },
-            'user' => function (Builder $builder) use($resourceModel) {
+            'user' => function (Builder $builder) use ($resourceModel) {
                 $groups = $this->subjectModel->groups->pluck('id')->toArray();
                 /** return the category that is no user_group attach (public) +
                  * include the category that match any current logged in user_group
                  **/
                 $builder->where('id', $resourceModel->id)->orWhereNull('user_group')
-                        ->orWhereIn('user_group', array_merge([null], $groups));
+                    ->orWhereIn('user_group', array_merge([null], $groups));
             }
 
         ];

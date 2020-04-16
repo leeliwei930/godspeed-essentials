@@ -2,7 +2,7 @@
 
 {%  if producerCategories  %}
     {% for producerCategory in producerCategories %}
-        <div class="d-flex flex-row align-items-center">
+        <div class="d-flex flex-row align-items-center" id="{{ producerCategory.name }}">
             <img height="50px" width="50px" src="{{ producerCategory.icon.getThumb(50,50,{mode: 'fit'}) }}" alt="Icon of {{  producerCategory.name }}">
             <h5 class="my-auto text-primary font-weight-bold text-uppercase mx-3">
                 {{ producerCategory.name }}
