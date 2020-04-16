@@ -67,7 +67,7 @@ class PortalBlogCategoryPolicy extends PolicyBase
         $resourceModel = $this->resourceModel;
         $condition = [
             'guest' => function (Builder $builder) use($resourceModel) {
-                $builder->where('id', $resourceModel->id)->where('user_group', null);
+                $builder->where('user_group', null);
             },
             'user' => function (Builder $builder) use($resourceModel) {
                 $groups = $this->subjectModel->groups->pluck('id')->toArray();
