@@ -22,7 +22,7 @@ class PortalBlogCategoryPolicy extends PolicyBase
     {
 
         Category::extend(function ($model) {
-            PortalBlogCategoriesPolicy::check($model);
+            PortalBlogCategoryPolicy::check($model);
         });
     }
     public static function check($resourceModel)
