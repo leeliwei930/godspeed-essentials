@@ -1,6 +1,6 @@
 {% set teams = __SELF__.teamMembers %}
 
-{% if teams is not empty %}
+{% if teams is not  empty %}
     <div class="d-flex flex-row flex-wrap justify-content-start mx-auto w-75">
 
         {% for index, team in teams %}
@@ -17,5 +17,13 @@
             </div>
 
         {% endfor %}
+    </div>
+
+{% else %}
+    <div class="d-flex justify-content-center flex-column align-items-center">
+        <i class="fas fa-users fa-3x text-primary"></i>
+        <p class="my-2 w-50 text-center">You don't have any team member right now, if you are a site administrator, you are able to add it by proceeding to the backend administrator management page and assign the role with
+            {{ __SELF__.group }}
+        </p>
     </div>
 {% endif %}

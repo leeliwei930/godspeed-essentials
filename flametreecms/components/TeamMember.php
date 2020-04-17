@@ -6,7 +6,7 @@ use Cms\Classes\ComponentBase;
 class TeamMember extends ComponentBase
 {
     public $teamMembers = [];
-
+    public $group;
     public function componentDetails()
     {
         return [
@@ -35,8 +35,9 @@ class TeamMember extends ComponentBase
     {
         $groupID = $this->property('groupName');
         $teamMembers = UserGroup::with(['users' , 'users.role'])->find($groupID);
-
         if (!is_null($teamMembers)) {
+            $this->group = $teamMembers->title;
+
             $this->teamMembers = $teamMembers['users'];
         }
     }
