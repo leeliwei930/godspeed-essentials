@@ -1,21 +1,16 @@
 {% set producers = __SELF__.producers  %}
 
 {% if producers %}
-    <div class="d-flex flex-row flex-wrap justify-content-around">
     {% for producer in producers %}
-        <div class="col-12 col-lg-3 col-md-6">
             <producer-card
                 width="320px"
                 origin="{{ producer.origin }}"
                 name="{{ producer.name }}"
-                gradient="linear-gradient(0deg, rgba(247, 183, 51, 1), rgba(240, 80, 51, 1))"
 
             >
 
             </producer-card>
-        </div>
     {% endfor %}
-    </div>
 {% else %}
 
 

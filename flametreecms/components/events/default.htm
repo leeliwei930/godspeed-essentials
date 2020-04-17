@@ -18,10 +18,10 @@
     {% endif %}
     </div>
         {% if events.count() > 0 %}
-            <div class="d-flex flex-column col-12 col-lg-9 " >
+            <div class="d-flex flex-column flex-grow-1" >
                 {% for index,event in events %}
                     <event-card
-                        class="my-3"
+                        class="my-3 mx-1"
                         started-at="{{ event.started_at }}"
                         ended-at="{{ event.ended_at }}"
 
