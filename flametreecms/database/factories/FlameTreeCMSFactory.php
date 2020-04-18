@@ -23,6 +23,7 @@ use GodSpeed\FlametreeCMS\Models\Training;
 use GodSpeed\FlametreeCMS\Models\Video;
 use GodSpeed\FlametreeCMS\Utils\Providers\YoutubeVideoProvider;
 use Illuminate\Support\Str;
+use RainLab\Blog\Models\Category;
 use RainLab\Blog\Models\Post;
 use RainLab\User\Models\UserGroup;
 
@@ -111,11 +112,10 @@ $factory->define(Post::class, function (Faker $faker) {
     ];
 });
 
-
 $factory->define(Event::class, function (Faker $faker) {
     $title = $faker->unique()->sentence(15);
     $description = $faker->paragraph(3);
-    $now = Carbon::parse( $faker->dateTimeThisDecade()->format("Y-m-d H:i"));
+    $now = Carbon::parse($faker->dateTimeThisDecade()->format("Y-m-d H:i"));
     $content = $faker->sentence(15);
     return [
         'title' => $title,
@@ -154,3 +154,13 @@ $factory->define(Referral::class, function (Faker $faker) {
         'user_group_id' => $role->id
     ];
 });
+
+$factory->define(Category::class, function (Faker $faker) {
+    $name = $faker->text(15);
+    return [
+        'name' => $name,
+        'slug' => Str::slug($name),
+        'code' => Str::snake($name, '-'),
+    ];
+});
+
