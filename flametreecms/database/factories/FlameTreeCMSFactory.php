@@ -23,7 +23,7 @@ use GodSpeed\FlametreeCMS\Models\Training;
 use GodSpeed\FlametreeCMS\Models\Video;
 use GodSpeed\FlametreeCMS\Utils\Providers\YoutubeVideoProvider;
 use Illuminate\Support\Str;
-use RainLab\Blog\Models\Category;
+
 use RainLab\Blog\Models\Post;
 use RainLab\User\Models\UserGroup;
 
@@ -155,12 +155,5 @@ $factory->define(Referral::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(Category::class, function (Faker $faker) {
-    $name = $faker->text(15);
-    return [
-        'name' => $name,
-        'slug' => Str::slug($name),
-        'code' => Str::snake($name, '-'),
-    ];
-});
+
 

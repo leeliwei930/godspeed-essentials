@@ -18,6 +18,9 @@ class FactorySeeder extends Seeder
 
     public function run()
     {
+        if (env('APP_ENV') === 'acceptance') {
+            return;
+        }
 
         // create faqs
         factory(\GodSpeed\FlametreeCMS\Models\FaqCategory::class, 3)->create()
@@ -46,7 +49,7 @@ class FactorySeeder extends Seeder
             $training->user_group()->attach($roles);
         });
 
-        factory(Referral::class, 80)->create()->each(function($referral){
+        factory(Referral::class, 80)->create()->each(function ($referral) {
 
         });
     }

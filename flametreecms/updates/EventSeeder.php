@@ -15,7 +15,7 @@ class EventSeeder extends Seeder
             'timezone' => "Australia/Sydney"
         ]);
 
-        $volunteerRole = UserGroup::where('name', 'volunteer')->first();
+        $volunteerRole = UserGroup::where('code', 'volunteer')->first();
         collect($events)->each(function ($event) use ($volunteerRole) {
             $event->user_group()->attach([$volunteerRole->id]);
         });

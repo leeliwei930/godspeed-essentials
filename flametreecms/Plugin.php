@@ -2,6 +2,7 @@
 
 use Backend;
 use BackendMenu;
+use GodSpeed\FlametreeCMS\Console\Test;
 use GodSpeed\FlametreeCMS\Models\ProducerCategory;
 use GodSpeed\FlametreeCMS\Policies\PortalBlogPostPolicy;
 use GodSpeed\FlametreeCMS\Utils\LazyLoad\AttachmentPlaceholderGenerator;
@@ -73,6 +74,7 @@ class Plugin extends PluginBase
     public function register()
     {
         app(EloquentFactory::class)->load(plugins_path('godspeed/flametreecms/database/factories'));
+        $this->registerConsoleCommand('flametreecms:test', Test::class);
     }
 
     /**
@@ -83,10 +85,12 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
-        $pluginManagerInstance = PluginManager::instance();
         // extend users importer
+        $pluginManagerInstance = PluginManager::instance();
         if ($pluginManagerInstance->hasPlugin('RainLab.User')) {
-            $this->extendingRainLabUserPlugin();
+            if (\Schema::hasTable('users')) {
+                $this->extendingRainLabUserPlugin();
+            }
         }
 
 
@@ -95,8 +99,12 @@ class Plugin extends PluginBase
         }
 
         if ($pluginManagerInstance->hasPlugin('RainLab.Blog')) {
-            $this->extendBlogCategoriesFormField();
+            if (\Schema::hasTable('rainlab_blog_categories')) {
+                $this->extendBlogCategoriesFormField();
+            }
         }
+
+
     }
 
     /**
@@ -187,7 +195,7 @@ class Plugin extends PluginBase
                         'icon' => 'icon-ticket',
                         'url' => Backend::url('godspeed/flametreecms/referrals'),
                         'permissions' => [
-                                'godspeed.flametreecms.browse_referrals'
+                            'godspeed.flametreecms.browse_referrals'
                         ]
 
                     ],

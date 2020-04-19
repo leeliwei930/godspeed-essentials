@@ -52,7 +52,7 @@ class ScaffoldTeamMember extends Seeder
         $group = UserGroup::create($groups);
 
         self::generateBackendUser($roles['volunteer']['code'], $groups['name']);
-        self::generateBackendUser($roles['volunteer']['name'], $groups['name']);
+        self::generateBackendUser($roles['volunteer']['code'], $groups['name']);
         self::generateBackendUser($roles['volunteer']['code'], $groups['name']);
         self::generateBackendUser($roles['volunteer']['code'], $groups['name']);
         self::generateBackendUser($roles['volunteer']['code'], $groups['name']);
@@ -104,7 +104,7 @@ class ScaffoldTeamMember extends Seeder
         return UserGroup::where('name', $groupName)->first();
     }
 
-    private static function tearDown()
+private static function tearDown()
     {
         // delete backend user
         $group = UserGroup::with('users')->where('name', self::GROUP['name'])->first();

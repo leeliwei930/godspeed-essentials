@@ -9,6 +9,9 @@ class ProductsSeeder extends Seeder
 {
     public function run()
     {
+        if (env('APP_ENV') === 'acceptance') {
+            return;
+        }
        $productCategories = [
            "Fresh Fruit and Vegetable" => [
                 [
