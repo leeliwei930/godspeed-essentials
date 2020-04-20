@@ -8,6 +8,7 @@
 namespace GodSpeed\FlametreeCMS\Policies;
 
 use October\Rain\Database\Builder;
+use RainLab\Blog\Models\Post;
 use RainLab\User\Facades\Auth;
 use RainLab\Blog\Models\Category;
 
@@ -24,8 +25,8 @@ class PortalBlogPostsPolicy extends PolicyBase
     public static function guard()
     {
 
-        Category::extend(function ($model) {
-            PortalBlogCategoriesPolicy::check($model);
+        Post::extend(function ($model) {
+            PortalBlogPostsPolicy::check($model);
         });
     }
 
@@ -71,15 +72,18 @@ class PortalBlogPostsPolicy extends PolicyBase
         $resourceModel = $this->resourceModel;
         $condition = [
             'guest' => function (Builder $builder) use ($resourceModel) {
-                $builder->where('user_group', null);
-            },
+                $builder->whereDoesntHave('categories')->orWhereHas('categories', function ($builder) use ($resourceModel) {
+                    $builder->where('user_group', null);
+                });            },
             'user' => function (Builder $builder) use ($resourceModel) {
                 $groups = $this->subjectModel->groups->pluck('id')->toArray();
                 /** return the category that is no user_group attach (public) +
                  * include the category that match any current logged in user_group
                  **/
-                $builder->where('id', $resourceModel->id)->orWhereNull('user_group')
-                    ->orWhereIn('user_group', array_merge([null], $groups));
+
+                $builder->whereDoesntHave('categories')->orWhereHas('categories', function ($builder) use ($resourceModel, $groups) {
+                    $builder->whereIn('user_group', array_merge([null], $groups));
+                });
             }
 
         ];
