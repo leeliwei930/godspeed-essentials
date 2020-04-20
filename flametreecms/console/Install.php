@@ -7,13 +7,14 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Illuminate\Database\Eloquent\Factory as EloquentFactory;
 use System\Classes\PluginManager;
+use System\Classes\UpdateManager;
 
-class Test extends Command
+class Install extends Command
 {
     /**
      * @var string The console command name.
      */
-    protected $name = 'flametreecms:test';
+    protected $name = 'flametreecms:install';
 
 
 
@@ -31,18 +32,25 @@ class Test extends Command
         app(EloquentFactory::class)->load(plugins_path('godspeeed/flametreecms/database/factories'));
 
 
-        if(!\Schema::hasTable('system_settings')){
+        if (!\Schema::hasTable('system_settings')) {
+            $this->call('october:up');
+        } else {
 
-            $this->call('october:up', [ '--env' => 'acceptance']);
-            $this->call('plugin:refresh', ['name' => 'GodSpeed.FlametreeCMS', '--env' => 'acceptance']);
+            $manager = UpdateManager::instance()->setNotesOutput($this->output);
+
+
+            $this->output->writeln('<info>Reinstalling plugin...</info>');
+            $manager->updatePlugin('RainLab.Pages');
+
+            $manager->updatePlugin('RainLab.User');
+            $manager->updatePlugin('RainLab.Blog');
+            $manager->updatePlugin('SureSoftware.PowerSEO');
+
+            $manager->updatePlugin('GodSpeed.FlametreeCMS');
 
         }
-        Theme::setActiveTheme('flametree-theme');
 
-
-
-
-
+        $this->call('theme:use', ['name' => 'flametree-theme']);
     }
 
     /**

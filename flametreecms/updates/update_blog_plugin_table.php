@@ -9,7 +9,7 @@ class UpdateBlogPlugin extends Migration
 {
     public function up()
     {
-        if (PluginManager::instance()->hasPlugin('RainLab.Blog')) {
+        if (Schema::hasTable('rainlab_blog_categories')) {
             Schema::table('rainlab_blog_categories', function (Blueprint $table) {
                 $table->string('featured_image')->nullable()->after('description');
                 $table->unsignedInteger('user_group')->nullable()->after('id');
@@ -19,7 +19,7 @@ class UpdateBlogPlugin extends Migration
 
     public function down()
     {
-        if (PluginManager::instance()->hasPlugin('RainLab.Blog')) {
+        if(Schema::hasTable('rainlab_blog_categories')){
             Schema::table('rainlab_blog_categories', function (Blueprint $table) {
                 if (Schema::hasColumn('rainlab_blog_categories', 'featured_image')) {
                     $table->dropColumn('featured_image');
@@ -29,5 +29,6 @@ class UpdateBlogPlugin extends Migration
                 }
             });
         }
+
     }
 }

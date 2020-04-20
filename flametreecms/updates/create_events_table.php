@@ -29,19 +29,25 @@ class CreateMeetingsTable extends Migration
 
             $table->primary(['member_role_id', 'event_id'], 'godspeed_flametreecms_pk_event_role');
             $table->foreign('event_id', 'godspeed_flametreecms_event_role')
-                    ->references('id')
-                    ->on('godspeed_flametreecms_events')
-                    ->onDelete('cascade');
+                ->references('id')
+                ->on('godspeed_flametreecms_events')
+                ->onDelete('cascade');
 
             $table->foreign('member_role_id', 'godspeed_flametreecms_role_event')
-                    ->references('id')
-                    ->on('user_groups')
-                    ->onDelete('cascade');
+                ->references('id')
+                ->on('user_groups')
+                ->onDelete('cascade');
         });
     }
 
     public function down()
     {
+        if (Schema::hasTable('godspeed_flametreecms_events_roles')) {
+            Schema::table('godspeed_flametreecms_events_roles', function (Blueprint $table) {
+                $table->dropForeign('godspeed_flametreecms_event_role');
+                $table->dropForeign('godspeed_flametreecms_role_event');
+            });
+        }
         Schema::dropIfExists('godspeed_flametreecms_events_roles');
         Schema::dropIfExists('godspeed_flametreecms_events');
     }

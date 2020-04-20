@@ -35,6 +35,12 @@ class CreateProductCategoriesTable extends Migration
 
     public function down()
     {
+        if(Schema::hasTable('godspeed_flametreecms_producer_categories_pivot')) {
+            Schema::table('godspeed_flametreecms_producer_categories_pivot', function (Blueprint $table) {
+                $table->dropForeign('godspeed_flametreecms_fk_producer_category');
+                $table->dropForeign('godspeed_flametreecms_fk_category_producer');
+            });
+        }
         Schema::dropIfExists('godspeed_flametreecms_producer_categories_pivot');
         Schema::dropIfExists('godspeed_flametreecms_producer_categories');
 

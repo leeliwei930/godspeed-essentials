@@ -37,6 +37,12 @@ class CreateVideoPlaylistsTable extends Migration
 
     public function down()
     {
+        if(Schema::hasTable('godspeed_flametreecms_video_playlists')){
+            Schema::table('godspeed_flametreecms_video_playlists', function(Blueprint $table){
+                $table->dropForeign('godspeed_flametreecms_vID_fg');
+                $table->dropForeign('godspeed_flametreecms_pID_fg');
+            });
+        }
         Schema::dropIfExists("godspeed_flametreecms_video_playlists");
         Schema::dropIfExists('godspeed_flametreecms_playlists');
 

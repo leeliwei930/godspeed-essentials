@@ -21,7 +21,7 @@ class CreateFaqCategoriesTable extends Migration
             $table->unsignedInteger('faq_id');
             $table->unsignedInteger('faq_category_id');
 
-            $table->primary(['faq_id' , 'faq_category_id'], 'godspeed_flametreecms_faq_category_cpk');
+            $table->primary(['faq_id', 'faq_category_id'], 'godspeed_flametreecms_faq_category_cpk');
 
             $table->foreign('faq_id', "godspeed_flametreecms_faq_fk")
                 ->references('id')
@@ -37,6 +37,12 @@ class CreateFaqCategoriesTable extends Migration
 
     public function down()
     {
+        if (Schema::hasTable('godspeed_flametreecms_faq_categories_pivot')) {
+            Schema::table('godspeed_flametreecms_faq_categories_pivot', function (Blueprint $table) {
+                $table->dropForeign('godspeed_flametreecms_faq_fk');
+                $table->dropForeign('godspeed_flametreecms_faq_category_fk');
+            });
+        }
         Schema::dropIfExists('godspeed_flametreecms_faq_categories_pivot');
         Schema::dropIfExists('godspeed_flametreecms_faq_categories');
     }

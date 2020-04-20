@@ -49,6 +49,11 @@ class CreateReferralsTable extends Migration
                 });
             }
         }
+        if(Schema::hasTable('godspeed_flametreecms_referrals')){
+            Schema::table('godspeed_flametreecms_referrals', function(Blueprint $table) {
+                $table->dropForeign(['user_group_id']);
+            });
+        }
         Schema::dropIfExists('godspeed_flametreecms_referrals');
     }
 }

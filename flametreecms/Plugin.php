@@ -2,7 +2,9 @@
 
 use Backend;
 use BackendMenu;
+use GodSpeed\FlametreeCMS\Console\Install;
 use GodSpeed\FlametreeCMS\Console\Test;
+use GodSpeed\FlametreeCMS\Console\Uninstall;
 use GodSpeed\FlametreeCMS\Models\ProducerCategory;
 use GodSpeed\FlametreeCMS\Policies\PortalBlogPostPolicy;
 use GodSpeed\FlametreeCMS\Utils\LazyLoad\AttachmentPlaceholderGenerator;
@@ -74,7 +76,8 @@ class Plugin extends PluginBase
     public function register()
     {
         app(EloquentFactory::class)->load(plugins_path('godspeed/flametreecms/database/factories'));
-        $this->registerConsoleCommand('flametreecms:test', Test::class);
+        $this->registerConsoleCommand('flametreecms:install', Install::class);
+        $this->registerConsoleCommand('flametreecms:uninstall', Uninstall::class);
     }
 
     /**
@@ -99,7 +102,7 @@ class Plugin extends PluginBase
         }
 
         if ($pluginManagerInstance->hasPlugin('RainLab.Blog')) {
-            if (\Schema::hasTable('rainlab_blog_categories')) {
+            if (\Schema::hasTable('rainlab_blog_categories') && \Schema::hasColumn('rainlab_blog_categories', 'user_group')) {
                 $this->extendBlogCategoriesFormField();
             }
         }
@@ -438,6 +441,7 @@ class Plugin extends PluginBase
 
 
         Event::listen('backend.form.extendFields', function ($widget) {
+            trace_log("Get Called");
             if (!$widget->getController() instanceof \RainLab\Blog\Controllers\Categories) {
                 return;
             }

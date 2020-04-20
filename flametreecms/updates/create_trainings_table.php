@@ -22,18 +22,17 @@ class CreateTrainingsTable extends Migration
 
 
             $table->foreign('user_id', 'godspeed_flametreecms_training_backend_user')
-                    ->references('id')
-                    ->on('backend_users')
-                    ->onDelete('cascade');
+                ->references('id')
+                ->on('backend_users')
+                ->onDelete('cascade');
         });
 
         Schema::table('godspeed_flametreecms_trainings', function (Blueprint $table) {
             $table->foreign('video_playlist_id')
-                    ->references('id')
-                    ->on('godspeed_flametreecms_playlists')
-                    ->onDelete('set null');
+                ->references('id')
+                ->on('godspeed_flametreecms_playlists')
+                ->onDelete('set null');
         });
-
 
 
         Schema::create('godspeed_flametreecms_roles_trainings', function (Blueprint $table) {
@@ -41,9 +40,9 @@ class CreateTrainingsTable extends Migration
             $table->unsignedInteger('role_id');
 
             $table->foreign('training_id', 'godspeed_flametreecms_training_roles')
-                    ->references('id')
-                    ->on('godspeed_flametreecms_trainings')
-                    ->onDelete('cascade');
+                ->references('id')
+                ->on('godspeed_flametreecms_trainings')
+                ->onDelete('cascade');
 
             $table->foreign('role_id', 'godspeed_flametreecms_roles_training')
                 ->references('id')
@@ -55,7 +54,19 @@ class CreateTrainingsTable extends Migration
 
     public function down()
     {
+        if (Schema::hasTable('godspeed_flametreecms_roles_trainings')) {
+            Schema::table('godspeed_flametreecms_roles_trainings', function (Blueprint $table) {
+                $table->dropForeign('godspeed_flametreecms_training_roles');
+                $table->dropForeign('godspeed_flametreecms_roles_training');
+            });
+        }
         Schema::dropIfExists('godspeed_flametreecms_roles_trainings');
+        if (Schema::hasTable('godspeed_flametreecms_trainings')) {
+            Schema::table('godspeed_flametreecms_trainings', function (Blueprint $table) {
+                $table->dropForeign(['video_playlist_id']);
+                $table->dropForeign('godspeed_flametreecms_training_backend_user');
+            });
+        }
         Schema::dropIfExists('godspeed_flametreecms_trainings');
     }
 }
