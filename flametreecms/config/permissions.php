@@ -227,5 +227,20 @@ return [
         'label' => "Delete Image Sliders",
         'roles' => ['developer', 'publisher', 'godspeed.flametreecms.editor']
 
+    ],
+    'godspeed.flametreecms.browse_products' => [
+        'tab' => 'GodSpeed CMS',
+        'label' => "Browse Products",
+        'roles' => ['developer', 'publisher', 'godspeed.flametreecms.reviewer', 'godspeed.flametreecms.advertising_team']
+    ],
+    'godspeed.flametreecms.create_products' => [
+        'tab' => 'GodSpeed CMS',
+        'label' => "Create Products",
+        'roles' => ['developer', 'publisher', 'godspeed.flametreecms.editor', 'godspeed.flametreecms.advertising_team']
+    ],
+    'godspeed.flametreecms.edit_products' => [
+        'tab' => 'GodSpeed CMS',
+        'label' => "Edit Products",
+        'roles' => ['developer', 'publisher', 'godspeed.flametreecms.editor', 'godspeed.flametreecms.advertising_team']
     ]
 ];

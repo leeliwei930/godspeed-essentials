@@ -1,0 +1,67 @@
+<?php Block::put('breadcrumb') ?>
+<ul>
+    <li><a href="<?= Backend::url('godspeed/flametreecms/products') ?>">Products</a></li>
+    <li><?= e($this->pageTitle) ?></li>
+</ul>
+<?php Block::endPut() ?>
+
+<?php if (!$this->fatalError): ?>
+<?= Block::put('form-contents') ?>
+<div class="layout-row">
+    <?= $this->formRenderPrimaryTabs() ?>
+</div>
+
+<div class="form-buttons">
+    <div class="loading-indicator-container">
+        <button
+            type="submit"
+            data-request="onSave"
+            data-request-data="redirect:0"
+            data-hotkey="ctrl+s, cmd+s"
+            data-load-indicator="Saving Product..."
+            class="btn btn-primary">
+            <u>S</u>ave
+        </button>
+        <button
+            type="button"
+            data-request="onSave"
+            data-request-data="close:1"
+            data-hotkey="ctrl+enter, cmd+enter"
+            data-load-indicator="Saving Product..."
+            class="btn btn-default">
+            Save and Close
+        </button>
+        <button
+            type="button"
+            class="oc-icon-trash-o btn-icon danger pull-right"
+            data-request="onDelete"
+            data-load-indicator="Deleting Product..."
+            data-request-confirm="Delete this product?">
+        </button>
+        <span class="btn-text">
+                    or <a href="<?= Backend::url('godspeed/flametreecms/products') ?>">Cancel</a>
+                </span>
+    </div>
+</div>
+<?= Block::endPut(); ?>
+
+<?= Block::put('form-sidebar') ?>
+<div class="hide-tabs">
+    <?= $this->formRenderSecondaryTabs() ?>
+</div>
+<?= Block::endPut() ?>
+<?= Block::put('body') ?>
+
+<?= Form::open(['class' => 'layout stretch']) ?>
+<?= $this->makeLayout('form-with-sidebar') ?>
+
+<?= Form::close() ?>
+<?= Block::endPut() ?>
+
+<?php else: ?>
+
+<p class="flash-message static error"><?= e($this->fatalError) ?></p>
+<p><a href="<?= Backend::url('godspeed/flametreecms/products') ?>" class="btn btn-default">Return to products list</a>
+</p>
+
+<?php endif ?>

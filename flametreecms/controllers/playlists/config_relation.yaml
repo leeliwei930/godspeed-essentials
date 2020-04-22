@@ -7,4 +7,12 @@ videos:
         list: $/godspeed/flametreecms/models/video/columns.yaml
         form: $/godspeed/flametreecms/models/video/modal_fields.yaml
 
+products:
+    label: Products
+    view:
+        list: $/godspeed/flametreecms/models/product/columns.yaml
+        toolbarButtons: add|remove|create
+    manage:
+        list: $/godspeed/flametreecms/models/product/columns.yaml
+        form: $/godspeed/flametreecms/models/product/modal_fields.yaml
 

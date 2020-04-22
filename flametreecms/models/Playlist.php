@@ -31,17 +31,19 @@ class Playlist extends Model
      */
     public $hasOne = [];
     public $hasMany = [
-
+        'products' => [
+            Product::class, "table" => "godspeed_flametreecms_products"
+        ]
     ];
     public $belongsTo = [];
 
     public $belongsToMany = [
         'videos' => [
-            "\GodSpeed\FlametreeCMS\Models\Video" , "table" => "godspeed_flametreecms_video_playlists"
-        ]
+            "\GodSpeed\FlametreeCMS\Models\Video", "table" => "godspeed_flametreecms_video_playlists"
+        ],
     ];
 
-    public $rules =  [
+    public $rules = [
         'name' => "required|unique:godspeed_flametreecms_playlists,name"
     ];
 

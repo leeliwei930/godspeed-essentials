@@ -24,7 +24,6 @@ class FrontendUserGroupSeeder extends \Seeder
                         'surname' => "Dev",
                         'email' => 'volunteer@mail.com',
                         'password' => 'secret123',
-                        'is_guest' => 0
 
                 ]
             ],
@@ -38,7 +37,6 @@ class FrontendUserGroupSeeder extends \Seeder
                         'email' => "member@mail.com",
                         'password' => 'secret123',
 
-                        'is_guest' => 0
                 ]
             ]
         ];

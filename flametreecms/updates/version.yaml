@@ -44,6 +44,11 @@
 1.0.8:
 - Create QR Code Manager
 - create_q_r_codes_table.php
+
+1.0.9:
+- Create Product and Categories
+- create_products_table.php
+- create_product_categories_table.php
 - ScaffoldTeamMember.php
 - AnnouncementCategoriesSeeder.php
 - FrontendUserGroupSeeder.php

@@ -1,0 +1,23 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: Name
+        type: text
+        span: left
+    slug:
+        label: Slug
+        preset:
+            field: name
+            type: slug
+        span: right
+    description:
+        label: Description
+        type: richeditor
+
+    _products:
+        label: Products
+        type: partial
+        path: $/godspeed/flametreecms/controllers/productcategories/products.htm

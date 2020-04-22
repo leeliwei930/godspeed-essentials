@@ -7,20 +7,14 @@ use GodSpeed\FlametreeCMS\Console\Test;
 use GodSpeed\FlametreeCMS\Console\Uninstall;
 use GodSpeed\FlametreeCMS\Models\ProducerCategory;
 use GodSpeed\FlametreeCMS\Policies\PortalBlogPostPolicy;
+use GodSpeed\FlametreeCMS\Traits\AcceptanceTestingTrait;
 use GodSpeed\FlametreeCMS\Utils\LazyLoad\AttachmentPlaceholderGenerator;
 use GodSpeed\FlametreeCMS\Utils\Lazyload\LazyloadImage;
-use GodSpeed\FlametreeCMS\Utils\VideoMeta\Video;
-use GodSpeed\FlametreeCMS\Models\Video as VideoModel;
 use GodSpeed\FlametreeCMS\Models\ProducerCategory as ProducerCategoryModel;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Validator;
 
-use October\Rain\Database\Builder;
-use October\Rain\Database\Model;
 
 use RainLab\Blog\Models\Category;
-use RainLab\Blog\Models\Post;
-use RainLab\User\Facades\Auth;
 use RainLab\User\Models\User;
 use RainLab\User\Models\UserGroup;
 use System\Classes\PluginBase;
@@ -38,6 +32,7 @@ class Plugin extends PluginBase
      *
      * @return array
      */
+    use AcceptanceTestingTrait;
     public $require = [
         'RainLab.User',
         'RainLab.Blog',
@@ -107,6 +102,11 @@ class Plugin extends PluginBase
             }
         }
 
+        if(env('APP_ENV') === 'acceptance'){
+            $this->bootAcceptanceTesting();
+        }
+
+
 
     }
 
@@ -174,7 +174,7 @@ class Plugin extends PluginBase
             'flametreecms' => [
                 'label' => 'GodSpeed CMS',
                 'url' => Backend::url('godspeed/flametreecms/producers'),
-                'icon' => 'icon-leaf',
+                'icon' => 'icon-window-restore',
                 'order' => 500,
                 "sideMenu" => [
                     "producers" => [
@@ -183,6 +183,14 @@ class Plugin extends PluginBase
                         "url" => Backend::url("godspeed/flametreecms/producers"),
                         'permissions' => [
                             'godspeed.flametreecms.browse_producers'
+                        ]
+                    ],
+                    "products" => [
+                        "label" => "Products",
+                        "icon" => 'icon-shopping-bag',
+                        "url" => Backend::url("godspeed/flametreecms/products"),
+                        'permissions' => [
+                            'godspeed.flametreecms.browse_products'
                         ]
                     ],
                     "specialorders" => [
@@ -441,7 +449,7 @@ class Plugin extends PluginBase
 
 
         Event::listen('backend.form.extendFields', function ($widget) {
-            trace_log("Get Called");
+
             if (!$widget->getController() instanceof \RainLab\Blog\Controllers\Categories) {
                 return;
             }

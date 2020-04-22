@@ -32,7 +32,7 @@ class Install extends Command
         app(EloquentFactory::class)->load(plugins_path('godspeeed/flametreecms/database/factories'));
 
 
-        if (!\Schema::hasTable('system_settings')) {
+        if (!\Schema::hasTable('backend_users')) {
             $this->call('october:up');
         } else {
 
@@ -50,7 +50,10 @@ class Install extends Command
 
         }
 
-        $this->call('theme:use', ['name' => 'flametree-theme']);
+        if(Theme::getActiveThemeCode() !== 'flametree-theme'){
+            $this->call('theme:use', ['name' => 'flametree-theme']);
+
+        }
     }
 
     /**

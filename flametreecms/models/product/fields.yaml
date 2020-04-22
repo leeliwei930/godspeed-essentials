@@ -1,0 +1,101 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+tabs:
+    fields:
+        is_active:
+            type: checkbox
+            label: Product Is Active
+            span: full
+            default: 1
+            tab: General
+        name:
+            type: text
+            label: Name
+            span: left
+            tab: General
+        slug:
+            label: Slug
+            span: right
+            tab: General
+            preset:
+                field: name
+                type: slug
+        description:
+            type: richeditor
+            label: Description
+            span: full
+            tab: General
+
+        images:
+            label: Images
+            type: repeater
+            prompt: Add new image
+            tab: General
+            form:
+                fields:
+                    image:
+                        type: mediafinder
+                        mode: image
+        video_playlist:
+            label: Playlist
+            commentAbove: If you wish to create a video playlist please proceed to <a target="_blank" href="/backend/godspeed/flametreecms/playlists/">Playlist Manager</a>
+            commentHtml: true
+            type: relation
+            namedFrom: name
+            tab: General
+            emptyOption: No Playlist Selected
+
+        product_categories:
+            label: Product Categories
+            tab: General
+            type: partial
+            path: $/godspeed/flametreecms/controllers/products/product_categories.htm
+        features:
+            label: Feature List
+            tab: Product Features
+            type: repeater
+            form:
+                fields:
+                    title:
+                        type: text
+                        label: Title
+                    description:
+                        type: richeditor
+                        label: Description
+
+secondaryTabs:
+    fields:
+
+        type:
+            type: dropdown
+            label: Type
+            default: product
+        price:
+            type: number
+            label: Price
+        currency:
+            type: dropdown
+            label: Currency
+
+        has_stock_limit:
+            type: checkbox
+            label: Has Stock Control
+
+        stock_left:
+            label: Stock Availability
+            type: number
+            trigger:
+                action: show
+                field: has_stock_limit
+                condition: checked
+            default: 0
+
+        billing_cycle:
+            label: Billing Cycle
+            type: radio
+            trigger:
+                action: show
+                field: type
+                condition: value[service]

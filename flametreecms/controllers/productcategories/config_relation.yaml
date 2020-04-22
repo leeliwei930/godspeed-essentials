@@ -1,0 +1,10 @@
+products:
+    label: Products
+    view:
+        toolbarButtons: link|unlink|create
+        form: $/godspeed/flametreecms/models/product/fields.yaml
+        list: $/godspeed/flametreecms/models/product/columns.yaml
+    manage:
+        form: $/godspeed/flametreecms/models/product/fields.yaml
+        list: $/godspeed/flametreecms/models/product/columns.yaml
+

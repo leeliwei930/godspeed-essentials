@@ -1,0 +1,8 @@
+categories:
+    label: Product Categories
+    view:
+        toolbarButtons: add|remove|create
+        list: $/godspeed/flametreecms/models/productcategory/columns.yaml
+    manage:
+        list: $/godspeed/flametreecms/models/productcategory/columns.yaml
+        form: $/godspeed/flametreecms/models/productcategory/modal_fields.yaml

@@ -3,6 +3,7 @@
 use Backend\Models\User;
 use Backend\Models\UserGroup;
 use Backend\Models\UserRole;
+use Backend\Models\UserRole as Role;
 use Seeder;
 
 class ScaffoldTeamMember extends Seeder
@@ -10,14 +11,24 @@ class ScaffoldTeamMember extends Seeder
 
 
     const GROUP = [
-        'name' =>  "FlameTree Community Food Co-Op"
+        'name' => "FlameTree Community Food Co-Op"
     ];
     const ROLES = [
         'advertising-team' => [
             'name' => "Advertising Team",
             'code' => 'godspeed.flametreecms.advertising_team'
+        ],
+        'reviewer' => [
+            'name' => "Reviewer",
+            'code' => 'godspeed.flametreecms.reviewer'
+        ],
+
+        'editor' => [
+            'name' => "Editor",
+            'code' => 'godspeed.flametreecms.editor'
         ]
     ];
+
     public function run()
     {
 
@@ -29,24 +40,28 @@ class ScaffoldTeamMember extends Seeder
         $groups = self::GROUP;
 
 
-
-
+        $roles = self::ROLES;
+        collect($roles)->each(function ($role){
+            $roleObj = Role::where('code' , $role['code']);
+            if(!is_null($roleObj)){
+                Role::create($role);
+            }
+        });
         $group = UserGroup::create($groups);
-
 
 
         $this->generateBackendUser($roles['advertising-team']['code'], $groups['name']);
         $this->generateBackendUser($roles['advertising-team']['code'], $groups['name']);
     }
 
-    private  function generateBackendUser($role, $group, $options = [
+    private function generateBackendUser($role, $group, $options = [
         'first_name' => null,
         'last_name' => null,
         'email' => null,
         'password' => null
     ])
     {
-        $faker =  new \Faker\Generator();
+        $faker = new \Faker\Generator();
         $faker->addProvider(new \Faker\Provider\en_US\Person($faker));
         $faker->addProvider(new \Faker\Provider\en_AU\Internet($faker));
 
@@ -68,21 +83,20 @@ class ScaffoldTeamMember extends Seeder
         return $user;
     }
 
-    private  function getRole($roleCode)
+    private function getRole($roleCode)
     {
         return UserRole::where('code', $roleCode)->first();
     }
 
-    private  function getGroup($groupName)
+    private function getGroup($groupName)
     {
         return UserGroup::where('name', $groupName)->first();
     }
 
-private  function tearDown()
+    private function tearDown()
     {
         // delete backend user
         $group = UserGroup::with('users')->where('name', self::GROUP['name'])->first();
-
         if (!is_null($group)) {
             collect($group->users)->each(function ($user) {
                 $user->forceDelete();
@@ -91,9 +105,13 @@ private  function tearDown()
         }
         // delete role
 
-
-
-
+        $roles = self::ROLES;
+        collect($roles)->each(function ($role){
+            $roleObj = Role::where('code' , $role['code']);
+            if(!is_null($roleObj)){
+                $roleObj->delete();
+            }
+        });
 
     }
 }

@@ -46,7 +46,12 @@ class Video extends Model
     ];
     public $morphTo = [];
     public $morphOne = [];
-    public $morphMany = [];
+    public $morphMany = [
+        'videos' => [
+            Video::class, "name" => 'ProductVideos'
+        ]
+
+    ];
     public $attachOne = [];
     public $attachMany = [];
 
