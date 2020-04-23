@@ -6,6 +6,11 @@ fields:
     name:
         label: Name
         type: text
+    slug:
+        label: Slug
+        preset:
+            field: name
+            type: slug
     origin:
         label: Origin
         type: text

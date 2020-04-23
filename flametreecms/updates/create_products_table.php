@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
             $table->json('features')->nullable();
             $table->json('images')->nullable();
             $table->unsignedInteger('video_playlist_id')->nullable();
+            $table->unsignedInteger('producer_id')->nullable();
             $table->boolean('is_active');
             $table->timestamps();
 
@@ -30,6 +31,11 @@ class CreateProductsTable extends Migration
                 ->references('id')
                 ->on('godspeed_flametreecms_playlists')
                 ->onDelete('set null');
+
+            $table->foreign('producer_id', 'godspeed_flametreecms_products_producer_fk')
+                    ->references('id')
+                    ->on('godspeed_flametreecms_producers')
+                    ->onDelete('set null');
         });
     }
 
@@ -40,6 +46,13 @@ class CreateProductsTable extends Migration
         ) {
             Schema::table('godspeed_flametreecms_products', function (Blueprint $table) {
                 $table->dropForeign('godspeed_flametreecms_products_video_fk');
+            });
+        }
+        if (Schema::hasTable('godspeed_flametreecms_products') &&
+            Schema::hasColumn('godspeed_flametreecms_products', 'producer_id')
+        ) {
+            Schema::table('godspeed_flametreecms_products', function (Blueprint $table) {
+                $table->dropForeign('godspeed_flametreecms_products_producer_fk');
             });
         }
         Schema::dropIfExists('godspeed_flametreecms_products');

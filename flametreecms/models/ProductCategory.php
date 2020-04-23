@@ -32,7 +32,7 @@ class ProductCategory extends Model
             'required', 'between:3,255'
         ],
         'description' => [
-            'required', 'max:65535'
+            'max:65535'
         ]
     ];
 

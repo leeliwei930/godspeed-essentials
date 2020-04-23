@@ -31,8 +31,10 @@ $factory->define(Producer::class, function (Faker $faker) {
     $faker->addProvider(new Address($faker));
     $faker->addProvider(new Lorem($faker));
     $faker->addProvider(new Internet($faker));
+    $name = $faker->word;
     return [
-        "name" => $faker->word,
+        "name" => $name,
+        "slug" => Str::slug($name),
         "origin" => $faker->state,
         "website" => $faker->url
     ];

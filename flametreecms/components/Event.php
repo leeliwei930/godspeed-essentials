@@ -60,7 +60,10 @@ class Event extends ComponentBase
     public function onRun()
     {
         $this->prepareVars();
-
+        if(is_null($this->event)){
+            $this->setStatusCode(404);
+            $this->controller->run("404");
+        }
     }
 
     /**

@@ -21,7 +21,7 @@ class Producer extends Model
      * @var array Fillable fields
      */
     protected $fillable = [
-        'name' , "origin", "website", "featured_image"
+        'name' , "origin", "website", "featured_image", "slug"
     ];
 
     protected $rules = [
@@ -37,7 +37,12 @@ class Producer extends Model
      */
     public $hasOne = [];
 
-    public $hasMany = [];
+    public $hasMany = [
+        "products" => [
+            Product::class,
+            "table"  => "godspeed_flametreecms_products"
+        ]
+    ];
     public $belongsToMany = [
         "producer_categories" => [
             'GodSpeed\FlametreeCMS\Models\ProducerCategory' ,

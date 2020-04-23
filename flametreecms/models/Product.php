@@ -47,10 +47,11 @@ class Product extends Model
         'has_stock_limit' => 'required|boolean',
         'stock_left' => 'required_if:has_stock_limit,1|numeric|min:0',
         'is_active' => 'required|boolean',
+        'slug' => 'required|unique:godspeed_flametreecms_products,slug',
         'billing_cycle' => [
             "required_if:type,services", "in:daily,weekly,monthly,annually"
         ],
-        "features.*.name" => [
+        "features.*.title" => [
             'required'
         ],
         "features.*.description" => [
@@ -73,7 +74,9 @@ class Product extends Model
     /**
      * @var array Attributes to be appended to the API representation of the model (ex. toArray())
      */
-    protected $appends = [];
+    protected $appends = [
+        'featured_image', 'price_tag'
+    ];
 
     /**
      * @var array Attributes to be removed from the API representation of the model (ex. toArray())
@@ -99,6 +102,10 @@ class Product extends Model
         'video_playlist' => [
             Playlist::class,
             "key" => 'video_playlist_id'
+        ],
+        'producer' => [
+            Producer::class,
+            'key' => 'producer_id'
         ]
     ];
     public $belongsToMany = [
@@ -115,8 +122,8 @@ class Product extends Model
     public $morphOne = [];
     public $morphMany = [
         'videos' => [
-            Video::class ,
-                'name' => "playlist videos"
+            Video::class,
+            'name' => "playlist videos"
 
         ]
     ];
@@ -136,16 +143,31 @@ class Product extends Model
         ];
     }
 
-    public function getBillingCycleOptions(){
+    public function getBillingCycleOptions()
+    {
         return [
             'daily' => 'Daily',
             'weekly' => 'Weekly',
             'monthly' => 'Monthly',
-            'yearly' => "Yearly"
+            'annually' => "Annually"
         ];
     }
 
-    public function getCurrencyOptions(){
+    public function getCurrencyOptions()
+    {
         return \Config::get('godspeed.flametreecms::currencies');
+    }
+
+    public function getFeaturedImageAttribute()
+    {
+        if (count($this->images) > 0) {
+            return $this->images[0]['image'];
+        } else {
+            return null;
+        }
+    }
+
+    public function getPriceTagAttribute(){
+        return money_format($this->currency . " %i" , $this->price);
     }
 }

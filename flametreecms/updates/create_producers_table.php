@@ -12,6 +12,7 @@ class CreateProducersTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name');
+            $table->string('slug')->unique();
             $table->string('origin');
             $table->string('website')->nullable();
             $table->string('featured_image')->default('default.png');

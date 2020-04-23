@@ -102,10 +102,9 @@ class Plugin extends PluginBase
             }
         }
 
-        if(env('APP_ENV') === 'acceptance'){
+        if (env('APP_ENV') === 'acceptance') {
             $this->bootAcceptanceTesting();
         }
-
 
 
     }
@@ -117,37 +116,8 @@ class Plugin extends PluginBase
      */
     public function registerComponents()
     {
-        return [
-            "GodSpeed\FlametreeCMS\Components\ProducerCategoryList" => "ProducerCategoryList",
-            "GodSpeed\FlametreeCMS\Components\SpecialOrderForm" => "SpecialOrderForm",
-            "GodSpeed\FlametreeCMS\Components\VideoSection" => "VideoSection",
-            "GodSpeed\FlametreeCMS\Components\ImageSlider" => "ImageSlider",
-            "GodSpeed\FlametreeCMS\Components\AllProducer" => "AllProducer",
-            "GodSpeed\FlametreeCMS\Components\TrendingAnnouncement" => "TrendingAnnouncement",
-            "GodSpeed\FlametreeCMS\Components\BusinessContact" => "BusinessContact",
-            "GodSpeed\FlametreeCMS\Components\TeamMember" => "TeamMember",
-            "GodSpeed\FlametreeCMS\Components\VolunteerResetPassword" => "VolunteerResetPassword",
-            "GodSpeed\FlametreeCMS\Components\PrivateAnnouncements" => "PrivateAnnouncements",
-            "GodSpeed\FlametreeCMS\Components\UpdateProfile" => "UpdateProfile",
+        return config('godspeed.flametreecms::components');
 
-
-            "GodSpeed\FlametreeCMS\Components\PortalRecentPrivateAnnouncements" => "PortalRecentPrivateAnnouncements",
-            "GodSpeed\FlametreeCMS\Components\ReferralSignUp" => "ReferralSignUp",
-
-            "GodSpeed\FlametreeCMS\Components\Events" => "Events",
-            "GodSpeed\FlametreeCMS\Components\Event" => "Event",
-            "GodSpeed\FlametreeCMS\Components\UpcomingEvents" => "UpcomingEvents",
-            "GodSpeed\FlametreeCMS\Components\Trainings" => "Trainings",
-            "GodSpeed\FlametreeCMS\Components\Training" => "Training",
-
-            "GodSpeed\FlametreeCMS\Components\FaqCategories" => "FaqCategories",
-            "GodSpeed\FlametreeCMS\Components\FaqCategory" => "FaqCategory",
-
-        ]; // Remove this line to activate
-
-//        return [
-//            'GodSpeed\FlametreeCMS\Components\MyComponent' => 'myComponent',
-//        ];
     }
 
     /**
@@ -170,98 +140,7 @@ class Plugin extends PluginBase
     public function registerNavigation()
     {
 
-        return [
-            'flametreecms' => [
-                'label' => 'GodSpeed CMS',
-                'url' => Backend::url('godspeed/flametreecms/producers'),
-                'icon' => 'icon-window-restore',
-                'order' => 500,
-                "sideMenu" => [
-                    "producers" => [
-                        "label" => "Producers",
-                        "icon" => 'icon-address-book',
-                        "url" => Backend::url("godspeed/flametreecms/producers"),
-                        'permissions' => [
-                            'godspeed.flametreecms.browse_producers'
-                        ]
-                    ],
-                    "products" => [
-                        "label" => "Products",
-                        "icon" => 'icon-shopping-bag',
-                        "url" => Backend::url("godspeed/flametreecms/products"),
-                        'permissions' => [
-                            'godspeed.flametreecms.browse_products'
-                        ]
-                    ],
-                    "specialorders" => [
-                        'label' => 'Special Orders',
-                        'icon' => 'icon-inbox',
-                        'url' => Backend::url('godspeed/flametreecms/specialorders'),
-                        'permissions' => [
-                            'godspeed.flametreecms.browse_special_orders'
-                        ]
-                    ],
-                    "referrals" => [
-                        'label' => "Referrals",
-                        'icon' => 'icon-ticket',
-                        'url' => Backend::url('godspeed/flametreecms/referrals'),
-                        'permissions' => [
-                            'godspeed.flametreecms.browse_referrals'
-                        ]
-
-                    ],
-                    "events" => [
-                        'label' => "Events",
-                        'icon' => 'icon-calendar',
-                        'url' => Backend::url('godspeed/flametreecms/events'),
-                        'permissions' => [
-                            'godspeed.flametreecms.browse_events'
-                        ]
-                    ],
-                    'qrcodes' => [
-                        'label' => "QR Codes",
-                        'icon' => 'icon-qrcode',
-                        'url' => Backend::url('godspeed/flametreecms/qrcodes'),
-                        'permissions' => [
-                            'godspeed.flametreecms.browse_qrcodes'
-                        ]
-                    ],
-                    "trainings" => [
-                        'label' => "Trainings",
-                        'icon' => 'icon-rocket',
-                        'url' => Backend::url('godspeed/flametreecms/trainings'),
-                        'permissions' => [
-                            'godspeed.flametreecms.browse_trainings'
-                        ]
-                    ],
-                    "videos" => [
-                        'label' => "Videos",
-                        'icon' => 'icon-film',
-                        'url' => Backend::url('godspeed/flametreecms/videos'),
-                        'permissions' => [
-                            'godspeed.flametreecms.browse_videos'
-                        ]
-                    ],
-                    'faqs' => [
-                        "label" => "Faqs",
-                        "icon" => "icon-question-circle",
-                        "url" => Backend::url("godspeed/flametreecms/faqs"),
-                        'permissions' => [
-                            'godspeed.flametreecms.browse_faqs'
-                        ]
-                    ],
-                    "imagesliders" => [
-                        "label" => "Carousel/Image Slider",
-                        "icon" => 'icon-picture-o',
-                        "url" => Backend::url("godspeed/flametreecms/imagesliders"),
-                        'permissions' => [
-                            'godspeed.flametreecms.browse_image_sliders'
-                        ]
-                    ],
-
-                ]
-            ],
-        ];
+        return config('godspeed.flametreecms::navigations');
     }
 
     public function registerMailTemplates()
