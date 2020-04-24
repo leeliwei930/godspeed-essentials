@@ -1,0 +1,72 @@
+<div class="d-flex flex-row flex-wrap m-3">
+    {% if product.images is not empty %}
+    <div class="col-12 col-md-6 col-lg-6 overflow-hidden">
+        <image-gallery
+        data-image="{{ product.featured_image | media  }}"
+        image="{{ product.featured_image | media | resize(480, 480, {quality: 35, blur: '15'})}}"
+        >
+                {% for index,image in product.images %}
+                    <image-thumbnail
+                        index="index"
+                        data-image="{{ image.image | media }}"
+                        image="{{  image.image | media | resize(150, 150, {quality: 35, blur: '15'}) }}"
+                    >
+
+                    </image-thumbnail>
+                {% endfor %}
+        </image-gallery>
+    </div>
+
+    {%  endif %}
+    <div class="col-12 {{ product.images is not empty ? 'col-md-6 col-lg-6' : null }}  my-3">
+
+        <div class="d-flex justify-content-between align-items-baseline">
+            <h1 class="text-primary">
+                {{ product.name }}
+            </h1>
+            <h2 class="text-secondary">
+                <i class="fas fa-dollar-sign"></i>
+                {{ product.price_tag }}
+            </h2>
+        </div>
+        <div class="d-inline-flex text-primary" >
+            <strong class="mr-1">Produced by:</strong>
+            <a class="text-link" href="{{ "producer/products"  | page({producer: product.producer.slug}) }}">{{ product.producer.name }}</a>
+        </div>
+        <hr class="separator">
+        <div  style="word-break: break-word">
+            <h3 class="text-primary">Product Description</h3>
+            {{ product.description | raw }}
+        </div>
+    </div>
+    {% if __SELF__.product.features is not empty %}
+    <div class="col-12 my-3">
+        <h3 class="text-primary my-3">Product Feature</h3>
+            {% for feature in product.features %}
+                <div class="d-flex flex-column">
+                    <h5 class="text-light-dark font-weight-bold">{{ feature.title }}</h5>
+                    <div class="content" style="word-break: break-word">
+                        {{ feature.description | raw }}
+                    </div>
+                </div>
+                <hr class="separator">
+            {% endfor %}
+
+    </div>
+
+    {% endif %}
+    {% if product.video_playlist  %}
+        <div class="col-12 my-3">
+            <h3 class="text-primary my-3">Product Videos</h3>
+            <video-gallery
+                video-list="{{ product.video_playlist.videos | json_encode }}"
+
+
+                :autoplay="false"
+
+                playlist-name="{{ product.video_playlist.name }}"
+            ></video-gallery>
+
+        </div>
+    {% endif %}
+</div>

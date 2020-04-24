@@ -168,6 +168,12 @@ class Product extends Model
     }
 
     public function getPriceTagAttribute(){
-        return money_format($this->currency . " %i" , $this->price);
+        if($this->type === 'service'){
+            return money_format($this->currency . " %i/". ucfirst($this->billing_cycle) , $this->price);
+
+        } else {
+            return money_format($this->currency . " %i", $this->price);
+
+        }
     }
 }

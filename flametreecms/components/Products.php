@@ -101,7 +101,13 @@ class Products extends ComponentBase
         $options = ['path' => $pageUrl];
         if ($this->getProducerSearchKey() === 'id') {
             $producerInfo = Producer::find($this->getProducerParameterValue());
-            $products = $this->paginate($producerInfo->products()->isActive()->get(), $this->property('products_per_page'), $this->getCurrentPage(), $options);
+            $producer_products = $producerInfo->products()->with('categories')->isActive()->get();
+            $products = $this->paginate(
+                $producer_products,
+                $this->property('products_per_page'),
+                $this->getCurrentPage(),
+                $options
+            );
             $this->products = $products;
         }
 
@@ -109,7 +115,13 @@ class Products extends ComponentBase
             $producerInfo = Producer::where('slug', $this->getProducerParameterValue())
                 ->first();
 
-            $products = $this->paginate($producerInfo->products()->isActive()->get(), $this->property('products_per_page'), $this->getCurrentPage(), $options);
+            $producer_products = $producerInfo->products()->with('categories')->isActive()->get();
+            $products = $this->paginate(
+                $producer_products,
+                $this->property('products_per_page'),
+                $this->getCurrentPage(),
+                $options
+            );
             $this->products = $products;
 
         }

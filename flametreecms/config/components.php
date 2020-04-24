@@ -26,4 +26,5 @@ return [
     "GodSpeed\FlametreeCMS\Components\FaqCategory" => "FaqCategory",
 
     "GodSpeed\FlametreeCMS\Components\Products" => "Products",
+    "GodSpeed\FlametreeCMS\Components\Product" => "Product",
 ];

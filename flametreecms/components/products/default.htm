@@ -16,18 +16,31 @@
 
                 <div class="d-flex flex-wrap py-3" id="product_list">
                     {% for product in __SELF__.products.items() %}
-                        <div class="col-12 col-md-6 col-lg-4 ">
+                        <div class="col-12 col-md-6 col-lg-4 col-xl-3 ">
                             <product-card
                                 class="my-2"
                                 data-image="{{ product.featured_image ? product.featured_image | media : null }}"
                                 image="{{ product.featured_image ? product.featured_image | media  |  resize(350, null, {quality: '15', blur : 15}) : null  }}"
-                                features="{{ product.features | json_encode }}"
+                                categories="{{ product.categories | json_encode }}"
                                 name="{{ product.name }}"
                                 price="{{ product.price_tag }}"
                             >
+                                {% if product.categories is not empty %}
+                                <template slot="categories">
+                                    <i class="fas fa-tag text-primary mr-1"></i>
+                                    {% for index,category in product.categories %}
+                                        <a href="#" class="text-link">{{ category.name }}</a>
+                                        {% if index <= product.categories.length %}
+                                        <span class="text-primary mr-1">,</span>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                </template>
+
+                                {% endif %}
 
                                 <template slot="actions">
-                                        <a href="" class="d-flex align-items-center flex-grow-1 justify-content-center  btn btn-primary rounded m-2 hover-move-right">
+                                        <a href="{{ "producer/product" | page({slug: product.slug}) }}" class="d-flex align-items-center flex-grow-1 justify-content-center  btn btn-primary rounded m-2 hover-move-right">
                                             Read More
                                         <i class="fas fa-chevron-right ml-2"></i>
                                         </a>
@@ -37,6 +50,22 @@
 
                     {% endfor %}
                 </div>
+            <div class="d-flex justify-content-center">
+                <dropdown-pagination
+                    class="col-10 col-md-4"
+                    current-page="{{ __SELF__.products.currentPage() }}"
+                    page-param="page"
+                    per-page="{{ __SELF__.products.perPage() }}"
+                    prev-page-url="{{ __SELF__.products.previousPageUrl() }}"
+                    next-page-url="{{ __SELF__.products.nextPageUrl() }}"
+                    total="{{ __SELF__.products.total() }}"
+                    @change="(e) => {
+                    $window.location.href = e.target.value;
+                    }"
+                >
+
+                </dropdown-pagination>
+            </div>
 
 
         {% else %}
