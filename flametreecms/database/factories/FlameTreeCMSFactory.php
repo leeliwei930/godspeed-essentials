@@ -1,6 +1,6 @@
 <?php
 
-namespace GodSpeed\FlametreeCMS\Database\Factories;
+
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 

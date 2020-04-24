@@ -6,7 +6,7 @@ use Seeder;
 use GodSpeed\FlametreeCMS\Models\ProducerCategory;
 
 
-class ProductsSeeder extends Seeder
+class ProducerSeeder extends Seeder
 {
     public function run()
     {

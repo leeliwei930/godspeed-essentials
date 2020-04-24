@@ -70,7 +70,8 @@ class Plugin extends PluginBase
      */
     public function register()
     {
-        app(EloquentFactory::class)->load(plugins_path('godspeed/flametreecms/database/factories'));
+        $this->app[EloquentFactory::class]->load(plugins_path('godspeed/flametreecms/database/factories'));
+
         $this->registerConsoleCommand('flametreecms:install', Install::class);
         $this->registerConsoleCommand('flametreecms:uninstall', Uninstall::class);
     }
@@ -83,6 +84,7 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
+
         // extend users importer
         $pluginManagerInstance = PluginManager::instance();
         if ($pluginManagerInstance->hasPlugin('RainLab.User')) {

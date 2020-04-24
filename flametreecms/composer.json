@@ -1,9 +1,7 @@
 {
     "name": "godspeed/flametreecms",
     "description": "A proprietary CMS designed for Flame Tree Co-op",
-    "require-dev": {
-        "laravel/dusk": "^2.0"
-    },
+
     "license": "Proprietary",
     "authors": [
         {
@@ -30,7 +28,10 @@
     "autoload": {
         "psr-4": {
             "GodSpeed\\FlametreeCMS\\Utils\\": "utils/"
-        }
+        },
+        "classmap": [
+            "database/factories"
+        ]
     },
     "require": {
         "james-heinrich/getid3": "dev-master",

@@ -1,5 +1,4 @@
 1.0.0:
-
 - Create producers and producer_categories table
 - create_producers_table.php
 - create_producer_categories_table.php
@@ -55,5 +54,5 @@
 - EventSeeder.php
 - FactorySeeder.php
 - ImageSliderSeeder.php
-- ProductsSeeder.php
+- ProducerSeeder.php
 
