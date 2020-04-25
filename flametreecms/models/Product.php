@@ -160,7 +160,7 @@ class Product extends Model
 
     public function getFeaturedImageAttribute()
     {
-        if (count($this->images) > 0) {
+        if (!is_null($this->images) && count($this->images) > 0) {
             return $this->images[0]['image'];
         } else {
             return null;

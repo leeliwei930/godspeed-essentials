@@ -23,6 +23,8 @@ use GodSpeed\FlametreeCMS\Models\Training;
 use GodSpeed\FlametreeCMS\Models\Video;
 use GodSpeed\FlametreeCMS\Utils\Providers\YoutubeVideoProvider;
 use Illuminate\Support\Str;
+use GodSpeed\FlametreeCMS\Models\Product;
+use GodSpeed\FlametreeCMS\Models\ProductCategory;
 
 use RainLab\Blog\Models\Post;
 use RainLab\User\Models\UserGroup;
@@ -157,5 +159,63 @@ $factory->define(Referral::class, function (Faker $faker) {
     ];
 });
 
+$factory->define(ProductCategory::class, function (Faker $faker) {
+    $name = $faker->unique()->text(10);
+    $description = $faker->unique()->sentences(5, true);
+    return [
+        'name' => $name,
+        'slug' => Str::slug($name),
+        'description' => "<p>$description</p>"
+    ];
+});
 
+$factory->define(Product::class, function (Faker $faker) {
+    $faker->addProvider(new \Bezhanov\Faker\Provider\Food($faker));
+    $productName = $faker->unique()->ingredient;
+    $featureTitles = $faker->unique()->words(10);
+    $featureDescription = $faker->unique()->words(10);
+    $features = collect([]);
 
+    collect($featureTitles)->each(function ($feature, $index) use ($features, $featureDescription) {
+        $features->push([
+            'title' => $feature,
+            'description' => $featureDescription[$index]
+        ]);
+    });
+
+    $isProduct = random_int(0, 1);
+    $hasStockLimit = random_int(0, 1);
+    $stockLeft = 0;
+
+    if ($hasStockLimit) {
+        $stockLeft = random_int(1, 10);
+    }
+
+    if ($isProduct) {
+        return [
+            'name' => $productName,
+            'type' => 'product',
+            'price' => random_int(5, 12),
+            'has_stock_limit' => $hasStockLimit,
+            'stock_left' => $stockLeft,
+            'is_active' => random_int(0, 1),
+            'slug' => Str::slug($productName),
+            'currency' => $faker->currencyCode,
+            'features' => $features->toArray(),
+        ];
+    } else {
+        $billingCycle = array_random(['daily', 'weekly', 'monthly', 'annually'], 1)[0];
+        return [
+            'name' => $productName,
+            'type' => 'service',
+            'price' => random_int(5, 12),
+            'has_stock_limit' => $hasStockLimit,
+            'stock_left' => $stockLeft,
+            'is_active' => random_int(0, 1),
+            'slug' => Str::slug($productName),
+            'currency' => $faker->currencyCode,
+            'billing_cycle' => $billingCycle,
+            'features' => $features->toArray(),
+        ];
+    }
+});

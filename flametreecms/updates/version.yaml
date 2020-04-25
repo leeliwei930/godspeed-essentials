@@ -52,7 +52,8 @@
 - AnnouncementCategoriesSeeder.php
 - FrontendUserGroupSeeder.php
 - EventSeeder.php
+- ProducerSeeder.php
 - FactorySeeder.php
 - ImageSliderSeeder.php
-- ProducerSeeder.php
+
 
