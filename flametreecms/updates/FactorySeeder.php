@@ -3,6 +3,9 @@
 use GodSpeed\FlametreeCMS\Models\Faq;
 use GodSpeed\FlametreeCMS\Models\FaqCategory;
 use GodSpeed\FlametreeCMS\Models\Playlist;
+use GodSpeed\FlametreeCMS\Models\Producer;
+use GodSpeed\FlametreeCMS\Models\Product;
+use GodSpeed\FlametreeCMS\Models\ProductCategory;
 use GodSpeed\FlametreeCMS\Models\Referral;
 use GodSpeed\FlametreeCMS\Models\SpecialOrder;
 use GodSpeed\FlametreeCMS\Models\Training;
@@ -51,6 +54,14 @@ class FactorySeeder extends Seeder
 
         factory(Referral::class, 80)->create()->each(function ($referral) {
 
+        });
+
+        factory(Product::class, 20)->create()->each(function ($product) {
+            $producerCategoriesID = factory(ProductCategory::class, 5)->create()->pluck('id');
+            $producer = Producer::all()->random();
+            $product->categories()->attach($producerCategoriesID);
+            $product->producer_id = $producer->id;
+            $product->save();
         });
     }
 
