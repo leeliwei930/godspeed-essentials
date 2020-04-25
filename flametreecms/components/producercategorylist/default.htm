@@ -12,16 +12,16 @@
         {% if producerCategory.producers is not empty %}
             <div class="d-flex flex-row justify-content-start flex-wrap my-3 mx-3">
                 {% for producer in producerCategory.producers %}
-                    <div class="col-xl-4 col-lg-6 col-md-6 col-12 d-flex justify-content-center">
-                        <producer-card
-                            origin="{{ producer.origin }}"
-                            name="{{ producer.name }}"
-                            image="{{ producer.featured_image | media |  resize(640, 480, {quality: '15', blur : 15})  }}"
-                            data-image="{{producer.featured_image | media}}"
-                        >
+                    <a href="{{ "producer/products" | page({producer: producer.slug}) }}" class="col-xl-4 col-lg-6 col-md-6 col-12 d-flex justify-content-center text-decoration-none">
+                            <producer-card
+                                origin="{{ producer.origin }}"
+                                name="{{ producer.name }}"
+                                image="{{ producer.featured_image | media |  resize(640, 480, {quality: '15', blur : 15})  }}"
+                                data-image="{{producer.featured_image | media}}"
+                            >
 
-                        </producer-card>
-                    </div>
+                            </producer-card>
+                    </a>
                 {% endfor %}
             </div>
         {% else %}

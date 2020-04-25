@@ -64,20 +64,14 @@ class Products extends ComponentBase
     {
 
         $this->prepareVars();
-        $producerName = optional($this->producer)->name;
 
-        if ($producerName) {
-            $this->page->title = $producerName . "'s products";
-        } else {
-            $this->setStatusCode(404);
-            return $this->controller->run('404');
-
-        }
     }
 
-    public function onRender()
+    public function throw404()
     {
 
+        $this->setStatusCode(404);
+        return $this->controller->run('404');
 
     }
 
@@ -101,6 +95,9 @@ class Products extends ComponentBase
         $options = ['path' => $pageUrl];
         if ($this->getProducerSearchKey() === 'id') {
             $producerInfo = Producer::find($this->getProducerParameterValue());
+            if (is_null($producerInfo)) {
+                return $this->throw404();
+            }
             $producer_products = $producerInfo->products()->with('categories')->isActive()->get();
             $products = $this->paginate(
                 $producer_products,
@@ -114,7 +111,9 @@ class Products extends ComponentBase
         if ($this->getProducerSearchKey() === 'slug') {
             $producerInfo = Producer::where('slug', $this->getProducerParameterValue())
                 ->first();
-
+            if (is_null($producerInfo)) {
+                return $this->throw404();
+            }
             $producer_products = $producerInfo->products()->with('categories')->isActive()->get();
             $products = $this->paginate(
                 $producer_products,

@@ -12,23 +12,16 @@ class YoutubeVideoProvider extends VideoProvider
     }
 
     const sources = [
-        "rocket" => [
-            "sZlzYzyREAI",
-            "ujX6CuRELFE",
-            "Tk338VXcb24",
-            "4jEz03Z8azc"
-        ],
-        "science" => [
-            "v3y8AIEX_dU",
-            "NMo3nZHVrZ4",
-            "WPPPFqsECz0",
-            "5iPH-br_eJQ",
-            "JhHMJCUmq28"
+
+        "flametree" => [
+            "qEdLc4klnu4",
+            "m0ZmTEDn-j4",
+            "vUB6qLGZAqc"
         ]
     ];
 
 
-    public function getVideoEmbedId($genre = "science")
+    public function getVideoEmbedId($genre = "flametree")
     {
         return collect(array_random(self::sources[$genre], 1))->first();
     }

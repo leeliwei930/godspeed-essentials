@@ -39,7 +39,8 @@ class Plugin extends PluginBase
         'RainLab.Pages',
         'SureSoftware.PowerSEO',
         'RainLab.MailChimp',
-        'AnandPatel.WysiwygEditors'
+        'AnandPatel.WysiwygEditors',
+        'Offline.SiteSearch'
     ];
 
     /**

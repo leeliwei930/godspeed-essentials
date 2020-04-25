@@ -70,7 +70,7 @@ class ProducerCategory extends Model
                     return [
                         'title' => $producer->name,
 
-                        'url' => $producer->website,
+                        'url' => $producer->slug,
                         'viewBag' => [
 
                             'origin' => $producer->origin

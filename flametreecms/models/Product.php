@@ -49,7 +49,7 @@ class Product extends Model
         'is_active' => 'required|boolean',
         'slug' => 'required|unique:godspeed_flametreecms_products,slug',
         'billing_cycle' => [
-            "required_if:type,services", "in:daily,weekly,monthly,annually"
+            "required_if:type,service", "in:daily,weekly,monthly,annually"
         ],
         "features.*.title" => [
             'required'

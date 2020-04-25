@@ -29,7 +29,7 @@ class FactorySeeder extends Seeder
             });
 
         // create video and playlist
-        factory(Playlist::class)->create(['name' => 'science'])->each(function ($playlist) {
+        factory(Playlist::class)->create(['name' => 'FLAMETREE PLAYLIST'])->each(function ($playlist) {
             $videos = factory(Video::class, 3)->create()->pluck('id')->toArray();
             $playlist->videos()->attach($videos);
         });
