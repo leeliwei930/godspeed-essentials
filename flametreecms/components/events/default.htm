@@ -1,5 +1,5 @@
 {%  set events = __SELF__.events %}
-<div class="d-flex flex-row flex-wrap-reverse align-items-end  m-3">
+<div class="d-flex flex-row align-items-baseline flex-wrap-reverse   m-3">
     <div class="d-flex flex-column col-12 col-lg-3">
     {% if timelines %}
 
@@ -18,7 +18,7 @@
     {% endif %}
     </div>
         {% if events.count() > 0 %}
-            <div class="d-flex flex-column flex-grow-1" >
+            <div class="d-flex flex-column col-12 col-lg-9 flex-grow-1" >
                 {% for index,event in events %}
                     <event-card
                         class="my-3 mx-1"
@@ -38,7 +38,7 @@
                 {% endfor %}
             </div>
         {% else %}
-            <div class="d-flex flex-column col-12 col-lg-8 align-items-center">
+            <div class="d-flex flex-column col-12 col-lg-9 align-items-center">
                 <i class="fas fa-calendar fa-3x text-primary"></i>
                 <p class="my-3">There is no events at the moment.</p>
             </div>

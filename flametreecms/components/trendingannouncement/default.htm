@@ -4,6 +4,7 @@
 <div class="d-flex flex-row flex-wrap  justify-content-around">
     {% for post in posts %}
             <announcement-basic-card
+                class="my-1"
                 :key="{{ post.id }}"
                 title="{{ post.title }}"
                 author="{{ post.user.full_name }}"
