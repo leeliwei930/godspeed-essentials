@@ -6,7 +6,7 @@
               title="{{ announcement.title }}"
               featured-image-url="{{ announcement.featured_images[0].getLocalPath() | resize(640, null) }}"
               data-featured-image-url="{{ announcement.featured_images[0].path }}"
-              description="{{ str_words(announcement.summary, 20) }}"
+              description="{{ str_words(announcement.content, 20) }}"
               author="{{ announcement.user.full_name }}"
               author-avatar-image="{{ announcement.user.getAvatarThumb(35) }}"
               author-role="{{ announcement.user.role.name }}"
@@ -27,7 +27,7 @@
                       </div>
                   {% endif %}
 
-                  <a class="btn btn-primary text-uppercase hover-move-right my-2 rounded" href="{{ "volunteer/announcement" | page({slug: announcement.slug}) }}">
+                  <a class="btn btn-primary text-uppercase hover-move-right  my-3 rounded align-self-md-end" href="{{ "volunteer/announcement" | page({slug: announcement.slug}) }}">
                       READ MORE
                       <i class="fas fa-chevron-right"></i>
                   </a>
@@ -36,22 +36,10 @@
 
     {% endfor %}
 
-    <div class="col-12 col-md-10 col-lg-9 align-self-center">
+    <div class="mx-auto overflow-x-scroll">
 
-        <dropdown-pagination
-            current-page="{{ __SELF__.posts.currentPage() }}"
-            page-param="page"
-            per-page="{{ __SELF__.posts.perPage() }}"
-            prev-page-url="{{ __SELF__.posts.previousPageUrl() }}"
-            next-page-url="{{ __SELF__.posts.nextPageUrl() }}"
-            url="{{ this.page.url | app }}"
-            total="{{ __SELF__.posts.total() }}"
-            @change="(e) => {
-                    $window.location.href = e.target.value;
-                }"
-        >
 
-        </dropdown-pagination>
+        {{ posts.render() | raw }}
     </div>
 
 

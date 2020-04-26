@@ -1,5 +1,6 @@
 {% if __SELF__.trainings %}
     {% for training in __SELF__.trainings %}
+<div class="col-12  col-md-10 col-lg-5">
 
             <training-card
                 class="my-3"
@@ -34,22 +35,14 @@
                 </div>
 
             </training-card>
-
+</div>
     {% endfor %}
-        <dropdown-pagination
-            class="my-2"
-            current-page="{{ __SELF__.trainings.currentPage() }}"
-            page-param="page"
-            per-page="{{ __SELF__.trainings.perPage() }}"
-            prev-page-url="{{ __SELF__.trainings.prevPageUrl() }}"
-            next-page-url="{{ __SELF__.trainings.nextPageUrl() }}"
-            url="{{ this.page.url | app }}"
-            total="{{ __SELF__.trainings.total() }}"
-            @change="(e) => {
-                    $window.location.href = e.target.value;
-                }"
-        >
-        </dropdown-pagination>
+
+    <div class="mx-auto overflow-x-scroll">
+
+
+        {{ __SELF__.trainings.render() | raw }}
+    </div>
 {% else %}
 
 

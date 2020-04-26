@@ -41,7 +41,7 @@ class Product extends ComponentBase
     public function onRun()
     {
         $this->product = $this->page['product'] = $this->fetchProduct();
-        $this->producer = $this->page['producer'] = $this->product->producer;
+        $this->producer = $this->page['producer'] = optional($this->product)->producer;
 
         if (is_null($this->product)) {
             $this->setStatusCode(404);

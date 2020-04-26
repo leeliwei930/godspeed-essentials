@@ -7,6 +7,9 @@ use GodSpeed\FlametreeCMS\Console\Test;
 use GodSpeed\FlametreeCMS\Console\Uninstall;
 use GodSpeed\FlametreeCMS\Models\ProducerCategory;
 use GodSpeed\FlametreeCMS\Policies\PortalBlogPostPolicy;
+use GodSpeed\FlametreeCMS\Search\AnnouncementSearchProvider;
+use GodSpeed\FlametreeCMS\Search\ProducerSearchProvider;
+use GodSpeed\FlametreeCMS\Search\ProductSearchProvider;
 use GodSpeed\FlametreeCMS\Traits\AcceptanceTestingTrait;
 use GodSpeed\FlametreeCMS\Utils\LazyLoad\AttachmentPlaceholderGenerator;
 use GodSpeed\FlametreeCMS\Utils\Lazyload\LazyloadImage;
@@ -104,7 +107,9 @@ class Plugin extends PluginBase
                 $this->extendBlogCategoriesFormField();
             }
         }
-
+        if($pluginManagerInstance->hasPlugin("OFFLINE.SiteSearch")){
+            $this->extendSearchScope();
+        }
         if (env('APP_ENV') === 'acceptance') {
             $this->bootAcceptanceTesting();
         }
@@ -368,6 +373,18 @@ class Plugin extends PluginBase
 
                 ]
             ]);
+        });
+    }
+
+    public function extendSearchScope()
+    {
+        \Event::listen('offline.sitesearch.extend', function () {
+            return [ new ProducerSearchProvider(),
+                    new AnnouncementSearchProvider(),
+                new ProductSearchProvider()
+            ];
+
+
         });
     }
 

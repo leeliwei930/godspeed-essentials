@@ -195,10 +195,10 @@ $factory->define(Product::class, function (Faker $faker) {
         return [
             'name' => $productName,
             'type' => 'product',
+            'is_active' => 1,
             'price' => random_int(5, 12),
             'has_stock_limit' => $hasStockLimit,
             'stock_left' => $stockLeft,
-            'is_active' => random_int(0, 1),
             'slug' => Str::slug($productName),
             'currency' => $faker->currencyCode,
             'features' => $features->toArray(),
