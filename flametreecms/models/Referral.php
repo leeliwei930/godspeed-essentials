@@ -93,6 +93,38 @@ class Referral extends Model
     public $attachOne = [];
     public $attachMany = [];
 
+    public function beforeValidate(){
+        $rules = [
+            'code' => [
+                'required', 'unique:godspeed_flametreecms_referrals,code', 'between:3,255'
+            ],
+            'valid_before' => [
+                'required',
+                'date',
+                'after:valid_after'
+            ],
+            'valid_after' => [
+                'required',
+                'date',
+                'before:valid_before'
+            ],
+            'usage_left' => [
+                'required_if:capped,true',
+                'min:0',
+                'numeric'
+            ],
+            'timezone' => [
+                'required', Rule::in($this->getTimezoneOptions())
+            ],
+            'capped' => [
+                'required', 'boolean'
+            ],
+            'user_group_id' => [
+                'required', "exists:user_groups,id"
+            ]
+        ];
+        $this->rules = $rules;
+    }
     public function getValidBeforeAttributes($date)
     {
         // if the system timezone is match with the record timezone, don't convert it
@@ -162,34 +194,6 @@ class Referral extends Model
         return $timezones->toArray();
     }
 
-    public function beforeValidate()
-    {
-
-        $rules = [
-            'code' => [
-                'required', 'between:5,255', 'unique:godspeed_flametreecms_referrals,code'
-            ],
-            'valid_before' => [
-                'sometimes', 'after:valid_after', 'date'
-            ],
-            'valid_after' => [
-                'sometimes', 'before:valid_before', 'date'
-            ],
-            'usage_left' => [
-                'required', 'numeric'
-            ],
-            'capped' => [
-                'required', 'boolean'
-            ]
-        ];
-
-        $rules['timezone'] = [
-            'required', Rule::in($this->getTimezoneOptions()),
-        ];
-
-        $this->rules = $rules;
-
-    }
 
     public static function findByCode($code)
     {

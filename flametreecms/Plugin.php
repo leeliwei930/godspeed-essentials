@@ -8,6 +8,7 @@ use GodSpeed\FlametreeCMS\Console\Uninstall;
 use GodSpeed\FlametreeCMS\Models\ProducerCategory;
 use GodSpeed\FlametreeCMS\Policies\PortalBlogPostPolicy;
 use GodSpeed\FlametreeCMS\Search\AnnouncementSearchProvider;
+use GodSpeed\FlametreeCMS\Search\FaqSearchProvider;
 use GodSpeed\FlametreeCMS\Search\ProducerSearchProvider;
 use GodSpeed\FlametreeCMS\Search\ProductSearchProvider;
 use GodSpeed\FlametreeCMS\Traits\AcceptanceTestingTrait;
@@ -36,6 +37,7 @@ class Plugin extends PluginBase
      * @return array
      */
     use AcceptanceTestingTrait;
+
     public $require = [
         'RainLab.User',
         'RainLab.Blog',
@@ -107,7 +109,7 @@ class Plugin extends PluginBase
                 $this->extendBlogCategoriesFormField();
             }
         }
-        if($pluginManagerInstance->hasPlugin("OFFLINE.SiteSearch")){
+        if ($pluginManagerInstance->hasPlugin("OFFLINE.SiteSearch")) {
             $this->extendSearchScope();
         }
         if (env('APP_ENV') === 'acceptance') {
@@ -379,12 +381,12 @@ class Plugin extends PluginBase
     public function extendSearchScope()
     {
         \Event::listen('offline.sitesearch.extend', function () {
-            return [ new ProducerSearchProvider(),
-                    new AnnouncementSearchProvider(),
-                new ProductSearchProvider()
+            return [
+                new ProducerSearchProvider(),
+                new AnnouncementSearchProvider(),
+                new ProductSearchProvider(),
+                new FaqSearchProvider()
             ];
-
-
         });
     }
 

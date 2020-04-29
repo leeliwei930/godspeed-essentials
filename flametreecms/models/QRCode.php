@@ -79,9 +79,9 @@ class QRCode extends Model
     ];
     public $attachMany = [];
 
-    public function __construct()
-    {
-        parent::__construct();
+
+
+    public function beforeValidate(){
         $this->rules = [
             'resource_name' => [
                 'required'
@@ -91,7 +91,6 @@ class QRCode extends Model
             ]
         ];
     }
-
     public function getPageOptions()
     {
 

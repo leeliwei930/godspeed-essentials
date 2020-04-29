@@ -37,7 +37,8 @@
         "james-heinrich/getid3": "dev-master",
         "intervention/image": "2.5.1",
         "eluceo/ical": "*",
-        "simplesoftwareio/simple-qrcode": "^2.0"
+        "simplesoftwareio/simple-qrcode": "^2.0",
+        "mbezhanov/faker-provider-collection": "^1.2"
 
     }
 }
