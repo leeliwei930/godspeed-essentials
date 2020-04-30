@@ -1,12 +1,37 @@
-<video-gallery
-    video-list="{{ __SELF__.getAllVideos().videos }}"
+{% if __SELF__.videos is not empty %}
 
+<video-gallery
+    default-video="{{ __SELF__.videos[0]}}"
     {%  if (__SELF__.property('autoplay') == 1) %}
         v-bind:autoplay="true"
     {%  else  %}
         v-bind:autoplay="false"
 
     {%  endif %}
-    playlist-name="{{ __SELF__.getAllVideos().name }}"
-></video-gallery>
+    playlist-name="{{ __SELF__.playlist }}"
+    v-slot="{playerState}"
+>
 
+        {% for video in __SELF__.videos %}
+
+            <video-thumbnail class="my-3 mx-1"
+                key="{{ video.id }}"
+                description="{{ str_words(video.description , 15) }}"
+                :duration="{{ video.duration }}"
+                title="{{ video.title }}"
+                featured-image-url="{{ video.featured_image_url }}"
+                embed-id="{{ video.embed_id }}"
+                video-url="{{ video.video_url }}"
+                type="{{video.type}}"
+                @click="playerState.setCurrentPlaying"
+                :is-playing="playerState.currentPlaying != null && playerState.currentPlaying.embed_id === '{{ video.embed_id }}' && playerState.currentPlaying.type === '{{ video.type }}'"
+                @paused="playerState.pausePlayer"
+            >
+            </video-thumbnail>
+        {% endfor %}
+
+
+
+</video-gallery>
+
+{% endif %}

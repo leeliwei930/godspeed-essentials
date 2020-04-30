@@ -14,14 +14,15 @@ use phpDocumentor\Reflection\DocBlock;
  */
 class VideoSection extends ComponentBase
 {
-
+    public $videos;
+    public $playlist;
     /**
      * @return array
      */
     public function componentDetails()
     {
         return [
-            'name'        => 'Video Player',
+            'name' => 'Video Player',
             'description' => 'Generate a plyr.io videos listing'
         ];
     }
@@ -35,13 +36,13 @@ class VideoSection extends ComponentBase
             "playlist_name" => [
                 "title" => "Playlist",
                 "type" => "dropdown",
-                'default'     => null,
+                'default' => null,
                 'placeholder' => 'Select Playlist'
             ],
             "autoplay" => [
                 "title" => "AutoPlay",
                 "type" => "checkbox",
-                'default'     => true
+                'default' => true
             ]
         ];
         $properties['playlist_name']['options'] = $this->getPlaylistOptions();
@@ -49,7 +50,16 @@ class VideoSection extends ComponentBase
         return $properties;
     }
 
+    public function onRun()
+    {
+        $this->prepareVars();
+    }
 
+    public function prepareVars()
+    {
+        $this->videos = $this->page['videos'] = $this->getAllVideos()['videos'];
+        $this->playlist = $this->page['playlist'] = $this->getAllVideos()['name'];
+    }
 
     /**
      * @return mixed;
@@ -68,7 +78,7 @@ class VideoSection extends ComponentBase
             $videoPlaylist = Playlist::with(['videos'])->find($playlistName);
         } else {
             $videos = Video::where('video_playlist_id', null)->get();
-            $videoPlaylist['videos'] = $videos;
+            $videoPlaylist['videos'] = $videos->toArray();
             $videoPlaylist['name'] = "Uncategorized";
         }
 
@@ -78,6 +88,6 @@ class VideoSection extends ComponentBase
 
     public function getPlaylistOptions()
     {
-        return Playlist::pluck('name' , 'id')->toArray();
+        return Playlist::pluck('name', 'id')->toArray();
     }
 }

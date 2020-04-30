@@ -35,23 +35,42 @@
         {{ __SELF__.training.content_html | raw }}
     </div>
     <accordion-view v-slot="{accordianCtrl}" :show-all="true" :toggle-mode="true">
+        {% if __SELF__.training.video_playlist %}
         <accordion :show="accordianCtrl.isActive(0)" @click="accordianCtrl.show(0)" height="100%">
-            {% if __SELF__.training.video_playlist %}
+            {% if __SELF__.training.video_playlist.videos is not empty %}
                 <template slot="header">
                     <strong><i class="fas fa-video mx-2"></i> VIDEOS</strong>
                 </template>
                 <video-gallery
-                    video-list="{{ __SELF__.training.video_playlist.videos | json_encode }}"
-
-
+                    default-video="{{ __SELF__.training.video_playlist.videos[0] }}"
                     :autoplay="false"
-
+                    v-slot="{playerState}"
                     playlist-name="{{ __SELF__.training.video_playlist.name }}"
-                ></video-gallery>
+                >
+
+                    {% for video in __SELF__.training.video_playlist.videos %}
+
+                        <video-thumbnail class="my-3 mx-1"
+                                         key="{{ video.id }}"
+                                         description="{{ str_words(video.description , 15) }}"
+                                         :duration="{{ video.duration }}"
+                                         title="{{ video.title }}"
+                                         featured-image-url="{{ video.featured_image_url }}"
+                                         embed-id="{{ video.embed_id }}"
+                                         video-url="{{ video.video_url }}"
+                                         type="{{video.type}}"
+                                         @click="playerState.setCurrentPlaying"
+                                         :is-playing="playerState.currentPlaying != null && playerState.currentPlaying.embed_id === '{{ video.embed_id }}' && playerState.currentPlaying.type === '{{ video.type }}'"
+                                         @paused="playerState.pausePlayer"
+                        >
+                        </video-thumbnail>
+                    {% endfor %}
+                </video-gallery>
             {% else %}
                 <p>There is no videos at the moment</p>
             {% endif %}
         </accordion>
+        {% endif %}
         <accordion :show="accordianCtrl.isActive(1)" @click="accordianCtrl.show(1)">
             <template slot="header">
                 <strong><i class="fas fa-folder mx-2"></i> TRAINING RESOURCES</strong>

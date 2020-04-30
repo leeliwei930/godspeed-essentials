@@ -61,13 +61,35 @@
         <div class="col-12 my-3">
             <h3 class="text-primary my-3">Product Videos</h3>
             <video-gallery
-                video-list="{{ product.video_playlist.videos | json_encode }}"
+                default-video="{{ __SELF__.product.video_playlist.videos[0]}}"
 
 
                 :autoplay="false"
 
                 playlist-name="{{ product.video_playlist.name }}"
-            ></video-gallery>
+                v-slot="{playerState}"
+
+            >
+
+
+                {% for video in product.video_playlist.videos %}
+
+                    <video-thumbnail class="my-3 mx-1"
+                         key="{{ video.id }}"
+                         description="{{ str_words(video.description , 15) }}"
+                         :duration="{{ video.duration }}"
+                         title="{{ video.title }}"
+                         featured-image-url="{{ video.featured_image_url }}"
+                         embed-id="{{ video.embed_id }}"
+                         video-url="{{ video.video_url }}"
+                         type="{{video.type}}"
+                         @click="playerState.setCurrentPlaying"
+                         :is-playing="playerState.currentPlaying != null && playerState.currentPlaying.embed_id === '{{ video.embed_id }}' && playerState.currentPlaying.type === '{{ video.type }}'"
+                         @paused="playerState.pausePlayer"
+                    >
+                    </video-thumbnail>
+                {% endfor %}
+            </video-gallery>
 
         </div>
     {% endif %}
