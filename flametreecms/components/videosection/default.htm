@@ -25,7 +25,7 @@
                 type="{{video.type}}"
                 @click="playerState.setCurrentPlaying"
                 :is-playing="playerState.currentPlaying != null && playerState.currentPlaying.embed_id === '{{ video.embed_id }}' && playerState.currentPlaying.type === '{{ video.type }}'"
-                @paused="playerState.pausePlayer"
+
             >
             </video-thumbnail>
         {% endfor %}

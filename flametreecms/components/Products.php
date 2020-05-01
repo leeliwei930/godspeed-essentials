@@ -93,19 +93,16 @@ class Products extends ComponentBase
         $producerInfo = null;
         $pageUrl = $this->page->url;
         $options = ['path' => $pageUrl];
+        $perPage = $this->property('products_per_page');
+        $currentPage = $this->getCurrentPage();
         if ($this->getProducerSearchKey() === 'id') {
             $producerInfo = Producer::find($this->getProducerParameterValue());
             if (is_null($producerInfo)) {
                 return $this->throw404();
             }
-            $producer_products = $producerInfo->products()->with('categories')->isActive()->get();
-            $products = $this->paginate(
-                $producer_products,
-                $this->property('products_per_page'),
-                $this->getCurrentPage(),
-                $options
-            );
-            $this->products = $products;
+            $producer_products = $producerInfo->products()->with('categories')->isActive()->paginate($perPage, $currentPage);
+
+            $this->products = $producer_products;
         }
 
         if ($this->getProducerSearchKey() === 'slug') {
@@ -114,14 +111,9 @@ class Products extends ComponentBase
             if (is_null($producerInfo)) {
                 return $this->throw404();
             }
-            $producer_products = $producerInfo->products()->with('categories')->isActive()->get();
-            $products = $this->paginate(
-                $producer_products,
-                $this->property('products_per_page'),
-                $this->getCurrentPage(),
-                $options
-            );
-            $this->products = $products;
+            $producer_products = $producerInfo->products()->with('categories')->isActive()->paginate($perPage, $currentPage);
+
+            $this->products = $producer_products;
 
         }
         return $producerInfo;
@@ -144,14 +136,7 @@ class Products extends ComponentBase
 
     }
 
-    public function paginate($items, $perPage = 15, $page = null, $options = [])
-    {
-        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
 
-        $items = $items instanceof Collection ? $items : Collection::make($items);
-
-        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
-    }
 
     /**
      * @return int|mixed

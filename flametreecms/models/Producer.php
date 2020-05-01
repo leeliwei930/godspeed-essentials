@@ -12,6 +12,7 @@ class Producer extends Model
      */
     public $table = 'godspeed_flametreecms_producers';
 
+
     /**
      * @var array Guarded fields
      */
