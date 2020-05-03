@@ -26,9 +26,10 @@ class FactorySeeder extends Seeder
         }
 
         // create faqs
-        factory(\GodSpeed\FlametreeCMS\Models\FaqCategory::class, 3)->create()
+        factory(\GodSpeed\FlametreeCMS\Models\FaqCategory::class, 20)->create()
             ->each(function ($faqCategory) {
-                $faqCategory->faqs()->create(factory(Faq::class)->make()->toArray());
+                $faqs =  factory(Faq::class, 15)->create();
+                $faqCategory->faqs()->attach($faqs->pluck('id'));
             });
 
         // create video and playlist

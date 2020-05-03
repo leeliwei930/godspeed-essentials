@@ -1,23 +1,39 @@
 {% set categories = __SELF__.categories %}
 
-{% if categories is not empty %}
-    <div class="d-flex justify-content-start flex-wrap align-content-center my-5 pb-5">
-    {% for category in categories %}
-        <div class="col-12 col-md-3 my-2">
-            <tile-card
-                link="{{ 'faq-category' | page({'slug' : category.slug}) }}"
-                :open-tab="true"
-                :hoverable="true"
-                background-color="linear-gradient(0deg, rgba(var(--primary-color-rgba), 0.3), rgba(var(--accent-color-rgba, 0.8)))"
-            >
-                <h2 class="headline-light-bold font-weight-bold text-uppercase">{{category.name}}</h2>
-                <template slot="trailing">
-                    <h5> {{category.faqs.count}}</h5>
-                </template>
-            </tile-card>
-        </div>
-    {% endfor %}
+<div class="d-flex flex-wrap ">
+
+    <div class="d-none d-md-flex flex-column col-12 col-md-3 faq-sidebar shadow-lg">
+    <strong class="text-muted text-uppercase p-3">CATEGORIES</strong>
+    {% if categories is not empty %}
+        <stack-menu-list v-slot="{state}" selected="{{ __SELF__.selectedCategory }}">
+            {% for category in categories %}
+                <stack-menu-item
+                    class="mx-3 my-1"
+                    :is-active="'{{ category.slug }}' === state.selected"
+                    href="{{ __SELF__.getCategoryLink(category.slug) }}"
+                >
+                    {{ category.name }}
+                </stack-menu-item>
+            {% endfor %}
+        </stack-menu-list>
+    {% endif %}
     </div>
 
+    <div class="d-flex flex-column col-12 col-md-9 faq-list">
 
-{% endif %}
+    {% if __SELF__.faqs %}
+        {% if __SELF__.faqs is not empty %}
+            <accordion-view  :toggle-mode="true">
+                {% for index,faq in __SELF__.faqs %}
+                    <accordion-basic
+                        title="{{faq.question}}"
+                    >
+                    {{ faq.answer | raw }}
+                    </accordion-basic>
+                {% endfor %}
+            </accordion-view>
+        {% endif %}
+    {% endif %}
+    </div>
+
+</div>

@@ -34,7 +34,7 @@ class Faq extends Model
             "required", "between:5,255"
         ],
         "answer" => [
-            "required", "between:5,255"
+            "required", "min:5"
         ]
 
     ];
