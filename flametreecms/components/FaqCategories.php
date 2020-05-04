@@ -15,6 +15,7 @@ class FaqCategories extends ComponentBase
     public $faqs = [];
     public $selectedCategory = null;
 
+
     /**
      * @return array
      */
@@ -76,7 +77,7 @@ class FaqCategories extends ComponentBase
     {
         if ($this->selectedCategory == null) {
             $faqCategory = FaqCategoryModel::with('faqs')->first();
-            $this->selectedCategory = $faqCategory->slug;
+            $this->selectedCategory = $faqCategory;
 
             return $faqCategory['faqs'];
         } else {
@@ -84,8 +85,8 @@ class FaqCategories extends ComponentBase
             if (is_null($faqCategory)) {
                 return $this->throw404();
             }
-            trace_log($faqCategory->toArray());
-            return optional($faqCategory)['faqs'];
+            $this->selectedCategory = $faqCategory;
+            return $faqCategory['faqs'];
         }
     }
 

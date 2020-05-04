@@ -84,7 +84,7 @@ $factory->define(Playlist::class, function (Faker $faker) {
 $factory->define(Faq::class, function (Faker $faker) {
     return [
         'question' => $faker->sentence(12) . "?",
-        'answer' => $faker->sentence(32)
+        'answer' => "<p>". $faker->sentence(60) ."</p>"
     ];
 });
 

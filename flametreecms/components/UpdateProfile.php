@@ -1,9 +1,10 @@
 <?php namespace GodSpeed\FlametreeCMS\Components;
 
-use Auth;
+
 use Cms\Classes\ComponentBase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use RainLab\User\Facades\Auth;
 use ValidationException;
 use Input;
 use Lang;
@@ -26,10 +27,11 @@ class UpdateProfile extends Account
     public function componentDetails()
     {
         return [
-            'name'        => 'UpdateProfile Component',
+            'name' => 'UpdateProfile Component',
             'description' => 'No description provided yet...'
         ];
     }
+
     public function verifyOldPassword($attribute, $value, $fail)
     {
         $isAuthorised = Hash::check($value, $this->user()->password);
@@ -42,6 +44,7 @@ class UpdateProfile extends Account
     {
 
         if (!$user = $this->user()) {
+
             return;
         }
 
@@ -54,20 +57,20 @@ class UpdateProfile extends Account
                 'required', 'between:2,255'
             ],
             'reset_password' => [
-                 'in:on,off'
+                'in:on,off'
             ],
 
             'phone_number' => [
-                'required' , 'between:7,15'
+                'required', 'between:7,15'
             ],
             'current_password' => [
-                'required_if:reset_password,on' ,
+                'required_if:reset_password,on',
                 function ($attribute, $value, $fail) {
                     return $this->verifyOldPassword($attribute, $value, $fail);
                 }
             ],
             'new_password' => [
-                'required_if:reset_password,on' , 'between:4,255', 'confirmed'
+                'required_if:reset_password,on', 'between:4,255', 'confirmed'
             ]
         ];
         $validation = \Validator::make(post(), $validationRules);
@@ -82,19 +85,20 @@ class UpdateProfile extends Account
             'phone_number' => post('phone_number'),
         ]);
 
+        $hasRequestToChangedPassword = post('reset_password') === "on";
 
-        if (post('reset_password') === 'on') {
+        if ($hasRequestToChangedPassword) {
+
             $user->password = post('new_password_confirmation');
             // Force update the password without any default model validation level
 
-            Auth::login($user->reload(), true);
         }
 
         if (\Input::has('avatar')) {
             $avatar = Image::make(\Input::file('avatar'))->resize(150, 150)->encode('jpg', 90);
-            $filename =  md5(time().$avatar->getEncoded()).".jpg";
+            $filename = md5(time() . $avatar->getEncoded()) . ".jpg";
 
-            $file =  (new \System\Models\File)->fromData($avatar->getEncoded(), $filename);
+            $file = (new \System\Models\File)->fromData($avatar->getEncoded(), $filename);
             $file->save();
             $user->avatar = $file;
         }
@@ -102,7 +106,9 @@ class UpdateProfile extends Account
         $user->forceSave();
 
         \Flash::success(post('flash', "Profile updated successfully."));
-
+        if ($hasRequestToChangedPassword) {
+            Auth::login($user->reload(), true);
+        }
         /*
          * Redirect
          */

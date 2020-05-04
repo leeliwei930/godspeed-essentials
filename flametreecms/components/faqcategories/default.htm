@@ -5,7 +5,7 @@
     <div class="d-none d-md-flex flex-column col-12 col-md-3 faq-sidebar shadow-lg">
     <strong class="text-muted text-uppercase p-3">CATEGORIES</strong>
     {% if categories is not empty %}
-        <stack-menu-list v-slot="{state}" selected="{{ __SELF__.selectedCategory }}">
+        <stack-menu-list v-slot="{state}" selected="{{ __SELF__.selectedCategory.slug }}">
             {% for category in categories %}
                 <stack-menu-item
                     class="mx-3 my-1"
@@ -20,7 +20,19 @@
     </div>
 
     <div class="d-flex flex-column col-12 col-md-9 faq-list">
+    <div class="d-flex flex-row justify-content-between align-items-center m-3">
+        <h3 class="text-primary text-uppercase medium headline-light-bold my-3">
+            <i class="fas fa-hashtag  text-accent"></i>
+            {{  __SELF__.selectedCategory.name }}
+        </h3>
 
+        <button class="btn btn-primary shadow d-md-none"
+        @click="$modal.show('faq-categories-modal')"
+        >
+            <i class="fas fa-filter"></i>
+            PICK CATEGORY
+        </button>
+    </div>
     {% if __SELF__.faqs %}
         {% if __SELF__.faqs is not empty %}
             <accordion-view  :toggle-mode="true">
@@ -37,3 +49,27 @@
     </div>
 
 </div>
+
+
+<modal name="faq-categories-modal" width="100%" :pivot-y="1" height="80%" :adaptive="true" classes="v--modal animated fadeInUp fast ">
+{#    Add Mobile category list selector #}
+    <div class="m-3 d-flex flex-column">
+        <h3 class="text-primary text-uppercase p-2">
+        <i class="fas fa-hashtag text-accent"></i>
+            SELECT FAQ CATEGORY
+        </h3>
+        {% if categories is not empty %}
+            <stack-menu-list class="py-3" style="max-height: 90vh;overflow-y:scroll "v-slot="{state}" selected="{{ __SELF__.selectedCategory.slug }}">
+                {% for category in categories %}
+                    <stack-menu-item
+                        class="mx-3 my-1"
+                        :is-active="'{{ category.slug }}' === state.selected"
+                        href="{{ __SELF__.getCategoryLink(category.slug) }}"
+                    >
+                        {{ category.name }}
+                    </stack-menu-item>
+                {% endfor %}
+            </stack-menu-list>
+        {% endif %}
+    </div>
+</modal>
