@@ -66,6 +66,11 @@ class Event extends ComponentBase
         }
     }
 
+    public function onRender()
+    {
+        $this->generatePageTitle();
+    }
+
     /**
      *
      */
@@ -124,6 +129,14 @@ class Event extends ComponentBase
     }
 
 
+    private function generatePageTitle()
+    {
+        $eventName = $this->event->title;
+
+
+        $this->page->title =   $eventName. $this->page->title;
+
+    }
 
 
 

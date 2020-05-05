@@ -2,6 +2,7 @@
 
 {% if producers %}
     {% for producer in producers %}
+        <a href="{{ "producer/products" | page({producer: producer.slug}) }}" target="_blank"  class="d-flex flex-grow-1 text-decoration-none">
             <producer-card
                 width="320px"
                 origin="{{ producer.origin }}"
@@ -10,13 +11,10 @@
                 data-image="{{producer.featured_image | media}}"
 
             >
-
             </producer-card>
+        </a>
     {% endfor %}
 {% else %}
 
 
 {% endif %}
-{#<producer-card>#}
-
-{#</producer-card>#}

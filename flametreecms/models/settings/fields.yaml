@@ -7,50 +7,7 @@ tabs:
             path: $/godspeed/flametreecms/views/settings/PluginDependenciesState.htm
             tab: "Plugin Status"
 
-        business_email:
-            type: text
-            label: Email
-            span: left
-            tab: "Business Contact"
 
-        business_phone_number:
-            type: text
-            label: Phone Number
-            span: right
-            tab: "Business Contact"
-
-        business_address:
-            type: richeditor
-            label: Business Address
-            span: left
-            tab: "Business Contact"
-
-        business_po_box_address:
-            type: richeditor
-            label: Business PO Box
-            span : right
-            tab: "Business Contact"
-
-
-
-
-        facebook_link:
-            label: Facebook Page URL
-            type: text
-            span: left
-            tab: "Business Contact"
-
-        twitter_link:
-            label: Twitter URL
-            type: text
-            span: right
-            tab: "Business Contact"
-
-        instagram_link:
-            label: Instagram Page URL
-            type: text
-            span: left
-            tab: "Business Contact"
 
         _youtube_data_api_key_hint:
             type: hint

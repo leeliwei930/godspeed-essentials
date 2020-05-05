@@ -6,7 +6,7 @@ return [
     "GodSpeed\FlametreeCMS\Components\ImageSlider" => "ImageSlider",
     "GodSpeed\FlametreeCMS\Components\AllProducer" => "AllProducer",
     "GodSpeed\FlametreeCMS\Components\TrendingAnnouncement" => "TrendingAnnouncement",
-    "GodSpeed\FlametreeCMS\Components\BusinessContact" => "BusinessContact",
+
     "GodSpeed\FlametreeCMS\Components\TeamMember" => "TeamMember",
     "GodSpeed\FlametreeCMS\Components\VolunteerResetPassword" => "VolunteerResetPassword",
     "GodSpeed\FlametreeCMS\Components\PrivateAnnouncements" => "PrivateAnnouncements",
