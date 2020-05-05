@@ -9,7 +9,7 @@ class TrendingAnnouncement extends Posts
     public function componentDetails()
     {
         return [
-            'name'        => 'TrendingAnnouncement - Basic ',
+            'name'        => 'Trending Announcement',
             'description' => 'Display a list of announcement in a card looking'
         ];
     }

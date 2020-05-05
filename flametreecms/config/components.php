@@ -23,8 +23,6 @@ return [
     "GodSpeed\FlametreeCMS\Components\Training" => "Training",
 
     "GodSpeed\FlametreeCMS\Components\FaqCategories" => "FaqCategories",
-    "GodSpeed\FlametreeCMS\Components\FaqCategory" => "FaqCategory",
-
     "GodSpeed\FlametreeCMS\Components\Products" => "Products",
     "GodSpeed\FlametreeCMS\Components\Product" => "Product",
 ];

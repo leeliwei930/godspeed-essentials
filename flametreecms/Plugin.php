@@ -63,9 +63,9 @@ class Plugin extends PluginBase
     {
         return [
             'name' => 'GodSpeed CMS',
-            'description' => 'No description provided yet...',
+            'description' => 'Provide an essential tools for  business that  require membership management feature',
             'author' => 'GodSpeed',
-            'icon' => 'icon-leaf'
+            'iconSvg' => 'icon-leaf'
         ];
     }
 
