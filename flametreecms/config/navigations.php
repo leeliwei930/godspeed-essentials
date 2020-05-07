@@ -5,7 +5,7 @@ return [
     'flametreecms' => [
         'label' => 'GodSpeed CMS',
         'url' => Backend::url('godspeed/flametreecms/producers'),
-        'icon' => 'icon-window-restore',
+        'iconSvg' => "plugins/godspeed/flametreecms/assets/5x/godspeed@5x.png",
         'order' => 500,
         "sideMenu" => [
             "producers" => [

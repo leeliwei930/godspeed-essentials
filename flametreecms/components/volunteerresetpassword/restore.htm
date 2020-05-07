@@ -1,18 +1,20 @@
 <form
-
+    data-request-validate="1"
     data-request="{{ __SELF__ }}::onRestorePassword"
+    data-request-flash="1"
     data-request-redirect="{{ __SELF__.getResetPasswordMailSentRedirectUrl() }}">
-    <div class="text-field-control my-1">
-        <label  for="volunteer_login_email">EMAIL</label>
 
+    <h2 class="text-primary headline-light-bold small py-2">Password Recovery</h2>
+
+    <div class="text-field-control my-1 ">
+        <label  for="volunteer_login_email">EMAIL ADDRESS</label>
         <input name="email" id="volunteer_login_email" type="email"  class="text-field"/>
-
     </div>
+    <small class="text-danger visible" data-validate-for="email"></small>
+
 
     <div class="d-flex flex-row justify-content-between my-2">
         <a href="{{ 'login/volunteer' | page }}" class="text-link">Back To Login</a>
-
-        <a href="#" class="text-link">How To Register?</a>
     </div>
-    <button class="btn btn-primary rounded w-100 my-3">SEND RESET PASSWORD INSTRUCTION</button>
+    <button class="btn btn-primary rounded w-100 px-5">SEND RESET PASSWORD INSTRUCTION</button>
 </form>

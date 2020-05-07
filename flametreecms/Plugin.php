@@ -65,7 +65,7 @@ class Plugin extends PluginBase
             'name' => 'GodSpeed CMS',
             'description' => 'Provide an essential tools for  business that  require membership management feature',
             'author' => 'GodSpeed',
-            'iconSvg' => 'icon-leaf'
+            'iconSvg' => "plugins/godspeed/flametreecms/assets/5x/godspeed@5x.png",
         ];
     }
 

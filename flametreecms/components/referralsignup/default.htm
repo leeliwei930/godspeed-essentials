@@ -1,7 +1,7 @@
 {{ form_ajax(__SELF__~"::onRegister" ,  { 'data-request-validate' : true, 'data-request-flash': true }) }}
-<div class="flametree-theme">
 
-    <h2 class="text-primary headline-light-bold small py-2">MEMBER REGISTRATION</h2>
+
+    <h2 class="text-primary headline-light-bold small py-2">Account Sign Up</h2>
     <div class="text-field-control my-1">
         <label for="name">FULL NAME</label>
 
@@ -51,5 +51,5 @@
         <a href="{{ 'login/volunteer' | page }}" class="text-link">Already have an account?</a>
     </div>
     <button class="btn btn-primary rounded w-100 my-3">SIGN UP</button>
-</div>
+
 {{ form_close() }}
