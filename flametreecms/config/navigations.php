@@ -24,14 +24,6 @@ return [
                     'godspeed.flametreecms.browse_products'
                 ]
             ],
-            "specialorders" => [
-                'label' => 'Special Orders',
-                'icon' => 'icon-inbox',
-                'url' => Backend::url('godspeed/flametreecms/specialorders'),
-                'permissions' => [
-                    'godspeed.flametreecms.browse_special_orders'
-                ]
-            ],
             "referrals" => [
                 'label' => "Referrals",
                 'icon' => 'icon-ticket',

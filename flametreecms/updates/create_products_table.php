@@ -13,7 +13,7 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->double('price');
-            $table->text('description')->nullable();
+            $table->longText('description')->nullable();
             $table->string('slug')->unique();
             $table->string('currency');
             $table->enum('type', ["service", "product"]);

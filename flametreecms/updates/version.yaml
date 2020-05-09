@@ -2,7 +2,6 @@
 - Create producers and producer_categories table
 - create_producers_table.php
 - create_producer_categories_table.php
-- create_special_orders_table.php
 
 1.0.1:
 - Alter users table for extending RainLab.User Plugin

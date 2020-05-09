@@ -44,7 +44,7 @@ class Playlist extends Model
     ];
 
     public $rules = [
-        'name' => "required|unique:godspeed_flametreecms_playlists,name"
+        'name' => "required|unique:godspeed_flametreecms_playlists,name|between:5,255"
     ];
 
     public $morphTo = [];

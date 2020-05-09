@@ -7,7 +7,6 @@ use GodSpeed\FlametreeCMS\Models\Producer;
 use GodSpeed\FlametreeCMS\Models\Product;
 use GodSpeed\FlametreeCMS\Models\ProductCategory;
 use GodSpeed\FlametreeCMS\Models\Referral;
-use GodSpeed\FlametreeCMS\Models\SpecialOrder;
 use GodSpeed\FlametreeCMS\Models\Training;
 use GodSpeed\FlametreeCMS\Models\Video;
 use October\Rain\Support\Collection;
@@ -28,7 +27,7 @@ class FactorySeeder extends Seeder
         // create faqs
         factory(\GodSpeed\FlametreeCMS\Models\FaqCategory::class, 20)->create()
             ->each(function ($faqCategory) {
-                $faqs =  factory(Faq::class, 15)->create();
+                $faqs = factory(Faq::class, 15)->create();
                 $faqCategory->faqs()->attach($faqs->pluck('id'));
             });
 
@@ -39,7 +38,7 @@ class FactorySeeder extends Seeder
         });
 
         //create special orders
-        factory(SpecialOrder::class, 50)->create();
+
 
         $this->tearDown();
 

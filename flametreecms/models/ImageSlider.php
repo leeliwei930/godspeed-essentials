@@ -11,6 +11,7 @@ use October\Rain\Database\Traits\Validation;
 class ImageSlider extends Model
 {
     use Validation;
+
     /**
      * @var string The database table used by the model.
      */
@@ -27,10 +28,25 @@ class ImageSlider extends Model
      * @var array Fillable fields
      */
     protected $fillable = [
-        'label', 'autoplay', 'interval', 'show_navigation', 'responsive_size', 'size_w', 'size_h',
-        'navigation_control_shape', 'show_navigation', 'autohide_navigation_control', 'navigation_control_bg_color',
-        'navigation_color', 'show_indicator', "slides", "prev_slide_animation", "next_slide_animation",
-        'indicator_active_class', 'indicator_inactive_class', 'navigation_prev_icon',
+        'label',
+        'autoplay',
+        'interval',
+        'show_navigation',
+        'responsive_size',
+        'size_w',
+        'size_h',
+        'navigation_control_shape',
+        'show_navigation',
+        'autohide_navigation_control',
+        'navigation_control_bg_color',
+        'navigation_color',
+        'show_indicator',
+        "slides",
+        "prev_slide_animation",
+        "next_slide_animation",
+        'indicator_active_class',
+        'indicator_inactive_class',
+        'navigation_prev_icon',
         'navigation_next_icon'
     ];
 
@@ -60,7 +76,7 @@ class ImageSlider extends Model
         "show_navigation" => [
             "required", "boolean"
         ],
-        "autohide_navigation_control" =>[
+        "autohide_navigation_control" => [
             "required", "boolean"
         ],
         "interval" => [
@@ -70,7 +86,7 @@ class ImageSlider extends Model
             'required',
         ],
         "responsive_size" => [
-            "required" , "boolean"
+            "required", "boolean"
         ],
 
         "size_w" => [
@@ -182,6 +198,7 @@ class ImageSlider extends Model
     {
         return \Config::get('godspeed.flametreecms::animate');
     }
+
     public function getNavigationControlShapeOptions()
     {
         return [
