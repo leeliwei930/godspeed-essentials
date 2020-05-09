@@ -1,7 +1,6 @@
 <?php
 return [
     "GodSpeed\FlametreeCMS\Components\ProducerCategoryList" => "ProducerCategoryList",
-    "GodSpeed\FlametreeCMS\Components\SpecialOrderForm" => "SpecialOrderForm",
     "GodSpeed\FlametreeCMS\Components\VideoSection" => "VideoSection",
     "GodSpeed\FlametreeCMS\Components\ImageSlider" => "ImageSlider",
     "GodSpeed\FlametreeCMS\Components\AllProducer" => "AllProducer",

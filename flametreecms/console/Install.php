@@ -44,7 +44,7 @@ class Install extends Command
 
             $manager->updatePlugin('RainLab.User');
             $manager->updatePlugin('RainLab.Blog');
-            $manager->updatePlugin('SureSoftware.PowerSEO');
+            $manager->updatePlugin('Arcane.Seo');
 
             $manager->updatePlugin('GodSpeed.FlametreeCMS');
 

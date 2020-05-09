@@ -42,10 +42,10 @@ class Plugin extends PluginBase
         'RainLab.User',
         'RainLab.Blog',
         'RainLab.Pages',
-        'SureSoftware.PowerSEO',
         'RainLab.MailChimp',
         'AnandPatel.WysiwygEditors',
-        'Offline.SiteSearch'
+        'Offline.SiteSearch',
+        'Arcane.Seo'
     ];
 
     /**

@@ -30,27 +30,6 @@ return [
         'roles' => ['developer', 'godspeed.flametreecms.editor']
 
     ],
-    'godspeed.flametreecms.browse_special_orders' => [
-        'tab' => 'GodSpeed CMS',
-        'label' => "Browse Special Orders",
-
-        'roles' => ['developer', 'godspeed.flametreecms.advertising_team']
-
-    ],
-    'godspeed.flametreecms.edit_special_orders' => [
-        'tab' => 'GodSpeed CMS',
-        'label' => "Edit Special Orders",
-        'roles' => ['developer', 'godspeed.flametreecms.advertising_team', 'godspeed.flametreecms.editor']
-
-
-    ],
-    'godspeed.flametreecms.delete_special_orders' => [
-        'tab' => 'GodSpeed CMS',
-        'label' => "Delete Special Orders",
-
-        'roles' => ['developer', 'godspeed.flametreecms.advertising_team', 'godspeed.flametreecms.editor']
-
-    ],
 
     'godspeed.flametreecms.browse_referrals' => [
         'tab' => 'GodSpeed CMS',

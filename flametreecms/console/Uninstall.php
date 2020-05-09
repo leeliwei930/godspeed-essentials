@@ -26,7 +26,7 @@ class Uninstall extends Command
 
 
             $manager = UpdateManager::instance()->setNotesOutput($this->output);
-        $manager->rollbackPlugin('SureSoftware.PowerSEO');
+        $manager->rollbackPlugin('Arcane.Seo');
 
         $manager->rollbackPlugin('GodSpeed.FlametreeCMS');
             $manager->rollbackPlugin('RainLab.Blog');
