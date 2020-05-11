@@ -44,9 +44,8 @@ class FrontendUserGroupSeeder extends \Seeder
         collect($groups)->each(function ($group) use ($groups) {
             $_group = UserGroup::firstOrCreate(['name' => $group['name'] , 'code' => $group['code']]);
             $group['users']['password_confirmation'] = $group['users']['password'];
-            $testUsers = User::where('email', $groups[0]['users']['email'])->orWhere('email', $groups[1]['users']['email'])->get();
-
-            if ($testUsers->count()  == 0) {
+            $testUser = User::where('email', $group['users']['email'])->get();
+            if ($testUser->count()  == 0) {
                 $user = Auth::register($group['users'], true);
                 $user->addGroup($_group->id);
 
