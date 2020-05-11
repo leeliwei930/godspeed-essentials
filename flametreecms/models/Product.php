@@ -28,6 +28,7 @@ class Product extends Model
         'description',
         'type', // services or product
         'price',
+        'images',
         'has_stock_limit',
         'stock_left',
         'billing_cycle', // can be monthly, anually, forever, daily or weekly or installment
