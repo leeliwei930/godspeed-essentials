@@ -1,7 +1,0 @@
-scopes:
-    range:
-        label: Event Date Range
-        modelClass: GodSpeed\FlametreeCMS\Models\Event
-        type: daterange
-        conditions:  started_at >= ":after" AND ended_at <= ":before"
-

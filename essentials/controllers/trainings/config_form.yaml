@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Training
+
+# Model Form Field configuration
+form: $/godspeed/essentials/models/training/fields.yaml
+
+# Model Class name
+modelClass: GodSpeed\Essentials\Models\Training
+
+# Default redirect location
+defaultRedirect: godspeed/essentials/trainings
+
+# Create page
+create:
+    title: Create Training
+    redirect: godspeed/essentials/trainings/update/:id
+    redirectClose: godspeed/essentials/trainings
+
+# Update page
+update:
+    title: Edit Training
+    redirect: godspeed/essentials/trainings
+    redirectClose: godspeed/essentials/trainings
+
+# Preview page
+preview:
+    title: Preview Training

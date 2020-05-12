@@ -1,0 +1,25 @@
+scopes:
+    type:
+        label: Product Type
+        modelClass: GodSpeed\Essentials\Models\Product
+        conditions:  type in (:filtered)
+        type: group
+        options:
+            product: Product
+            service: Service
+    price:
+        label: Price Range
+        modelClass: GodSpeed\Essentials\Models\Product
+        type: numberrange
+        conditions:  price >= (:min) and price <= (:max)
+
+    billing_cycle:
+        label: Billing Cycle
+        modelClass: GodSpeed\Essentials\Models\Product
+        type: group
+        conditions:  billing_cycle in (:filtered)
+        options:
+            daily: Daily
+            weekly: Weekly
+            monthly: Monthly
+            annualy: Annualy

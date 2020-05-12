@@ -1,0 +1,9 @@
+producer_categories:
+    label: Producer Category
+    view:
+        list: $/godspeed/essentials/models/producercategory/columns.yaml
+        toolbarsButtons: add|remove|create
+    manage:
+        form: $/godspeed/essentials/models/producercategory/modal_fields.yaml
+        list: $/godspeed/essentials/models/producercategory/columns.yaml
+        toolbarsButtons: add|remove|create

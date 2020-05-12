@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Producer
+
+# Model Form Field configuration
+form: $/godspeed/essentials/models/producer/fields.yaml
+
+# Model Class name
+modelClass: GodSpeed\Essentials\Models\Producer
+
+# Default redirect location
+defaultRedirect: godspeed/essentials/producers
+
+# Create page
+create:
+    title: Create Producer
+    redirect: godspeed/essentials/producers/update/:id
+    redirectClose: godspeed/essentials/producers
+
+# Update page
+update:
+    title: Edit Producer
+    redirect: godspeed/essentials/producers
+    redirectClose: godspeed/essentials/producers
+
+# Preview page
+preview:
+    title: Preview Producer

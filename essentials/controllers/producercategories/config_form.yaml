@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Producer Category
+
+# Model Form Field configuration
+form: $/godspeed/essentials/models/producercategory/fields.yaml
+
+# Model Class name
+modelClass: GodSpeed\Essentials\Models\ProducerCategory
+
+# Default redirect location
+defaultRedirect: godspeed/essentials/producercategories
+
+# Create page
+create:
+    title: Create Producer Category
+    redirect: godspeed/essentials/producercategories/update/:id
+    redirectClose: godspeed/essentials/producercategories
+
+# Update page
+update:
+    title: Edit Producer Category
+    redirect: godspeed/essentials/producercategories
+    redirectClose: godspeed/essentials/producercategories
+
+# Preview page
+preview:
+    title: Preview Producer Category

@@ -1,6 +1,0 @@
-scopes:
-    playlists:
-        label: Playlist
-        modelClass: GodSpeed\FlametreeCMS\Models\Playlist
-        conditions: id in (select video_id from godspeed_flametreecms_video_playlists where playlist_id in (:filtered))
-        nameFrom: name

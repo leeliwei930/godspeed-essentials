@@ -1,0 +1,28 @@
+categories:
+    label: Product Categories
+    view:
+        toolbarButtons: add|remove|create
+        list: $/godspeed/essentials/models/productcategory/columns.yaml
+    manage:
+        list: $/godspeed/essentials/models/productcategory/columns.yaml
+        form: $/godspeed/essentials/models/productcategory/modal_fields.yaml
+
+producer:
+    label: Producer
+    view:
+        toolbarButtons: link|unlink|create
+        list: $/godspeed/essentials/models/producer/columns.yaml
+        form: $/godspeed/essentials/models/producer/modal_fields.yaml
+    manage:
+        list: $/godspeed/essentials/models/producer/columns.yaml
+        form: $/godspeed/essentials/models/producer/modal_fields.yaml
+
+video_playlist:
+    label: Video Playlist
+    view:
+        toolbarButtons: link|unlink|create
+        list: $/godspeed/essentials/models/playlist/columns.yaml
+        form: $/godspeed/essentials/models/playlist/modal_fields.yaml
+    manage:
+        list: $/godspeed/essentials/models/playlist/columns.yaml
+        form: $/godspeed/essentials/models/playlist/modal_fields.yaml

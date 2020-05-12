@@ -1,0 +1,21 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+columns:
+    id:
+        label: ID
+        searchable: true
+    name:
+        label: Name
+        searchable: true
+    producer_icon:
+        label: Icon
+        searchable: false
+        type: partial
+        path: ~/plugins/godspeed/essentials/controllers/producercategories/_producer_icon.htm
+    producers:
+        label: Number of Producers
+        type: partial
+        path: ~/plugins/godspeed/essentials/controllers/producercategories/_list_num_of_producers.htm
+        sortable: false

@@ -1,9 +1,0 @@
-playlists:
-    label: Playlists
-    view:
-        list: $/godspeed/flametreecms/models/playlist/columns.yaml
-        toolbarButtons: add|remove|create
-    manage:
-        list: $/godspeed/flametreecms/models/playlist/columns.yaml
-        form: $/godspeed/flametreecms/models/playlist/modal_fields.yaml
-

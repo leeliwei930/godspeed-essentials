@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Playlist
+
+# Model Form Field configuration
+form: $/godspeed/essentials/models/playlist/fields.yaml
+
+# Model Class name
+modelClass: GodSpeed\Essentials\Models\Playlist
+
+# Default redirect location
+defaultRedirect: godspeed/essentials/playlists
+
+# Create page
+create:
+    title: Create Playlist
+    redirect: godspeed/essentials/playlists/update/:id
+    redirectClose: godspeed/essentials/playlists
+
+# Update page
+update:
+    title: Edit Playlist
+    redirect: godspeed/essentials/playlists
+    redirectClose: godspeed/essentials/playlists
+
+# Preview page
+preview:
+    title: Preview Playlist

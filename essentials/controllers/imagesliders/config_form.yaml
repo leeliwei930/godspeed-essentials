@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Image Slider
+
+# Model Form Field configuration
+form: $/godspeed/essentials/models/imageslider/fields.yaml
+
+# Model Class name
+modelClass: GodSpeed\Essentials\Models\ImageSlider
+
+# Default redirect location
+defaultRedirect: godspeed/essentials/imagesliders
+
+# Create page
+create:
+    title: Create Image Slider
+    redirect: godspeed/essentials/imagesliders/update/:id
+    redirectClose: godspeed/essentials/imagesliders
+
+# Update page
+update:
+    title: Edit Image Slider
+    redirect: godspeed/essentials/imagesliders
+    redirectClose: godspeed/essentials/imagesliders
+
+# Preview page
+preview:
+    title: Preview Image Slider

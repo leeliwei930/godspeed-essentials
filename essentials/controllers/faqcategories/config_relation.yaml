@@ -1,0 +1,9 @@
+faqs:
+    label: Faqs
+    view:
+        list: $/godspeed/essentials/models/faq/columns.yaml
+        toolbarButtons: add|remove|create
+    manage:
+        list: $/godspeed/essentials/models/faq/columns.yaml
+        form: $/godspeed/essentials/models/faq/modal_fields.yaml
+

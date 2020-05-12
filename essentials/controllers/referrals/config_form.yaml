@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Referral
+
+# Model Form Field configuration
+form: $/godspeed/essentials/models/referral/fields.yaml
+
+# Model Class name
+modelClass: GodSpeed\Essentials\Models\Referral
+
+# Default redirect location
+defaultRedirect: godspeed/essentials/referrals
+
+# Create page
+create:
+    title: Create Referral
+    redirect: godspeed/essentials/referrals/update/:id
+    redirectClose: godspeed/essentials/referrals
+
+# Update page
+update:
+    title: Edit Referral
+    redirect: godspeed/essentials/referrals
+    redirectClose: godspeed/essentials/referrals
+
+# Preview page
+preview:
+    title: Preview Referral

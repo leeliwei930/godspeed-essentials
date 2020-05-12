@@ -1,0 +1,44 @@
+{
+    "name": "godspeed/essentials",
+    "description": "A proprietary CMS designed for Flame Tree Co-op",
+
+
+    "authors": [
+        {
+            "name": "Lee Li Wei",
+            "email": "leeliwei930@gmail.com"
+        },
+        {
+            "name": "David Yong",
+            "email": "dpsy611@uowmail.edu.au"
+        },
+        {
+            "name": "Wai Kit Low",
+            "email": "wkl090@uowmail.edu.au"
+        },
+        {
+            "name" : "Alwyn Yeo Khai Yuan",
+            "email": "akyy958@uowmail.edu.au"
+        },
+        {
+            "name" : "Nadun Jayawardena",
+            "email": "nj547@uowmail.edu.au"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "GodSpeed\\Essentials\\Utils\\": "utils/"
+        },
+        "classmap": [
+            "database/factories"
+        ]
+    },
+    "require": {
+        "james-heinrich/getid3": "dev-master",
+        "intervention/image": "2.5.1",
+        "eluceo/ical": "*",
+        "simplesoftwareio/simple-qrcode": "^2.0",
+        "mbezhanov/faker-provider-collection": "^1.2"
+
+    }
+}

@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Product Category
+
+# Model Form Field configuration
+form: $/godspeed/essentials/models/productcategory/fields.yaml
+
+# Model Class name
+modelClass: GodSpeed\Essentials\Models\ProductCategory
+
+# Default redirect location
+defaultRedirect: godspeed/essentials/productcategories
+
+# Create page
+create:
+    title: Create Product Category
+    redirect: godspeed/essentials/productcategories/update/:id
+    redirectClose: godspeed/essentials/productcategories
+
+# Update page
+update:
+    title: Edit Product Category
+    redirect: godspeed/essentials/productcategories
+    redirectClose: godspeed/essentials/productcategories
+
+# Preview page
+preview:
+    title: Preview Product Category

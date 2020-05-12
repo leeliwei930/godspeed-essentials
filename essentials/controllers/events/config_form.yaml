@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Event
+
+# Model Form Field configuration
+form: $/godspeed/essentials/models/event/fields.yaml
+
+# Model Class name
+modelClass: GodSpeed\Essentials\Models\Event
+
+# Default redirect location
+defaultRedirect: godspeed/essentials/events
+
+# Create page
+create:
+    title: Create Event
+    redirect: godspeed/essentials/events/update/:id
+    redirectClose: godspeed/essentials/events
+
+# Update page
+update:
+    title: Edit Event
+    redirect: godspeed/essentials/events
+    redirectClose: godspeed/essentials/events
+
+# Preview page
+preview:
+    title: Preview Event

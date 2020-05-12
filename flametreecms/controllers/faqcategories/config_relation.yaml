@@ -1,9 +1,0 @@
-faqs:
-    label: Faqs
-    view:
-        list: $/godspeed/flametreecms/models/faq/columns.yaml
-        toolbarButtons: add|remove|create
-    manage:
-        list: $/godspeed/flametreecms/models/faq/columns.yaml
-        form: $/godspeed/flametreecms/models/faq/modal_fields.yaml
-

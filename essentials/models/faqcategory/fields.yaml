@@ -1,0 +1,17 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: Question Category
+        type: text
+    slug:
+        label: Slug
+        preset:
+            field: name
+            type: slug
+    faqs:
+        label: Faqs
+        type: partial
+        path: $/godspeed/essentials/controllers/faqcategories/relation_manager.htm

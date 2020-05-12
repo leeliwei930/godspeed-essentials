@@ -1,0 +1,18 @@
+videos:
+    label: Videos
+    view:
+        list: $/godspeed/essentials/models/video/columns.yaml
+        toolbarButtons: add|remove|create
+    manage:
+        list: $/godspeed/essentials/models/video/columns.yaml
+        form: $/godspeed/essentials/models/video/modal_fields.yaml
+
+products:
+    label: Products
+    view:
+        list: $/godspeed/essentials/models/product/columns.yaml
+        toolbarButtons: add|remove|create
+    manage:
+        list: $/godspeed/essentials/models/product/columns.yaml
+        form: $/godspeed/essentials/models/product/modal_fields.yaml
+

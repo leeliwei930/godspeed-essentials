@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Faq
+
+# Model Form Field configuration
+form: $/godspeed/essentials/models/faq/fields.yaml
+
+# Model Class name
+modelClass: GodSpeed\essentials\Models\Faq
+
+# Default redirect location
+defaultRedirect: godspeed/essentials/faqs
+
+# Create page
+create:
+    title: Create Faq
+    redirect: godspeed/essentials/faqs/update/:id
+    redirectClose: godspeed/essentials/faqs
+
+# Update page
+update:
+    title: Edit Faq
+    redirect: godspeed/essentials/faqs
+    redirectClose: godspeed/essentials/faqs
+
+# Preview page
+preview:
+    title: Preview Faq

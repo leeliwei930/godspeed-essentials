@@ -1,0 +1,10 @@
+import:
+    title: Import volunteers
+    modelClass: GodSpeed\Essentials\Models\VolunteerImport
+    list: $/godspeed/essentials/controllers/volunteers/columns.yaml
+    view: $/godspeed/essentials/controllers/volunteers/import.htm
+
+export:
+    title: Export Volunteers
+    modelClass: GodSpeed\Essentials\Models\VolunteerExport
+    list: $/godspeed/essentials/controllers/volunteers/columns.yaml

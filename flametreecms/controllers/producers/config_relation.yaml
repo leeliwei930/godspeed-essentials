@@ -1,9 +1,0 @@
-producer_categories:
-    label: Producer Category
-    view:
-        list: $/godspeed/flametreecms/models/producercategory/columns.yaml
-        toolbarsButtons: add|remove|create
-    manage:
-        form: $/godspeed/flametreecms/models/producercategory/modal_fields.yaml
-        list: $/godspeed/flametreecms/models/producercategory/columns.yaml
-        toolbarsButtons: add|remove|create

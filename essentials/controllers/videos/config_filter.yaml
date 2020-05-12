@@ -1,0 +1,6 @@
+scopes:
+    playlists:
+        label: Playlist
+        modelClass: GodSpeed\Essentials\Models\Playlist
+        conditions: id in (select video_id from godspeed_essentials_video_playlists where playlist_id in (:filtered))
+        nameFrom: name

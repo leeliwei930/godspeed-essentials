@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: QR Code
+
+# Model Form Field configuration
+form: $/godspeed/essentials/models/qrcode/fields.yaml
+
+# Model Class name
+modelClass: GodSpeed\Essentials\Models\QRCode
+
+# Default redirect location
+defaultRedirect: godspeed/essentials/qrcodes
+
+# Create page
+create:
+    title: Create QR Code
+    redirect: godspeed/essentials/qrcodes/update/:id
+    redirectClose: godspeed/essentials/qrcodes
+
+# Update page
+update:
+    title: Edit QR Code
+    redirect: godspeed/essentials/qrcodes/update/:id
+    redirectClose: godspeed/essentials/qrcodes
+
+# Preview page
+preview:
+    title: Preview QR Code

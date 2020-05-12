@@ -1,0 +1,9 @@
+playlists:
+    label: Playlists
+    view:
+        list: $/godspeed/essentials/models/playlist/columns.yaml
+        toolbarButtons: add|remove|create
+    manage:
+        list: $/godspeed/essentials/models/playlist/columns.yaml
+        form: $/godspeed/essentials/models/playlist/modal_fields.yaml
+

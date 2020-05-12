@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Video
+
+# Model Form Field configuration
+form: $/godspeed/essentials/models/video/fields.yaml
+
+# Model Class name
+modelClass: GodSpeed\Essentials\Models\Video
+
+# Default redirect location
+defaultRedirect: godspeed/essentials/videos
+
+# Create page
+create:
+    title: Create Video
+    redirect: godspeed/essentials/videos/update/:id
+    redirectClose: godspeed/essentials/videos
+
+# Update page
+update:
+    title: Edit Video
+    redirect: godspeed/essentials/videos
+    redirectClose: godspeed/essentials/videos
+
+# Preview page
+preview:
+    title: Preview Video

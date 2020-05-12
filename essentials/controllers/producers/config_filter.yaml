@@ -1,0 +1,6 @@
+scopes:
+    producer_categories:
+        label: Producer Category
+        modelClass: GodSpeed\Essentials\Models\ProducerCategory
+        conditions:  id in (select producer_id from godspeed_essentials_producer_categories_pivot where producer_category_id in (:filtered))
+        nameFrom: name
