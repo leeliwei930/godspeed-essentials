@@ -109,7 +109,6 @@ class Referral extends Model
                 'before:valid_before'
             ],
             'usage_left' => [
-                'required_if:capped,true',
                 'min:0',
                 'numeric'
             ],

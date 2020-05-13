@@ -36,6 +36,7 @@ fields:
     usage_left:
         label: Maximum Redemption
         type: number
+        default: 0
         span: right
         trigger:
             action: show
