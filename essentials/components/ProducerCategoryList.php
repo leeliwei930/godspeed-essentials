@@ -33,9 +33,9 @@ class ProducerCategoryList extends ComponentBase
     {
 
         if ($this->property('show_producers')) {
-            $productCategories = \GodSpeed\FlametreeCMS\Models\ProducerCategory::with(['producers'])->get();
+            $productCategories = \GodSpeed\Essentials\Models\ProducerCategory::with(['producers'])->get();
         } else {
-            $productCategories = \GodSpeed\FlametreeCMS\Models\ProducerCategory::all();
+            $productCategories = \GodSpeed\Essentials\Models\ProducerCategory::all();
         }
         return $productCategories;
     }

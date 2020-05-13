@@ -209,7 +209,7 @@ class LazyloadImage
 
         // If we do not have an existing custom not found image, use the default from this plugin
         if (!isset($imagePath) || !file_exists($imagePath)) {
-            $imagePath = plugins_path('godspeed/flametreecms/assets/default-not-found.jpeg');
+            $imagePath = plugins_path('godspeed/essentials/assets/default-not-found.jpeg');
         }
 
         // Create a new Image object to resize

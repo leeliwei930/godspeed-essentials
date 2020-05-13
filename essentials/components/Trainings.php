@@ -83,7 +83,9 @@ class Trainings extends ComponentBase
      */
     public function paginateAllTrainings()
     {
-        return Training::paginate($this->property('perPage'), $this->getCurrentPage())->toArray();
+        return Training::paginate($this->property('perPage'), $this->getCurrentPage())
+                ->orderBy('created_at', 'desc')
+                ->toArray();
     }
 
     /**
@@ -93,7 +95,13 @@ class Trainings extends ComponentBase
     public function getLoggedInUserTrainings()
     {
         $userRoles = optional(\Auth::user())->groups()
-                ->with(['trainings.video_playlist.videos', 'trainings.documents'])
+                ->with([
+                    'trainings' => function ($query) {
+                        $query->orderBy('created_at', 'desc');
+                    },
+                    'trainings.video_playlist.videos',
+                    'trainings.documents'
+                ])
                 ->get() ?? collect();
 
 
