@@ -24,7 +24,7 @@
             :show="carousel.carouselState.currentSlide == {{ index }}"
             slide-id="{{ index }}"
             data-image="{{ slide.image | media  }}"
-            image="{{ slide.image | media | resize(640,null, {quality: 35, blur: 15}) }}"
+            image="{{ slide.image | media | lazyload(640,null, {quality: 35, blur: 15}) }}"
             title="{{ slide.title }}"
             caption="{{ slide.caption }}"
             title-animation="{{ slide.titleAnimation }}"

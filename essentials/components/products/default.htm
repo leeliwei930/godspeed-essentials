@@ -4,7 +4,7 @@
             origin="{{ __SELF__.producer.origin }}"
             name="{{ __SELF__.producer.name }}"
             :hoverable="false"
-            image="{{ __SELF__.producer.featured_image | media |  resize(350, null, {quality: '15', blur : 15}) }}"
+            image="{{ __SELF__.producer.featured_image | media |  lazyload(350, null, {quality: '15', blur : 15}) }}"
             data-image="{{ __SELF__.producer.featured_image | media }}"
             :scalable="true"
         >
@@ -20,7 +20,7 @@
                             <product-card
                                 class="my-2"
                                 data-image="{{ product.featured_image ? product.featured_image | media : null }}"
-                                image="{{ product.featured_image ? product.featured_image | media  |  resize(350, null, {quality: '15', blur : 15}) : null  }}"
+                                image="{{ product.featured_image ? product.featured_image | media  |  lazyload(350, null, {quality: '15', blur : 15}) : null  }}"
                                 categories="{{ product.categories | json_encode }}"
                                 name="{{ product.name }}"
                                 price="{{ product.price_tag }}"

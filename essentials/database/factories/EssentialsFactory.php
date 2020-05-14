@@ -162,8 +162,8 @@ $factory->define(ProductCategory::class, function (Faker $faker) {
 $factory->define(Product::class, function (Faker $faker) {
     $faker->addProvider(new \Bezhanov\Faker\Provider\Food($faker));
     $productName = $faker->unique()->ingredient;
-    $featureTitles = $faker->unique()->words(10, true);
-    $featureDescription = $faker->unique()->words(10, true);
+    $featureTitles = $faker->unique()->words(10);
+    $featureDescription = $faker->unique()->words(10);
     $features = collect([]);
 
     collect($featureTitles)->each(function ($feature, $index) use ($features, $featureDescription) {

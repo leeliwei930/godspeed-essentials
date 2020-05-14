@@ -7,7 +7,7 @@
                 width="320px"
                 origin="{{ producer.origin }}"
                 name="{{ producer.name }}"
-                image="{{ producer.featured_image | media |  resize(350, null, {quality: '15', blur : 15})  }}"
+                image="{{ producer.featured_image | media |  lazyload(350, null, {quality: '15', blur : 15})  }}"
                 data-image="{{producer.featured_image | media}}"
 
             >

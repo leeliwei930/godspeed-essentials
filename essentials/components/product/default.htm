@@ -3,13 +3,13 @@
     <div class="col-12 col-md-6 col-lg-6 overflow-hidden">
         <image-gallery
         data-image="{{ __SELF__.product.featured_image | media  }}"
-        image="{{ __SELF__.product.featured_image | media | resize(480, 480, {quality: 35, blur: '15'})}}"
+        image="{{ __SELF__.product.featured_image | media | lazyload(480, 480, {quality: 35, blur: '15'})}}"
         >
                 {% for index,image in product.images %}
                     <image-thumbnail
                         index="index"
                         data-image="{{ image.image | media }}"
-                        image="{{  image.image | media | resize(150, 150, {quality: 35, blur: '15'}) }}"
+                        image="{{  image.image | media | lazyload(150, 150, {quality: 35, blur: '15'}) }}"
                     >
 
                     </image-thumbnail>

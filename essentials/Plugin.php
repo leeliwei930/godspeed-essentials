@@ -195,7 +195,7 @@ class Plugin extends PluginBase
     {
         return [
             'filters' => [
-                'resize' => function ($file_path, $width = null, $height = null, $options = []) {
+                'lazyload' => function ($file_path, $width = null, $height = null, $options = []) {
                     $image = new LazyloadImage($file_path);
                     return $image->resize($width, $height, $options);
                 },

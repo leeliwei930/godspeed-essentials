@@ -4,7 +4,7 @@
               key="{{ announcement.id }}"
               class="col-12 col-md-10 col-lg-9"
               title="{{ announcement.title }}"
-              featured-image-url="{{ announcement.featured_images[0].getLocalPath() | resize(640, null) }}"
+              featured-image-url="{{ announcement.featured_images[0].getLocalPath() | lazyload(640, null) }}"
               data-featured-image-url="{{ announcement.featured_images[0].path }}"
               description="{{ str_words(announcement.content, 20) }}"
               author="{{ announcement.user.full_name }}"

@@ -5,7 +5,7 @@
 
 <h3 class="oc-text-gray">Download QR Code</h3>
 
-    <div class="w-350 m-x-auto">
+    <div class="w-350 m-x-auto m-y">
 
         <div class="form-group span-full flex-layout-column">
             <!-- qr code preview partials  -->
@@ -22,20 +22,22 @@
             <label for="">QR Code Link</label>
             <input type="text" readonly value="<?= $qrCode->createQRUrl() ?>" class="form-control">
         </div>
-        <div class="form-group  radio-field ">
+        <div class="form-group radio-field  span-full">
             <label>Format</label>
-                <div class="radio custom-radio">
+            <div class="flex-layout-row align-items-baseline">
+                <div class=" custom-radio">
                     <input name="format" value="SVG" type="radio" id="svg" />
                     <label for="svg">SVG</label>
                 </div>
-                <div class="radio custom-radio">
+                <div class=" custom-radio">
                     <input name="format" value="PNG" type="radio" id="png" />
                     <label for="png">PNG</label>
                 </div>
-                <div class="radio custom-radio">
+                <div class=" custom-radio">
                     <input name="format" value="EPS" type="radio" id="eps" />
                     <label for="eps">EPS</label>
                 </div>
+            </div>
             <?php if( isset($errors)): ?>
             <small class="text-danger"><?= $errors->first('format') ?></small>
             <?php endif; ?>

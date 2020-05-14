@@ -16,7 +16,7 @@
                             <producer-card
                                 origin="{{ producer.origin }}"
                                 name="{{ producer.name }}"
-                                image="{{ producer.featured_image | media |  resize(640, 480, {quality: '15', blur : 15})  }}"
+                                image="{{ producer.featured_image | media |  lazyload(640, 480, {quality: '15', blur : 15})  }}"
                                 data-image="{{producer.featured_image | media}}"
                             >
 
