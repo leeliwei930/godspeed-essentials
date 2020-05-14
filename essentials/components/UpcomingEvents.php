@@ -2,11 +2,15 @@
 
 use Carbon\CarbonInterval;
 use Cms\Classes\ComponentBase;
+use Cms\Classes\Page;
+use GodSpeed\Essentials\Models\Event;
 use October\Rain\Database\Relations\BelongsToMany;
+use RainLab\User\Models\UserGroup;
 
 class UpcomingEvents extends ComponentBase
 {
     public $events = [];
+    public $eventPage;
 
     public function componentDetails()
     {
@@ -41,32 +45,56 @@ class UpcomingEvents extends ComponentBase
                 ],
                 'default' => 'months'
             ],
+            'event_page' => [
+                'title' => "Event Detail Page",
+                'type' => "dropdown",
+                'options' => Page::getNameList()
+            ]
 
         ];
     }
     public function prepareVars()
     {
-        $events = $this->makeEventsCollection(optional($this->getUpcomingEventsQuery())->get());
-        $this->events = $this->page['events'] = $events;
+        $events = $this->makeEventsCollection($this->getUpcomingEventsQuery());
+        $this->events = $this->page['upcomingEvents'] = $events;
+        $this->eventPage = $this->page['eventPage'] = $this->property('event_page');
+
     }
 
-    public function onRun(){
+    public function onRun()
+    {
         $this->prepareVars();
     }
 
     private function getUpcomingEventsQuery()
     {
         $member = $this->getCurrentMemberSession();
+        $upperBoundDate = $this->getDateScopeUpperBound();
+
         if (!is_null($member)) {
-            $upperBoundDate = $this->getDateScopeUpperBound();
-            return $member->groups()->with([
-                'events' => function (BelongsToMany $query) use ($upperBoundDate) {
-                    $query->whereBetween('started_at', [
-                        now()->toDateString(),
-                        $upperBoundDate->toDateString()
-                    ]);
-                }
-            ]);
+            $userGroups = $member->groups()->get();
+
+            collect($userGroups)->each(function ($group) use ($upperBoundDate) {
+                $group['events'] = Event::whereHas('user_group', function ($query) use ($group) {
+                    $query->whereIn('code', [$group->code, 'guest']);
+                })->whereBetween('started_at', [
+                    now()->toDateString(),
+                    $upperBoundDate->toDateString()
+                ])->orWhereDoesntHave('user_group')->get();
+            });
+            return $userGroups;
+        } else {
+            $userGroups = UserGroup::where('code', 'guest')->get();
+            collect($userGroups)->each(function ($group) use ($upperBoundDate) {
+                $group['events'] = Event::whereHas('user_group', function ($query) use ($group) {
+                    $query->where('code', $group->code);
+                })->whereBetween('started_at', [
+                    now()->toDateString(),
+                    $upperBoundDate->toDateString()
+                ])->orWhereDoesntHave('user_group')->get();
+            });
+
+            return $userGroups;
         }
     }
 

@@ -1,4 +1,3 @@
-{% set upcomingEvents = __SELF__.events %}
 
 
 {% if upcomingEvents is not empty %}
@@ -8,6 +7,7 @@
         <list
             type="sublist"
             new-tab="_blank"
+            link="{{ eventPage | page({slug: event.slug})}}"
         >
         <div class="d-flex flex-wrap flex-md-row flex-column  align-items-start justify-content-between align-items-start p-2">
 
