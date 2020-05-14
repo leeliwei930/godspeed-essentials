@@ -20,3 +20,7 @@ fields:
     featured_image:
         label: Featured Image
         type: mediafinder
+    producer_categories:
+        label: Producer Categories
+        type: relation
+
