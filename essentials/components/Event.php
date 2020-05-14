@@ -5,6 +5,7 @@ use Cms\Classes\Page;
 
 use October\Rain\Database\Relations\BelongsToMany;
 use RainLab\User\Models\User;
+use RainLab\User\Models\UserGroup;
 
 class Event extends ComponentBase
 {
@@ -16,7 +17,7 @@ class Event extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'Event',
+            'name' => 'Event',
             'description' => 'Return a specific event based on page url'
         ];
     }
@@ -60,7 +61,7 @@ class Event extends ComponentBase
     public function onRun()
     {
         $this->prepareVars();
-        if(is_null($this->event)){
+        if (is_null($this->event)) {
             $this->setStatusCode(404);
             $this->controller->run("404");
         }
@@ -94,13 +95,33 @@ class Event extends ComponentBase
     public function findEventBySlug($slug)
     {
         $user = $this->getCurrentMemberSession();
-        if (!is_null($user) && $user instanceof  User) {
-            return $user->groups()->with(['events' => function (BelongsToMany $query) use ($slug) {
-                return $query->where('slug', $slug)->first();
-            },'events.documents'])->get();
-        }
+        if (!is_null($user) && $user instanceof User) {
+            $userGroups = $user->groups()->get();
+            collect($userGroups)->each(function ($group) use ($slug) {
+                $group['events'] = \GodSpeed\Essentials\Models\Event::where('slug', $slug)
+                    ->whereHas('user_group', function ($query) use ($group) {
+                        $query->where('code', $group->code)->orWhere('code', 'guest');
+                    })->orWhereDoesntHave('user_group')
+                    ->with('documents')
+                    ->get();
+            });
 
-        return null;
+            return $userGroups;
+        } else {
+            $data = [];
+            $guest = UserGroup::where('code', 'guest')->first();
+
+            $guest['events'] = \GodSpeed\Essentials\Models\Event::where('slug', $slug)
+                ->whereHas('user_group', function ($query) {
+                    $query->where('code', 'guest');
+                })->orWhereDoesntHave('user_group')
+                ->with('documents')
+                ->get();
+
+            array_push($data, $guest);
+
+            return $data;
+        }
     }
 
     /**
@@ -110,13 +131,32 @@ class Event extends ComponentBase
     public function findEventById($id)
     {
         $user = $this->getCurrentMemberSession();
-        if (!is_null($user) && $user instanceof  User) {
-            return $user->groups()->with(['events' => function (BelongsToMany $query) use ($id) {
-                return $query->find($id);
-            }, 'events.documents'])->get();
-        }
+        if (!is_null($user) && $user instanceof User) {
+            $userGroups = $user->groups()->get();
+            collect($userGroups)->each(function ($group) use ($id) {
+                $group['events'] = \GodSpeed\Essentials\Models\Event::where('id', $id)
+                    ->whereHas('user_group', function ($query) use ($group) {
+                        $query->where('code', $group->code)->orWhere('code', 'guest');
+                    })->orWhereDoesntHave('user_group')
+                    ->with('documents')
+                    ->get();
+            });
 
-        return null;
+            return $userGroups;
+        } else {
+            $data = [];
+            $guest = UserGroup::where('code', 'guest')->first();
+
+            $guest['events'] = \GodSpeed\Essentials\Models\Event::where('id', $id)
+                ->whereHas('user_group', function ($query) {
+                    $query->where('code', 'guest');
+                })->orWhereDoesntHave('user_group')
+                ->with('documents')
+                ->get();
+
+            array_push($data, $guest);
+            return $data;
+        }
     }
 
     public function prepareEventsData($records)
@@ -134,10 +174,6 @@ class Event extends ComponentBase
         $eventName = $this->event->title;
 
 
-        $this->page->title =   $eventName. $this->page->title;
-
+        $this->page->title = $eventName . $this->page->title;
     }
-
-
-
 }

@@ -1,4 +1,4 @@
-{%  set events = __SELF__.events %}
+
 <div class="d-flex flex-row align-items-baseline flex-wrap-reverse   m-3">
     <div class="d-flex flex-column col-12 col-lg-3">
     {% if timelines %}
@@ -9,7 +9,7 @@
                     leading="{{ timeline.timeline_label }}"
                     :is-active="{{ (__SELF__.selectedTimeLine == "01-" ~ timeline.timeline_value) ? "true" : "false"  }}"
                     trailing="{{ timeline.count ~ " events"}}"
-                    link="{{ "volunteer/events" | page ~ "?" ~ monthname_key ~ "=01-" ~ timeline.timeline_value}}"
+                    link="{{ app ~ "?" ~ monthname_key ~ "=01-" ~ timeline.timeline_value}}"
                 >
 
                 </list>
@@ -27,7 +27,7 @@
 
                         name="{{ event.title }}"
                         timezone="{{ event.timezone }}"
-                        link="{{ "volunteer/event" | page({slug: event.slug}) }}"
+                        link="{{ eventPage | page({slug: event.slug}) }}"
                         ics-link="{{ event.ics.getPath() }}"
                         location="{{ event.location }}"
                     >

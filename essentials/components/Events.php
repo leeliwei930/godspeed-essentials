@@ -3,6 +3,7 @@
 use Carbon\CarbonInterval;
 use Carbon\Exceptions\InvalidDateException;
 use Cms\Classes\ComponentBase;
+use Cms\Classes\Page;
 use GodSpeed\Essentials\Models\Event;
 use GodSpeed\Essentials\Plugin;
 use Illuminate\Database\Eloquent\Collection;
@@ -10,6 +11,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Carbon;
 use October\Rain\Database\Relations\BelongsToMany;
+use RainLab\User\Models\UserGroup;
 
 class Events extends ComponentBase
 {
@@ -17,6 +19,7 @@ class Events extends ComponentBase
      * @var
      */
     public $events;
+    public $eventPage;
     public $timelines;
     public $selectedTimeLine;
 
@@ -43,7 +46,11 @@ class Events extends ComponentBase
                 "type" => "string",
                 "default" => $defaultMonthNameField
             ],
-
+            'event_page' => [
+                'title' => "Event Detail Page",
+                'type' => "dropdown",
+                'options' => Page::getNameList()
+            ]
 
         ];
     }
@@ -65,10 +72,11 @@ class Events extends ComponentBase
         $this->timelines = $this->page['timelines'] = $this->getTimelineLabel();
         $this->page['monthname_key'] = $this->getMonthNameKey();
 
-        $events = $this->getEventsQuery()->get();
+        $events = $this->getEventsQuery();
         $eventCollection = $this->makeEventsCollection($events);
 
         $this->events = $this->page['events'] = $eventCollection;
+        $this->eventPage = $this->page['eventPage'] = $this->property('event_page');
     }
 
     public function makeEventsCollection($records)
@@ -94,7 +102,6 @@ class Events extends ComponentBase
             $lowerBound = Carbon::parse($date)->firstOfMonth();
             $upperBound = Carbon::parse($date)->lastOfMonth();
             $this->selectedTimeLine = $lowerBound->format("d-m-Y");
-
         } catch (\Exception $exception) {
             // silent any invalid date format get passed in
             $date = now()->format("Y-m-d");
@@ -103,16 +110,31 @@ class Events extends ComponentBase
             $this->selectedTimeLine = $lowerBound->format("d-m-Y");
         }
         if (!is_null($member)) {
-            return $member->groups()->with([
-                'events' => function (BelongsToMany $query) use ($lowerBound, $upperBound) {
-                    $query->whereBetween('started_at', [
-                        $lowerBound->toDateString(),
-                        $upperBound->toDateString()
-                    ]);
-                }
-            ]);
+            $userGroups = $member->groups()->get();
+
+            collect($userGroups)->each(function ($group) use ($lowerBound, $upperBound) {
+                $group['events'] = Event::whereHas('user_group', function ($query) use ($group) {
+                    $query->whereIn('code', [$group->code, 'guest']);
+                })->whereBetween('started_at', [
+                    $lowerBound->toDateString(),
+                    $upperBound->toDateString()
+                ])->orWhereDoesntHave('user_group')->get();
+            });
+
+            return $userGroups;
+        } else {
+            $userGroups = UserGroup::where('code', 'guest')->get();
+            collect($userGroups)->each(function ($group) use ($lowerBound, $upperBound) {
+                $group['events'] = Event::whereHas('user_group', function ($query) use ($group) {
+                    $query->where('code', $group->code);
+                })->whereBetween('started_at', [
+                    $lowerBound->toDateString(),
+                    $upperBound->toDateString()
+                ])->orWhereDoesntHave('user_group')->get();
+            });
+
+            return $userGroups;
         }
-        return [];
     }
 
     public function getMonthlyScopedValue()
@@ -138,15 +160,35 @@ class Events extends ComponentBase
     public function getTimelineLabel()
     {
         $member = $this->getCurrentMemberSession();
-        $groups = $member->groups()->with(['events'])->get();
         $eventID = collect();
-        collect($groups)->each(function ($group) use ($eventID) {
-            collect($group['events'])->each(function ($event) use ($eventID) {
-                $eventID->push($event->id);
-            });
-        });
 
-        $eventID = $eventID->unique()->toArray();
+        if(!is_null($member)) {
+            $userGroups =  $member->groups()->get();
+
+            collect($userGroups)->each(function ($group) use ($eventID) {
+                $events = Event::whereHas('user_group', function ($query) use ($group, $eventID) {
+                    $query->whereIn('code', [$group->code, 'guest']);
+                })->orWhereDoesntHave('user_group')->pluck('id');
+
+                $events->each(function ($event) use ($eventID) {
+                    $eventID->push($event);
+                });
+            });
+        } else {
+            $userGroups = UserGroup::where('code', 'guest')->get();
+            collect($userGroups)->each(function ($group) use ($eventID) {
+                $events = Event::whereHas('user_group', function ($query) use ($group, $eventID) {
+                    $query->where('code', $group->code);
+                })->orWhereDoesntHave('user_group')->pluck('id');
+
+                $events->each(function ($event) use ($eventID) {
+                    $eventID->push($event);
+                });
+            });
+        }
+        $eventID = $eventID->toArray();
+
+
         return Event::selectRaw('DATE_FORMAT(started_at, "%M, %Y") as timeline_label, DATE_FORMAT(started_at, "%m-%Y") as timeline_value, COUNT(*) as count')
             ->whereIn('id', $eventID)
             ->groupBy('timeline_label', 'timeline_value')

@@ -17,14 +17,16 @@ class AllProducer extends ComponentBase
     public function defineProperties()
     {
         return [
-            'Include Categories' => [
+            'include_categories' => [
+                "title" => "Include Categories",
                 "type" => "checkbox"
             ],
-            'Limit' => [
+            'limit' => [
+                'title' => "Limit",
                 "type" => "string",
                 "default" => "0",
                 'validationPattern' => '^[0-9]+$',
-                'validationMessage' => 'The Limit property can contain only numeric symbols',
+                'validationMessage' => 'The limit property can contain only numeric symbols',
                 'placeholder' => "If 0 all producers will be loaded."
 
             ]
@@ -33,14 +35,14 @@ class AllProducer extends ComponentBase
 
     public function onRun()
     {
-        $this->producers =  $this->loadProducers();
+        $this->producers = $this->page['producers'] =  $this->loadProducers();
     }
 
 
     public function loadProducers()
     {
-        $limit = (int) $this->property('Limit') ?? 0;
-        $include_categories = (int) $this->property('Include Categories') ?? 0;
+        $limit = (int) $this->property('limit') ?? 0;
+        $include_categories = (int) $this->property('include_categories') ?? 0;
         if ($include_categories == 1) {
             $eloquentBuilder = Producer::with('producer_categories');
             if ($limit) {

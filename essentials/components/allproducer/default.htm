@@ -1,6 +1,6 @@
-{% set producers = __SELF__.producers  %}
 
-{% if producers %}
+
+{% if producers.count() > 0 %}
     {% for producer in producers %}
         <a href="{{ "producer/products" | page({producer: producer.slug}) }}" target="_blank"  class="d-flex flex-grow-1 text-decoration-none">
             <producer-card
@@ -15,6 +15,9 @@
         </a>
     {% endfor %}
 {% else %}
-
+    <div class="alert alert-info d-flex flex-column w-100">
+        <h3>Info</h3>
+        There is no producers right now, you can add it via producers management  page.
+    </div>
 
 {% endif %}
