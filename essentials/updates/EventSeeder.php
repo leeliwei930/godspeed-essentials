@@ -1,5 +1,6 @@
 <?php namespace GodSpeed\Essentials\Updates;
 
+use Cms\Classes\Theme;
 use GodSpeed\Essentials\Models\Event;
 
 use RainLab\User\Models\UserGroup;
@@ -13,7 +14,10 @@ class EventSeeder extends Seeder
         if (env('APP_ENV') === 'acceptance') {
             return;
         }
-        $events  = factory(Event::class, 50)->create([
+        if(Theme::getActiveThemeCode() !== 'flametree-theme'){
+            return;
+        }
+        $events  = factory(Event::class, 10)->create([
             'timezone' => "Australia/Sydney"
         ]);
 

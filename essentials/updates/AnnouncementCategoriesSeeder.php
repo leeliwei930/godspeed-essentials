@@ -1,5 +1,6 @@
 <?php namespace GodSpeed\Essentials\Updates;
 
+use Cms\Classes\Theme;
 use Illuminate\Support\Str;
 use October\Rain\Support\Collection;
 use RainLab\Blog\Models\Category;
@@ -53,7 +54,9 @@ class AnnouncementCategoriesSeeder extends Seeder
                 'featured_image' => 'announcement-categories/membership.png'
             ]
         ];
-
+        if(Theme::getActiveThemeCode() !== 'flametree-theme'){
+            return;
+        }
         // teardown
         collect($annoucementCategories)->each(function ($category) {
             $category = Category::where('name', $category['name'])->first();

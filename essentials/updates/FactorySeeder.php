@@ -1,5 +1,6 @@
 <?php namespace GodSpeed\Essentials\Updates;
 
+use Cms\Classes\Theme;
 use GodSpeed\Essentials\Models\Faq;
 use GodSpeed\Essentials\Models\FaqCategory;
 use GodSpeed\Essentials\Models\Playlist;
@@ -23,7 +24,9 @@ class FactorySeeder extends Seeder
         if (env('APP_ENV') === 'acceptance') {
             return;
         }
-
+        if(Theme::getActiveThemeCode() !== 'flametree-theme'){
+            return;
+        }
         // create faqs
         factory(\GodSpeed\Essentials\Models\FaqCategory::class, 20)->create()
             ->each(function ($faqCategory) {

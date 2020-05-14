@@ -1,5 +1,6 @@
 <?php namespace GodSpeed\Essentials\Updates;
 
+use Cms\Classes\Theme;
 use GodSpeed\Essentials\Models\Faq;
 use GodSpeed\Essentials\Models\FaqCategory;
 use GodSpeed\Essentials\Models\Playlist;
@@ -14,6 +15,10 @@ class ImageSlider extends Seeder
 
     public function run()
     {
+        // if the current  theme is set to other, dont seed the flametree data
+        if(Theme::getActiveThemeCode() !== 'flametree-theme'){
+            return;
+        }
         $slider = [
             'label' => "Home",
             "slides" => [

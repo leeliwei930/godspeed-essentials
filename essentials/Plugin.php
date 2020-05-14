@@ -60,10 +60,11 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name' => 'GodSpeed Essential',
+            'name' => 'GodSpeed Essentials',
             'description' => 'Provide an essential tools for  business that  require membership management feature',
             'author' => 'GodSpeed',
             'iconSvg' => "plugins/godspeed/essentials/assets/godspeed.svg",
+
         ];
     }
 
@@ -103,7 +104,7 @@ class Plugin extends PluginBase
         }
 
         if ($pluginManagerInstance->hasPlugin('RainLab.Blog')) {
-            if (\Schema::hasTable('rainlab_blog_categories') && \Schema::hasColumn('rainlab_blog_categories', 'user_group')) {
+            if (\Schema::hasColumn('rainlab_blog_categories', 'user_group')) {
                 $this->extendBlogCategoriesFormField();
             }
         }

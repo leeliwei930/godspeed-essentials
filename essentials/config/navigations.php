@@ -3,9 +3,9 @@
 
 return [
     'essentials' => [
-        'label' => 'GodSpeed Essential',
+        'label' => 'GodSpeed Essentials',
         'url' => Backend::url('godspeed/essentials/producers'),
-        'iconSvg' => "plugins/godspeed/essentials/assets/5x/godspeed@5x.png",
+        'iconSvg' => "plugins/godspeed/essentials/assets/godspeed.svg",
         'order' => 500,
         "sideMenu" => [
             "producers" => [

@@ -19,12 +19,6 @@ class CreateTrainingsTable extends Migration
             $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('video_playlist_id')->nullable();
             $table->timestamps();
-
-
-            $table->foreign('user_id', 'godspeed_essentials_training_backend_user')
-                ->references('id')
-                ->on('backend_users')
-                ->onDelete('cascade');
         });
 
         Schema::table('godspeed_essentials_trainings', function (Blueprint $table) {
@@ -32,6 +26,11 @@ class CreateTrainingsTable extends Migration
                 ->references('id')
                 ->on('godspeed_essentials_playlists')
                 ->onDelete('set null');
+//
+//            $table->foreign('user_id', 'godspeed_essentials_training_backend_user')
+//                ->references('id')
+//                ->on('backend_users')
+//                ->onDelete('cascade');
         });
 
 
@@ -44,10 +43,10 @@ class CreateTrainingsTable extends Migration
                 ->on('godspeed_essentials_trainings')
                 ->onDelete('cascade');
 
-            $table->foreign('role_id', 'godspeed_essentials_roles_training')
-                ->references('id')
-                ->on('user_groups')
-                ->onDelete('cascade');
+//            $table->foreign('role_id', 'godspeed_essentials_roles_training')
+//                ->references('id')
+//                ->on('user_groups')
+//                ->onDelete('cascade');
             $table->primary(['training_id', 'role_id'], 'godspeed_essentials_roles_trainings_pk');
         });
     }
@@ -57,14 +56,14 @@ class CreateTrainingsTable extends Migration
         if (Schema::hasTable('godspeed_essentials_roles_trainings')) {
             Schema::table('godspeed_essentials_roles_trainings', function (Blueprint $table) {
                 $table->dropForeign('godspeed_essentials_training_roles');
-                $table->dropForeign('godspeed_essentials_roles_training');
+//                $table->dropForeign('godspeed_essentials_roles_training');
             });
         }
         Schema::dropIfExists('godspeed_essentials_roles_trainings');
         if (Schema::hasTable('godspeed_essentials_trainings')) {
             Schema::table('godspeed_essentials_trainings', function (Blueprint $table) {
                 $table->dropForeign(['video_playlist_id']);
-                $table->dropForeign('godspeed_essentials_training_backend_user');
+//                $table->dropForeign('godspeed_essentials_training_backend_user');
             });
         }
         Schema::dropIfExists('godspeed_essentials_trainings');

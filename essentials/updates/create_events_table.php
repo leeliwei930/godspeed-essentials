@@ -32,11 +32,11 @@ class CreateMeetingsTable extends Migration
                 ->references('id')
                 ->on('godspeed_essentials_events')
                 ->onDelete('cascade');
-
-            $table->foreign('member_role_id', 'godspeed_essentials_role_event')
-                ->references('id')
-                ->on('user_groups')
-                ->onDelete('cascade');
+//
+//            $table->foreign('member_role_id', 'godspeed_essentials_role_event')
+//                ->references('id')
+//                ->on('user_groups')
+//                ->onDelete('cascade');
         });
     }
 
@@ -45,7 +45,7 @@ class CreateMeetingsTable extends Migration
         if (Schema::hasTable('godspeed_essentials_events_roles')) {
             Schema::table('godspeed_essentials_events_roles', function (Blueprint $table) {
                 $table->dropForeign('godspeed_essentials_event_role');
-                $table->dropForeign('godspeed_essentials_role_event');
+//                $table->dropForeign('godspeed_essentials_role_event');
             });
         }
         Schema::dropIfExists('godspeed_essentials_events_roles');

@@ -4,6 +4,7 @@ use Backend\Models\User;
 use Backend\Models\UserGroup;
 use Backend\Models\UserRole;
 use Backend\Models\UserRole as Role;
+use Cms\Classes\Theme;
 use Seeder;
 
 class ScaffoldTeamMember extends Seeder
@@ -31,6 +32,10 @@ class ScaffoldTeamMember extends Seeder
 
     public function run()
     {
+        // if the current  theme is set to other, dont seed the flametree data
+        if(Theme::getActiveThemeCode() !== 'flametree-theme'){
+            return;
+        }
 
         $this->tearDown();
 

@@ -2,6 +2,7 @@
 
 namespace GodSpeed\Essentials\Updates;
 
+use Cms\Classes\Theme;
 use RainLab\User\Models\User;
 use RainLab\User\Models\UserGroup;
 use RainLab\User\Facades\Auth;
@@ -12,6 +13,10 @@ class FrontendUserGroupSeeder extends \Seeder
 
     public function run()
     {
+        // if the current  theme is set to other, dont seed the flametree data
+        if(Theme::getActiveThemeCode() !== 'flametree-theme'){
+            return;
+        }
 
         $this->tearDown();
         $groups = [

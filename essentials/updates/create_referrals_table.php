@@ -21,7 +21,7 @@ class CreateReferralsTable extends Migration
                 $table->unsignedInteger('usage_left');
                 $table->unsignedInteger('user_group_id');
 
-                $table->foreign('user_group_id')->references('id')->on('user_groups')->onDelete('cascade');
+//                $table->foreign('user_group_id')->references('id')->on('user_groups')->onDelete('cascade');
                 $table->boolean('capped')->default(false);
                 $table->timestamps();
             });
@@ -29,11 +29,12 @@ class CreateReferralsTable extends Migration
         }
         if (PluginManager::instance()->hasPlugin('RainLab.User')) {
 
-
-            Schema::table('users', function (Blueprint $table) {
-                $table->unsignedInteger('referral_id')->nullable();
-                $table->foreign('referral_id')->references('id')->on('godspeed_essentials_referrals')->onDelete('set null');
-            });
+            if (Schema::hasTable('users')) {
+                Schema::table('users', function (Blueprint $table) {
+                    $table->unsignedInteger('referral_id')->nullable();
+//                    $table->foreign('referral_id')->references('id')->on('godspeed_essentials_referrals')->onDelete('set null');
+                });
+            }
         }
     }
 
@@ -43,17 +44,17 @@ class CreateReferralsTable extends Migration
             if (Schema::hasTable('users')) {
                 Schema::table('users', function (Blueprint $table) {
                     if (Schema::hasColumn('users', 'referral_id')) {
-                        $table->dropForeign(['referral_id']);
+//                        $table->dropForeign(['referral_id']);
                         $table->dropColumn('referral_id');
                     }
                 });
             }
         }
-        if(Schema::hasTable('godspeed_essentials_referrals')){
-            Schema::table('godspeed_essentials_referrals', function(Blueprint $table) {
-                $table->dropForeign(['user_group_id']);
-            });
-        }
+//        if(Schema::hasTable('godspeed_essentials_referrals')){
+//            Schema::table('godspeed_essentials_referrals', function(Blueprint $table) {
+//                $table->dropForeign(['user_group_id']);
+//            });
+//        }
         Schema::dropIfExists('godspeed_essentials_referrals');
     }
 }

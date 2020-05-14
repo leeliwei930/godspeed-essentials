@@ -1,6 +1,7 @@
 <?php namespace GodSpeed\Essentials\Updates;
 
 
+use Cms\Classes\Theme;
 use GodSpeed\Essentials\Models\Producer;
 use Seeder;
 use GodSpeed\Essentials\Models\ProducerCategory;
@@ -13,7 +14,13 @@ class ProducerSeeder extends Seeder
         if (env('APP_ENV') === 'acceptance') {
             return;
         }
-       $producerCategories = [
+
+        // if the current  theme is set to other, dont seed the flametree data
+        if(Theme::getActiveThemeCode() !== 'flametree-theme'){
+            return;
+        }
+
+        $producerCategories = [
            "Fresh Fruit and Vegetable" => [
                 [
                     "featured_image" => "products/fresh-fruit-and-vegetable/daptoCommunityFarm.jpg",
