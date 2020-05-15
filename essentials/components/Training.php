@@ -49,11 +49,12 @@ class Training extends ComponentBase
     }
 
     /**
-     *
+     * Prepare frontend view variables
      */
     public function prepareVars()
     {
         $this->page['training'] = $this->training = $this->fetchTraining();
+
     }
 
     /**
@@ -62,6 +63,10 @@ class Training extends ComponentBase
     public function onRun()
     {
         $this->prepareVars();
+        if(is_null($this->training)){
+            $this->controller->run('404');
+            $this->setStatusCode(404);
+        }
     }
 
     /**

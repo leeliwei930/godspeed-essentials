@@ -4,6 +4,7 @@ use Carbon\Carbon;
 use Cms\Classes\Page;
 use Model;
 use October\Rain\Database\Attach\File;
+use RainLab\User\Models\UserGroup;
 
 /**
  * Meeting Model
@@ -108,7 +109,7 @@ class Event extends Model
      */
     public $belongsToMany = [
         'user_group' => [
-            'RainLab\User\Models\UserGroup' ,
+            'RainLab\User\Models\UserGroup',
             'table' => 'godspeed_essentials_events_roles',
             'otherKey' => 'member_role_id'
         ]
@@ -148,7 +149,6 @@ class Event extends Model
      */
 
 
-
     public function afterValidate()
     {
 
@@ -156,15 +156,15 @@ class Event extends Model
         if (!$this->hasCreatedICSFileBefore()) {
             // create a new ics file and save it.
             $icalEvent = $this->makeiCalEvent();
-            $filename =str_limit($this->slug, 10, '').'.ics';
-            $file =  new \System\Models\File();
+            $filename = str_limit($this->slug, 10, '') . '.ics';
+            $file = new \System\Models\File();
             $file->fromData($this->makeCalendarInstance($icalEvent)->render(), $filename);
             $file->save();
             $this->ics = $file;
             $this->forceSave();
         } else {
             $icalEvent = $this->makeiCalEvent();
-            $filename = str_limit($this->slug, 10, '').'.ics';
+            $filename = str_limit($this->slug, 10, '') . '.ics';
             // replace the new data to the existing file
             $this->ics->fromData($this->makeCalendarInstance($icalEvent)->render(), $filename);
             $this->ics->save();
@@ -242,9 +242,6 @@ class Event extends Model
     }
 
 
-
-
-
     /**
      * Started At field value getter
      * @param $date
@@ -262,7 +259,6 @@ class Event extends Model
 
         // return to a converted date time based on the timezone
         return $startedAt->setTimezone($this->timezone);
-
     }
 
     /**
@@ -309,4 +305,84 @@ class Event extends Model
         $endedAt = Carbon::parse($date, $this->timezone);
         $this->attributes['ended_at'] = $endedAt->setTimezone($this->getSystemTimezone())->toDateTimeString();
     }
+
+    /**
+     * Return a query which assign to guest or no user groups, with a specific date range
+     * @param $query
+     * @param Carbon $lowerBound
+     * @param Carbon $upperBound
+     * @return mixed
+     */
+    public function scopePublicBetween($query, Carbon $lowerBound, Carbon $upperBound)
+    {
+        $userGroups = UserGroup::where('code', 'guest')->pluck('code');
+
+        return $query->whereHas('user_group', function ($query) use ($userGroups) {
+            $query->whereIn('code', $userGroups);
+        })->whereBetween('started_at', [
+            $lowerBound->toDateString(),
+            $upperBound->toDateString()
+        ])->orWhereDoesntHave('user_group');
+    }
+
+    /**
+     * Return a query which assign to user groups, with a specific date range
+     * @param $query
+     * @param Carbon $lowerBound
+     * @param Carbon $upperBound
+     * @return mixed
+     */
+    public function scopeUserGroupBetween($query, Carbon $lowerBound, Carbon $upperBound)
+    {
+        $member = \Auth::user();
+        if (!is_null($member)) {
+            $userGroups = $member->groups()->pluck('code');
+
+            $userGroups->push('guest');
+
+            return $query->whereHas('user_group', function ($query) use ($userGroups) {
+                $query->whereIn('code', $userGroups);
+            })->whereBetween('started_at', [
+                $lowerBound->toDateString(),
+                $upperBound->toDateString()
+            ])->orWhereDoesntHave('user_group');
+        } else {
+            return $this->scopePublicBetween($query, $lowerBound, $upperBound);
+        }
+    }
+
+    /**
+     * Return all public events query
+     * @param $query
+     * @return mixed
+     */
+    public function scopePublic($query)
+    {
+        $userGroups = UserGroup::where('code', 'guest')->pluck('code');
+
+        return $query->whereHas('user_group', function ($query) use ($userGroups) {
+            $query->whereIn('code', $userGroups);
+        })->orWhereDoesntHave('user_group');
+    }
+
+    /**
+     * Return all public events + user_group based events query.
+     * @param $query
+     * @return mixed
+     */
+    public function scopeUserGroup($query)
+    {
+        $member = \Auth::user();
+        if (!is_null($member)) {
+            $userGroups = $member->groups()->pluck('code');
+
+            return $query->whereHas('user_group', function ($query) use ($userGroups) {
+                $query->whereIn('code', $userGroups)->orWhere('code', 'guest');
+            })->orWhereDoesntHave('user_group');
+        } else {
+            return $this->scopePublic($query);
+        }
+    }
+
+
 }

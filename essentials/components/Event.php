@@ -6,6 +6,7 @@ use Cms\Classes\Page;
 use October\Rain\Database\Relations\BelongsToMany;
 use RainLab\User\Models\User;
 use RainLab\User\Models\UserGroup;
+use GodSpeed\Essentials\Models\Event as EventModel;
 
 class Event extends ComponentBase
 {
@@ -77,7 +78,7 @@ class Event extends ComponentBase
      */
     public function prepareVars()
     {
-        $this->event = $this->page['event'] = $this->prepareEventsData($this->fetchEvent());
+        $this->event = $this->page['event'] = $this->fetchEvent();
     }
 
     /**
@@ -96,31 +97,9 @@ class Event extends ComponentBase
     {
         $user = $this->getCurrentMemberSession();
         if (!is_null($user) && $user instanceof User) {
-            $userGroups = $user->groups()->get();
-            collect($userGroups)->each(function ($group) use ($slug) {
-                $group['events'] = \GodSpeed\Essentials\Models\Event::where('slug', $slug)
-                    ->whereHas('user_group', function ($query) use ($group) {
-                        $query->where('code', $group->code)->orWhere('code', 'guest');
-                    })->orWhereDoesntHave('user_group')
-                    ->with('documents')
-                    ->get();
-            });
-
-            return $userGroups;
+            return EventModel::with('documents')->userGroup()->where('slug', $slug)->first();
         } else {
-            $data = [];
-            $guest = UserGroup::where('code', 'guest')->first();
-
-            $guest['events'] = \GodSpeed\Essentials\Models\Event::where('slug', $slug)
-                ->whereHas('user_group', function ($query) {
-                    $query->where('code', 'guest');
-                })->orWhereDoesntHave('user_group')
-                ->with('documents')
-                ->get();
-
-            array_push($data, $guest);
-
-            return $data;
+            return EventModel::with('documents')->public()->where('slug', $slug)->first();
         }
     }
 
@@ -132,41 +111,12 @@ class Event extends ComponentBase
     {
         $user = $this->getCurrentMemberSession();
         if (!is_null($user) && $user instanceof User) {
-            $userGroups = $user->groups()->get();
-            collect($userGroups)->each(function ($group) use ($id) {
-                $group['events'] = \GodSpeed\Essentials\Models\Event::where('id', $id)
-                    ->whereHas('user_group', function ($query) use ($group) {
-                        $query->where('code', $group->code)->orWhere('code', 'guest');
-                    })->orWhereDoesntHave('user_group')
-                    ->with('documents')
-                    ->get();
-            });
-
-            return $userGroups;
+            return EventModel::with('documents')->userGroup()->find($id);
         } else {
-            $data = [];
-            $guest = UserGroup::where('code', 'guest')->first();
-
-            $guest['events'] = \GodSpeed\Essentials\Models\Event::where('id', $id)
-                ->whereHas('user_group', function ($query) {
-                    $query->where('code', 'guest');
-                })->orWhereDoesntHave('user_group')
-                ->with('documents')
-                ->get();
-
-            array_push($data, $guest);
-            return $data;
+            return EventModel::with('documents')->public()->find($id);
         }
     }
 
-    public function prepareEventsData($records)
-    {
-        // return unique result of event avoid duplication due to sometimes a user might have two roles
-        return collect($records)->flatMap(function ($group) {
-            // pluck out only events arrays
-            return collect($group['events']);
-        })->unique('id')->first();
-    }
 
 
     private function generatePageTitle()

@@ -57,6 +57,7 @@ tabs:
         user_group:
             label: Target Member Type
             type: relation
+            default: 1
             tab: General
 
 

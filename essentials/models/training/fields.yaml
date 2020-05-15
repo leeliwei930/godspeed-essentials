@@ -40,3 +40,4 @@ tabs:
             label: Target Member
             type: relation
             tab: General
+            default: 1

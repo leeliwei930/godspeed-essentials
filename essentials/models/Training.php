@@ -79,7 +79,13 @@ class Training extends Model
     public $hasOne = [
 
     ];
+    /**
+     * @var array
+     */
     public $hasMany = [];
+    /**
+     * @var \string[][]
+     */
     public $belongsTo = [
         'video_playlist' => [
             \GodSpeed\Essentials\Models\Playlist::class
@@ -88,6 +94,9 @@ class Training extends Model
             \Backend\Models\User::class
         ]
     ];
+    /**
+     * @var \string[][]
+     */
     public $belongsToMany = [
         'user_group' => [
             'RainLab\User\Models\UserGroup',
@@ -96,21 +105,42 @@ class Training extends Model
 
         ]
     ];
+    /**
+     * @var array
+     */
     public $morphTo = [];
+    /**
+     * @var array
+     */
     public $morphOne = [];
+    /**
+     * @var array
+     */
     public $morphMany = [];
+    /**
+     * @var array
+     */
     public $attachOne = [];
+    /**
+     * @var \string[][]
+     */
     public $attachMany = [
         'documents' => [
             'System\Models\File'
         ]
     ];
 
+    /**
+     * @return \Illuminate\Support\Collection
+     */
     public function getVideoPlaylistOptions()
     {
         return Playlist::all()->pluck('name', 'id');
     }
 
+    /**
+     *
+     */
     public function beforeSave()
     {
         if ($user = BackendAuth::getUser()) {
@@ -118,6 +148,11 @@ class Training extends Model
         }
     }
 
+    /**
+     *
+     * @param $slug
+     * @return mixed
+     */
     public function scopeFindUserTrainingBySlug($slug)
     {
         $groups = optional(Auth::user())->groups()->pluck('code');
@@ -128,6 +163,10 @@ class Training extends Model
         ->first();
     }
 
+    /**
+     * @param $query
+     * @return mixed
+     */
     public function scopeUserGroupTraining($query)
     {
         $user = Auth::user();
@@ -149,7 +188,9 @@ class Training extends Model
     }
 
 
-
+    /**
+     * @return mixed
+     */
     public function scopeUserGroup()
     {
         $groups = optional(Auth::user())->groups()->pluck('code');
@@ -157,10 +198,13 @@ class Training extends Model
             $query->whereIn('code', $groups)
                 ->orWhere('code', 'guest');
         })
-            ->orWhereDoesntHave('user_group')
-            ->orderBy('created_at', 'desc');
+        ->orWhereDoesntHave('user_group')
+        ->orderBy('created_at', 'desc');
     }
 
+    /**
+     * @return mixed
+     */
     public function scopePublic()
     {
         return self::whereHas('user_group', function ($query) {

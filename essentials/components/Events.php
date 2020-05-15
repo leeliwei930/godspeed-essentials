@@ -19,8 +19,17 @@ class Events extends ComponentBase
      * @var
      */
     public $events;
+    /**
+     * @var
+     */
     public $eventPage;
+    /**
+     * @var
+     */
     public $timelines;
+    /**
+     * @var
+     */
     public $selectedTimeLine;
 
     /**
@@ -71,20 +80,8 @@ class Events extends ComponentBase
 
         $this->timelines = $this->page['timelines'] = $this->getTimelineLabel();
         $this->page['monthname_key'] = $this->getMonthNameKey();
-
-        $events = $this->getEventsQuery();
-        $eventCollection = $this->makeEventsCollection($events);
-
-        $this->events = $this->page['events'] = $eventCollection;
+        $this->events = $this->page['events'] = $this->getEventsQuery();
         $this->eventPage = $this->page['eventPage'] = $this->property('event_page');
-    }
-
-    public function makeEventsCollection($records)
-    {
-
-        return collect($records)->flatMap(function ($roles) {
-            return collect($roles['events']);
-        });
     }
 
 
@@ -110,33 +107,16 @@ class Events extends ComponentBase
             $this->selectedTimeLine = $lowerBound->format("d-m-Y");
         }
         if (!is_null($member)) {
-            $userGroups = $member->groups()->get();
-
-            collect($userGroups)->each(function ($group) use ($lowerBound, $upperBound) {
-                $group['events'] = Event::whereHas('user_group', function ($query) use ($group) {
-                    $query->whereIn('code', [$group->code, 'guest']);
-                })->whereBetween('started_at', [
-                    $lowerBound->toDateString(),
-                    $upperBound->toDateString()
-                ])->orWhereDoesntHave('user_group')->get();
-            });
-
-            return $userGroups;
+            return Event::userGroupBetween($lowerBound, $upperBound)->get();
         } else {
-            $userGroups = UserGroup::where('code', 'guest')->get();
-            collect($userGroups)->each(function ($group) use ($lowerBound, $upperBound) {
-                $group['events'] = Event::whereHas('user_group', function ($query) use ($group) {
-                    $query->where('code', $group->code);
-                })->whereBetween('started_at', [
-                    $lowerBound->toDateString(),
-                    $upperBound->toDateString()
-                ])->orWhereDoesntHave('user_group')->get();
-            });
-
-            return $userGroups;
+            return Event::publicBetween($lowerBound, $upperBound)->get();
         }
     }
 
+    /**
+     * Checking on the first day of the month specify in the url, if not system date will be used.
+     * @return mixed|string
+     */
     public function getMonthlyScopedValue()
     {
         // if there is no monthname presented, pick the latest one
@@ -157,35 +137,24 @@ class Events extends ComponentBase
     }
 
 
+    /**
+     * Aggregate the events to month-year group
+     * @return mixed
+     */
     public function getTimelineLabel()
     {
         $member = $this->getCurrentMemberSession();
         $eventID = collect();
 
-        if(!is_null($member)) {
-            $userGroups =  $member->groups()->get();
-
-            collect($userGroups)->each(function ($group) use ($eventID) {
-                $events = Event::whereHas('user_group', function ($query) use ($group, $eventID) {
-                    $query->whereIn('code', [$group->code, 'guest']);
-                })->orWhereDoesntHave('user_group')->pluck('id');
-
-                $events->each(function ($event) use ($eventID) {
-                    $eventID->push($event);
-                });
-            });
+        if (!is_null($member)) {
+            $events = Event::userGroup();
+            $eventID = $events->pluck('id');
         } else {
-            $userGroups = UserGroup::where('code', 'guest')->get();
-            collect($userGroups)->each(function ($group) use ($eventID) {
-                $events = Event::whereHas('user_group', function ($query) use ($group, $eventID) {
-                    $query->where('code', $group->code);
-                })->orWhereDoesntHave('user_group')->pluck('id');
+            $events = Event::public();
 
-                $events->each(function ($event) use ($eventID) {
-                    $eventID->push($event);
-                });
-            });
+            $eventID = $events->pluck('id');
         }
+
         $eventID = $eventID->toArray();
 
 
@@ -196,12 +165,20 @@ class Events extends ComponentBase
             ->get();
     }
 
+    /**
+     * Return the default month name query parameter
+     * @return string
+     */
     private function getDefaultMonthNameField()
     {
         return 'scope';
     }
 
 
+    /**
+     * Get the monthname query parameter value
+     * @return string|null
+     */
     public function getMonthNameKey()
     {
         return $this->property('monthname_field');
