@@ -3,6 +3,8 @@
 use BackendAuth;
 use Model;
 use GodSpeed\Essentials\Models\Playlist;
+use RainLab\User\Facades\Auth;
+use RainLab\User\Models\UserGroup;
 
 /**
  * Training Model
@@ -114,5 +116,57 @@ class Training extends Model
         if ($user = BackendAuth::getUser()) {
             $this->user = $user;
         }
+    }
+
+    public function scopeFindUserTrainingBySlug($slug)
+    {
+        $groups = optional(Auth::user())->groups()->pluck('code');
+        return self::whereHas('user_group', function ($query) use ($groups) {
+            $query->whereIn('code', $groups)->orWhere('code', 'guest');
+        })->orWhereDoesntHave('user_group')
+        ->where('slug', $slug)
+        ->first();
+    }
+
+    public function scopeUserGroupTraining($query)
+    {
+        $user = Auth::user();
+
+        if (is_null($user)) {
+            $groups = UserGroup::where('code', 'guest')->pluck('code');
+            return $query->whereHas('user_group', function ($query) use ($groups) {
+                $query->whereIn('code', $groups);
+            })
+            ->orWhereDoesntHave('user_group')
+            ->with('documents', 'user_group', 'video_playlist.videos');
+        }
+        $groups = optional($user)->groups()->pluck('code');
+
+        return $query->whereHas('user_group', function ($query) use ($groups) {
+            $query->whereIn('code', $groups)->orWhere('code', 'guest');
+        })->orWhereDoesntHave('user_group')
+        ->with('documents', 'user_group', 'video_playlist.videos');
+    }
+
+
+
+    public function scopeUserGroup()
+    {
+        $groups = optional(Auth::user())->groups()->pluck('code');
+        return self::whereHas('user_group', function ($query) use ($groups) {
+            $query->whereIn('code', $groups)
+                ->orWhere('code', 'guest');
+        })
+            ->orWhereDoesntHave('user_group')
+            ->orderBy('created_at', 'desc');
+    }
+
+    public function scopePublic()
+    {
+        return self::whereHas('user_group', function ($query) {
+            $query->where('code', 'guest');
+        })
+            ->orWhereDoesntHave('user_group')
+            ->orderBy('created_at', 'desc');
     }
 }

@@ -22,7 +22,7 @@ class PortalRecentPrivateAnnouncements extends ComponentBase
     {
         return [
             'name' => 'Recent Private Announcements',
-            'description' => 'Load a collection of recent private announcement based on given parameters'
+            'description' => 'Load a collection of recent private announcement based on given parameters',
         ];
     }
 

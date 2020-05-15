@@ -20,8 +20,8 @@ class Training extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name' => 'Training Component',
-            'description' => 'No description provided yet...'
+            'name' => 'Training',
+            'description' => 'Render a single training record based onhe URL parameter'
         ];
     }
 
@@ -73,11 +73,11 @@ class Training extends ComponentBase
         switch ($this->property('searchBy')) {
             case 'id':
                 // fetch all relations
-                return TrainingModel::with(['documents', 'user_group', 'video_playlist.videos'])
+                return TrainingModel::userGroupTraining()
                     ->find($this->getSearchKey());
                 break;
             case 'slug':
-                return TrainingModel::with(['documents', 'user_group', 'video_playlist.videos'])
+                return TrainingModel::userGroupTraining()
                     ->where('slug', $this->getSearchKey())
                     ->first();
                 break;
@@ -92,5 +92,11 @@ class Training extends ComponentBase
     {
         return $this->property('searchKey');
     }
+
+
+    private function getCurrentLoginMemberSession(){
+        return \Auth::user();
+    }
+
 
 }

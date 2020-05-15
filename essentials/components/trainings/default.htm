@@ -1,5 +1,5 @@
-{% if __SELF__.trainings %}
-    {% for training in __SELF__.trainings %}
+{% if trainings %}
+    {% for training in trainings %}
 <div class="col-12  col-md-10 col-lg-5">
 
             <training-card
@@ -41,7 +41,7 @@
     <div class="mx-auto overflow-x-scroll">
 
 
-        {{ __SELF__.trainings.render() | raw }}
+        {{ trainings.render() | raw }}
     </div>
 {% else %}
 

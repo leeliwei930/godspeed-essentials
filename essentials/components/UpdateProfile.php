@@ -27,8 +27,8 @@ class UpdateProfile extends Account
     public function componentDetails()
     {
         return [
-            'name' => 'UpdateProfile Component',
-            'description' => 'No description provided yet...'
+            'name' => 'UpdateProfile',
+            'description' => 'Render an update profile form'
         ];
     }
 

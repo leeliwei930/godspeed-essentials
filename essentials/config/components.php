@@ -24,4 +24,5 @@ return [
     "GodSpeed\Essentials\Components\FaqCategories" => "FaqCategories",
     "GodSpeed\Essentials\Components\Products" => "Products",
     "GodSpeed\Essentials\Components\Product" => "Product",
+    "GodSpeed\Essentials\Components\PortalRecentPrivateAnnouncements" => "PortalRecentPrivateAnnouncements",
 ];

@@ -6,6 +6,7 @@ use GodSpeed\Essentials\Models\Training;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use October\Rain\Support\Collection;
+use RainLab\User\Facades\Auth;
 
 /**
  * Class Trainings
@@ -40,11 +41,6 @@ class Trainings extends ComponentBase
                 'validationPattern' => '^[0-9]+$',
                 'validationMessage' => 'perPage value must be a numeric',
                 'default' => 10
-            ],
-            'requireAuth' => [
-                'title' => 'Require user authentication',
-                'type' => 'checkbox',
-                'default' => 1
             ]
         ];
     }
@@ -70,11 +66,12 @@ class Trainings extends ComponentBase
      */
     public function fetchTrainings()
     {
-        if ($this->requireAuth()) {
+
+        if (!is_null($this->getCurrentMemberLoginSession())) {
             return $this->getLoggedInUserTrainings();
-        } else {
-            return $this->paginateAllTrainings();
         }
+        return $this->paginateAllTrainings();
+
     }
 
     /**
@@ -83,9 +80,7 @@ class Trainings extends ComponentBase
      */
     public function paginateAllTrainings()
     {
-        return Training::paginate($this->property('perPage'), $this->getCurrentPage())
-                ->orderBy('created_at', 'desc')
-                ->toArray();
+        return Training::public()->paginate($this->property('perPage'), $this->getCurrentPage());
     }
 
     /**
@@ -94,40 +89,12 @@ class Trainings extends ComponentBase
      */
     public function getLoggedInUserTrainings()
     {
-        $userRoles = optional(\Auth::user())->groups()
-                ->with([
-                    'trainings' => function ($query) {
-                        $query->orderBy('created_at', 'desc');
-                    },
-                    'trainings.video_playlist.videos',
-                    'trainings.documents'
-                ])
-                ->get() ?? collect();
-
-
-        $trainings = collect();
-
-        collect($userRoles)->each(function ($role) use ($trainings) {
-            collect($role['trainings'])->each(function ($training) use ($trainings) {
-                $trainings->push($training);
-            });
-        });
-
-        $records = $trainings->unique('id');
-
-        $response = $this->paginate($records, $this->property('perPage'), $this->getCurrentPage(), [
-            'path' => url($this->page->url)
-        ]);
-        return $response;
+        return Training::userGroup()->paginate($this->property('perPage'), $this->getCurrentPage());
     }
 
-    /**
-     * Determine return the result should be based on user's roles
-     * @return bool
-     */
-    public function requireAuth()
+    private function getCurrentMemberLoginSession()
     {
-        return $this->property('requireAuth') == 1;
+        return Auth::user();
     }
 
     /**
