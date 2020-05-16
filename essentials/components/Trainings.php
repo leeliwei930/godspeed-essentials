@@ -18,6 +18,9 @@ class Trainings extends ComponentBase
      * @var
      */
     public $trainings;
+    public $trainingPage;
+    public $trainingPageSlug;
+
 
     /**
      * @return array
@@ -41,6 +44,16 @@ class Trainings extends ComponentBase
                 'validationPattern' => '^[0-9]+$',
                 'validationMessage' => 'perPage value must be a numeric',
                 'default' => 10
+            ],
+            'training_page' => [
+                'title' => "Training Page",
+                'type' => 'dropdown',
+                'options' => Page::getNameList()
+            ],
+            'training_page_slug' => [
+                'title' => "Training Page Slug",
+                'type' => 'string',
+                'default' => 'slug'
             ]
         ];
     }
@@ -59,6 +72,8 @@ class Trainings extends ComponentBase
     public function prepareVars()
     {
         $this->page['trainings'] = $this->trainings = $this->fetchTrainings();
+        $this->page['trainingPage'] = $this->trainingPage = $this->property('training_page');
+        $this->page['trainingPageSlug'] = $this->trainingPageSlug = $this->property('training_page_slug');
     }
 
     /**
@@ -106,20 +121,7 @@ class Trainings extends ComponentBase
     }
 
 
-    /**
-     * Generate pagination wrapper response
-     * @param $items
-     * @param int $perPage
-     * @param null $page
-     * @param array $options
-     * @return LengthAwarePaginator
-     */
-    public function paginate($items, $perPage = 15, $page = null, $options = [])
-    {
-        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
-
-        $items = $items instanceof Collection ? $items : Collection::make($items);
-
-        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    public function getTrainingPageUrl($slug){
+        return Page::url($this->trainingPage, [$this->trainingPageSlug => $slug]);
     }
 }

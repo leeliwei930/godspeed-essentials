@@ -10,7 +10,7 @@
                 <stack-menu-item
                     class="mx-3 my-1"
                     :is-active="'{{ category.slug }}' === state.selected"
-                    href="{{ __SELF__.getCategoryLink(category.slug) }}"
+                    href="{{ this.page.url ~  __SELF__.getCategoryLink(category.slug)}}"
                 >
                     {{ category.name }}
                 </stack-menu-item>

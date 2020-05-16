@@ -32,6 +32,7 @@ class Events extends ComponentBase
      */
     public $selectedTimeLine;
 
+    public $eventPageSlug;
     /**
      * @return array
      */
@@ -59,6 +60,11 @@ class Events extends ComponentBase
                 'title' => "Event Detail Page",
                 'type' => "dropdown",
                 'options' => Page::getNameList()
+            ],
+            'event_page_slug' => [
+                'title' => "Event Page Slug",
+                'type' => 'string',
+                'default' => "slug"
             ]
 
         ];
@@ -82,6 +88,7 @@ class Events extends ComponentBase
         $this->page['monthname_key'] = $this->getMonthNameKey();
         $this->events = $this->page['events'] = $this->getEventsQuery();
         $this->eventPage = $this->page['eventPage'] = $this->property('event_page');
+        $this->eventPageSlug = $this->page['eventPageSlug'] = $this->property('event_page_slug');
     }
 
 
@@ -182,5 +189,10 @@ class Events extends ComponentBase
     public function getMonthNameKey()
     {
         return $this->property('monthname_field');
+    }
+
+
+    public function getEventPageUrl($slug){
+        return Page::url($this->eventPage, [$this->eventPageSlug => $slug]);
     }
 }

@@ -5,7 +5,7 @@
             <training-card
                 class="my-3"
                 title="{{ training.title }}"
-                primary-link="{{ "volunteer/training" | page({'slug' : training.slug}) }}"
+                primary-link="{{ __SELF__.getTrainingPageUrl(training.slug) }}"
                 :posted-at="$tzConverter.convert('{{ training.created_at }}', 'dddd, MMM D Y hh:mm a')"
             >
                 <div class="d-flex flex-column flex-wrap ">

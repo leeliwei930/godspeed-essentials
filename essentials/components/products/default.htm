@@ -1,5 +1,5 @@
-<div class="d-flex flex-row justify-content-around align-items-stretch flex-wrap my-3 ">
-    <div class="col-12  col-lg-12">
+<div class="d-flex flex-column align-items-stretch flex-wrap m-3">
+    <div class="col-12  col-lg-12 m-0">
         <producer-card
             origin="{{ __SELF__.producer.origin }}"
             name="{{ __SELF__.producer.name }}"
@@ -10,15 +10,15 @@
         >
         </producer-card>
     </div>
-    <div class="col-12  col-lg-12 my-3 mx-0 px-0">
-        <h3 class="text-primary heading small mx-3">{{ __SELF__.producer.name }}'s Products Catalogue</h3>
+    <div class="d-flex flex-column">
+        <h3 class="text-primary heading small m-3">{{ __SELF__.producer.name }}'s Products Catalogue</h3>
         {% if __SELF__.products  is not empty %}
 
-                <div class="d-flex flex-wrap py-3" id="product_list">
+                <div class="d-flex flex-grow-1 flex-wrap" id="product_list">
                     {% for product in __SELF__.products  %}
-                        <div class="col-12 col-md-6 col-lg-4 col-xl-3 ">
+                        <div class="col-12 col-md-6 col-lg-4">
                             <product-card
-                                class="my-2"
+                                class="my-2  w-100"
                                 data-image="{{ product.featured_image ? product.featured_image | media : null }}"
                                 image="{{ product.featured_image ? product.featured_image | media  |  lazyload(350, null, {quality: '15', blur : 15}) : null  }}"
                                 categories="{{ product.categories | json_encode }}"
@@ -40,7 +40,7 @@
                                 {% endif %}
 
                                 <template slot="actions">
-                                        <a href="{{ "producer/product" | page({slug: product.slug}) }}" class="d-flex align-items-center flex-grow-1 justify-content-center  btn btn-primary rounded m-2 hover-move-right">
+                                        <a href="{{ __SELF__.getProductPageUrl(product.slug) }}" class="d-flex align-items-center flex-grow-1 justify-content-center  btn btn-primary rounded m-2 hover-move-right">
                                             Read More
                                         <i class="fas fa-chevron-right ml-2"></i>
                                         </a>

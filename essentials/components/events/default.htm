@@ -27,7 +27,7 @@
 
                         name="{{ event.title }}"
                         timezone="{{ event.timezone }}"
-                        link="{{ eventPage | page({slug: event.slug}) }}"
+                        link="{{ __SELF__.getEventPageUrl(event.slug) }}"
                         ics-link="{{ event.ics.getPath() }}"
                         location="{{ event.location }}"
                     >

@@ -37,11 +37,6 @@ class FaqCategories extends ComponentBase
                 "title" => "Category URL parameter query",
                 'type' => "string",
                 'default' => "category"
-            ],
-            'faqs_page' => [
-                'title' => "FAQ Page",
-                'type' => 'dropdown',
-                'options' => Page::getNameList()
             ]
         ];
     }
@@ -105,6 +100,6 @@ class FaqCategories extends ComponentBase
     }
 
     public function getCategoryLink($slug){
-        return Page::url($this->property('faqs_page'))."?{$this->property('category_parameter_key')}={$slug}";
+        return "?{$this->property('category_parameter_key')}={$slug}";
     }
 }

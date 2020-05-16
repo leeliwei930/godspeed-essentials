@@ -1,11 +1,15 @@
 <?php namespace GodSpeed\Essentials\Components;
 
 use Cms\Classes\ComponentBase;
+use Cms\Classes\Page;
 use GodSpeed\Essentials\Models\Producer;
 
 class AllProducer extends ComponentBase
 {
     public $producers;
+    public $producerPage;
+    public $producerPageSlug;
+
     public function componentDetails()
     {
         return [
@@ -28,7 +32,15 @@ class AllProducer extends ComponentBase
                 'validationPattern' => '^[0-9]+$',
                 'validationMessage' => 'The limit property can contain only numeric symbols',
                 'placeholder' => "If 0 all producers will be loaded."
-
+            ],
+            'producer_page' => [
+                'title' => "Producer Page",
+                'type' => 'dropdown'
+            ],
+            'producer_page_slug' => [
+                'title' => "Producer Page Slug",
+                'type' => 'string',
+                'default' => 'slug'
             ]
         ];
     }
@@ -36,6 +48,8 @@ class AllProducer extends ComponentBase
     public function onRun()
     {
         $this->producers = $this->page['producers'] =  $this->loadProducers();
+        $this->producerPage = $this->page['producerPage'] = $this->property('producer_page');
+        $this->producerPageSlug = $this->page['producerPageSlug'] = $this->property('producer_page_slug');
     }
 
 
@@ -61,5 +75,8 @@ class AllProducer extends ComponentBase
             return $eloquentBuilder;
 
         }
+    }
+    public function getProducerPageUrl($slug){
+        return Page::url($this->producerPage, [$this->producerPageSlug => $slug]);
     }
 }

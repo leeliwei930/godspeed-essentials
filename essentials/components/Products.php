@@ -3,6 +3,7 @@
 use Cms\Classes\ComponentBase;
 
 
+use Cms\Classes\Page;
 use GodSpeed\Essentials\Models\Producer;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
@@ -17,6 +18,8 @@ class Products extends ComponentBase
 {
     public $producer;
     public $products;
+    public $productPage;
+    public $productPageSlug;
 
 
     /**
@@ -53,6 +56,15 @@ class Products extends ComponentBase
                 'validationPattern' => '^[0-9]+$',
                 'validationMessage' => 'perPage value must be a numeric',
                 'default' => 10
+            ],
+            'product_page' => [
+                'title' => "Product Page",
+                'type' => 'dropdown'
+            ],
+            'product_page_slug' => [
+                'title' => "Product Page Slug",
+                'type' => 'string',
+                'default' => 'slug'
             ]
         ];
     }
@@ -82,6 +94,8 @@ class Products extends ComponentBase
     {
         $this->producer = $this->page['producer'] = $this->fetchProducerProducts();
         $this->page['products'] = $this->products;
+        $this->productPage = $this->page['productPage'] = $this->property('product_page');
+        $this->productPageSlug = $this->page['productPageSlug'] = $this->property('product_page_slug');
     }
 
     /**
@@ -146,4 +160,7 @@ class Products extends ComponentBase
         return (\Input::has('page')) ? \Input::get('page') : 1;
     }
 
+    public function getProductPageUrl($slug){
+        return Page::url($this->productPage, [$this->productPageSlug => $slug]);
+    }
 }
