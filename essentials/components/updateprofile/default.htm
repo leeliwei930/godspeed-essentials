@@ -1,6 +1,6 @@
 {{ form_ajax(__SELF__~'::onUpdate', { 'data-request-validate' : true, 'data-request-flash': true , 'files' : true}) }}
 
-<div class="d-flex flex-shrink-1 flex-column flametree-theme align-items-center flex-wrap  p-5 ">
+<div class="d-flex flex-shrink-1 flex-column align-items-center flex-wrap  p-5 ">
 
 
 
@@ -39,7 +39,7 @@
             <label for="phone_number" class="text-uppercase">Phone Number</label>
 
             <input type="text" id="phone_number" name="phone_number" class="text-field"
-                   value="{{ __SELF__.user.phone_number }}">
+                   value="{{ __SELF__.user.godspeed_essentials_phone_number }}">
 
         </div>
         <small class="text-danger" data-validate-for="phone_number"></small>

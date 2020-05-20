@@ -82,7 +82,7 @@ class UpdateProfile extends Account
         $user->update([
             'name' => post('name'),
             'surname' => post('surname'),
-            'phone_number' => post('phone_number'),
+            'godspeed_essentials_phone_number' => post('phone_number'),
         ]);
 
         $hasRequestToChangedPassword = post('reset_password') === "on";
