@@ -6,15 +6,14 @@
               title="{{ announcement.title }}"
               featured-image-url="{{ announcement.featured_images[0].getLocalPath() | lazyload(640, null) }}"
               data-featured-image-url="{{ announcement.featured_images[0].path }}"
-              description="{{ str_words(announcement.content, 20) }}"
               author="{{ announcement.user.full_name }}"
               author-avatar-image="{{ announcement.user.getAvatarThumb(35) }}"
               author-role="{{ announcement.user.role.name }}"
               :published-on="$tzConverter.convert('{{  announcement.published_at }}', 'dddd, MMM D Y hh:mm a')"
           >
-              <div class="d-flex flex-column flex-wrap justify-content-between mt-5">
+              <div class="d-flex flex-column flex-md-row flex-wrap justify-content-between mt-1">
                   {% if announcement.categories is not empty %}
-                      <div class="d-flex align-items-center flex-row">
+                      <div class="d-flex align-items-center flex-row flex-grow-1 flex-md-grow-0 ">
                           <i class="text-primary fas fa-tags mr-2"></i>
                           {% for index, category in announcement.categories %}
                               <a target="_blank" class="text-link" href="{{ 'volunteer/announcement-category' | page({category: category.slug}) }}">

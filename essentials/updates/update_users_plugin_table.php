@@ -11,7 +11,7 @@ class UpdateUsersPluginTable extends Migration
     {
         if (PluginManager::instance()->hasPlugin('RainLab.User')) {
             Schema::table('users', function (Blueprint $table) {
-                $table->string('phone_number')->nullable()->after('email');
+                $table->string('godspeed_essentials_phone_number')->nullable()->after('email');
             });
         }
     }
@@ -20,9 +20,9 @@ class UpdateUsersPluginTable extends Migration
     {
         if (PluginManager::instance()->hasPlugin('RainLab.User')) {
             Schema::table('users', function (Blueprint $table) {
-                if (Schema::hasColumn('users', 'phone_number')) {
+                if (Schema::hasColumn('users', 'godspeed_essentials_phone_number')) {
                     $table->dropColumn([
-                        'phone_number'
+                        'godspeed_essentials_phone_number'
                     ]);
                 }
             });

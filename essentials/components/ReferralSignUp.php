@@ -154,7 +154,7 @@ class ReferralSignUp extends \RainLab\User\Components\Account
             $userActivation = UserSettings::get('activate_mode') == UserSettings::ACTIVATE_USER;
             $user = Auth::register($data, $automaticActivation);
 
-            $user->referral_id = optional($referralData)->id;
+            $user->godspeed_essentials_referral_id = optional($referralData)->id;
             $referralData->updateUsageLeft();
             // grant the user to specific group based on the referral selected role
             $referralGroup = $referralData->user_group()->get();

@@ -73,7 +73,7 @@ class PortalBlogPostsPolicy extends PolicyBase
         $condition = [
             'guest' => function (Builder $builder) use ($resourceModel) {
                 $builder->whereDoesntHave('categories')->orWhereHas('categories', function ($builder) use ($resourceModel) {
-                    $builder->where('user_group', null);
+                    $builder->where('godspeed_essentials_user_group', null);
                 });            },
             'user' => function (Builder $builder) use ($resourceModel) {
                 $groups = $this->subjectModel->groups->pluck('id')->toArray();
@@ -82,7 +82,7 @@ class PortalBlogPostsPolicy extends PolicyBase
                  **/
 
                 $builder->whereDoesntHave('categories')->orWhereHas('categories', function ($builder) use ($resourceModel, $groups) {
-                    $builder->whereIn('user_group', array_merge([null], $groups));
+                    $builder->whereIn('godspeed_essentials_user_group', array_merge([null], $groups));
                 });
             }
 

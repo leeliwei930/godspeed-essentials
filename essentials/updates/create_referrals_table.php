@@ -31,8 +31,8 @@ class CreateReferralsTable extends Migration
 
             if (Schema::hasTable('users')) {
                 Schema::table('users', function (Blueprint $table) {
-                    $table->unsignedInteger('referral_id')->nullable();
-//                    $table->foreign('referral_id')->references('id')->on('godspeed_essentials_referrals')->onDelete('set null');
+                    $table->unsignedInteger('godspeed_essentials_referral_id')->nullable();
+
                 });
             }
         }
@@ -43,9 +43,8 @@ class CreateReferralsTable extends Migration
         if (PluginManager::instance()->hasPlugin('RainLab.User')) {
             if (Schema::hasTable('users')) {
                 Schema::table('users', function (Blueprint $table) {
-                    if (Schema::hasColumn('users', 'referral_id')) {
-//                        $table->dropForeign(['referral_id']);
-                        $table->dropColumn('referral_id');
+                    if (Schema::hasColumn('users', 'godspeed_essentials_referral_id')) {
+                        $table->dropColumn('godspeed_essentials_referral_id');
                     }
                 });
             }

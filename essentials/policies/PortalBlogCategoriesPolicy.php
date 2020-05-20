@@ -65,14 +65,14 @@ class PortalBlogCategoriesPolicy extends PolicyBase
         $userType = (is_null($this->subjectModel))? "guest" : "user";
         $condition = [
             'guest' => function (Builder $builder) {
-                $builder->where('user_group', null);
+                $builder->where('godspeed_essentials_user_group', null);
             },
             'user' => function (Builder $builder) {
                 $groups = $this->subjectModel->groups->pluck('id')->toArray();
                 /** return the category that is no user_group attach (public) +
                  * include the category that match any current logged in user_group
                 **/
-                $builder->orWhereNull('user_group')->orWhereIn('user_group', array_merge([null], $groups));
+                $builder->orWhereNull('godspeed_essentials_user_group')->orWhereIn('godspeed_essentials_user_group', array_merge([null], $groups));
             }
 
         ];

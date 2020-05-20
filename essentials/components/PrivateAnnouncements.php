@@ -29,9 +29,9 @@ class PrivateAnnouncements extends Posts
         $groups = Auth::check() ? Auth::user()->groups->pluck('id')->toArray() : [];
 
         $posts = BlogPost::whereHas('categories', function (Builder $query) use ($groups) {
-            $query = $query->whereNotNull('user_group');
+            $query = $query->whereNotNull('godspeed_essentials_user_group');
             if (count($groups) > 0) {
-                $query->whereIn('user_group', $groups);
+                $query->whereIn('godspeed_essentials_user_group', $groups);
             }
         })->with('categories')->listFrontEnd([
             'page'             => $this->property('pageNumber'),

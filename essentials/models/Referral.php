@@ -76,11 +76,12 @@ class Referral extends Model
     public $hasMany = [
         'users' => [
             'RainLab\User\Models\User',
+            'key' => 'godspeed_essentials_referral_id'
         ]
     ];
     public $belongsTo = [
         'user_group' => [
-            'RainLab\User\Models\UserGroup',
+            'RainLab\User\Models\UserGroup'
 
         ]
     ];

@@ -13,8 +13,8 @@ class UpdateBlogPlugin extends Migration
 
             if (Schema::hasTable('rainlab_blog_categories')) {
                 Schema::table('rainlab_blog_categories', function (Blueprint $table) {
-                    $table->string('featured_image')->nullable()->after('description');
-                    $table->unsignedInteger('user_group')->nullable()->after('id');
+                    $table->string('godspeed_essentials_featured_image')->nullable()->after('description');
+                    $table->unsignedInteger('godspeed_essentials_user_group')->nullable()->after('id');
                 });
             }
         }
@@ -26,11 +26,11 @@ class UpdateBlogPlugin extends Migration
 
             if (Schema::hasTable('rainlab_blog_categories')) {
                 Schema::table('rainlab_blog_categories', function (Blueprint $table) {
-                    if (Schema::hasColumn('rainlab_blog_categories', 'featured_image')) {
-                        $table->dropColumn('featured_image');
+                    if (Schema::hasColumn('rainlab_blog_categories', 'godspeed_essentials_featured_image')) {
+                        $table->dropColumn('godspeed_essentials_featured_image');
                     }
-                    if (Schema::hasColumn('rainlab_blog_categories', 'user_group')) {
-                        $table->dropColumn('user_group');
+                    if (Schema::hasColumn('rainlab_blog_categories', 'godspeed_essentials_user_group')) {
+                        $table->dropColumn('godspeed_essentials_user_group');
                     }
                 });
             }

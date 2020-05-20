@@ -104,7 +104,7 @@ class Plugin extends PluginBase
         }
 
         if ($pluginManagerInstance->hasPlugin('RainLab.Blog')) {
-            if (\Schema::hasColumn('rainlab_blog_categories', 'user_group')) {
+            if (\Schema::hasColumn('rainlab_blog_categories', 'godspeed_essentials_user_group')) {
                 $this->extendBlogCategoriesFormField();
             }
         }
@@ -242,18 +242,22 @@ class Plugin extends PluginBase
                 'table' => 'godspeed_essentials_roles_trainings', 'key' => 'role_id', 'other_key' => 'training_id'
             ];
             $model->hasOne['referral'] = [
-                \GodSpeed\Essentials\Models\Referral::class
+                \GodSpeed\Essentials\Models\Referral::class,
+                'otherKey' => 'godspeed_essentials_referral_id',
+
             ];
 
         });
 
 
         User::extend(function ($model) {
-            $model->addFillable('phone_number');
-            $model->addFillable('referral_id');
+            $model->addFillable('godspeed_essentials_phone_number');
+            $model->addFillable('godspeed_essentials_referral_id');
 
             $model->hasOne['referral'] = [
-                \GodSpeed\Essentials\Models\Referral::class
+                \GodSpeed\Essentials\Models\Referral::class,
+                'key' => 'godspeed_essentials_referral_id',
+
             ];
         });
 
@@ -263,16 +267,16 @@ class Plugin extends PluginBase
                 return;
             }
 
-            $model->rules['phone_number'] = "between:8,20";
+            $model->rules['godspeed_essentials_phone_number'] = "between:8,20";
             $form->addFields([
-                'phone_number' => [
+                'godspeed_essentials_phone_number' => [
                     "label" => "Phone Number"
                 ]
             ]);
         });
 
         RainLabUsersController::extendListColumns(function ($list, $model) {
-            $list->addColumns(['phone_number' => [
+            $list->addColumns(['godspeed_essentials_phone_number' => [
                 'searchable' => true,
                 'label' => "Phone Number",
             ]]);
@@ -303,35 +307,35 @@ class Plugin extends PluginBase
             $model->bindEvent('model.form.filterFields', function ($widget, $fields, $context) use ($model) {
                 switch ($context) {
                     case "create":
-                        if ($fields->required_auth->value === "0") {
-                            $fields->user_group->value = null;
-                            $fields->user_group->hidden = true;
+                        if ($fields->godspeed_essentials_required_auth->value === "0") {
+                            $fields->godspeed_essentials_user_group->value = null;
+                            $fields->godspeed_essentials_user_group->hidden = true;
                         } else {
-                            $model->user_group = null;
-                            $fields->user_group->hidden = false;
+                            $model->godspeed_essentials_user_group = null;
+                            $fields->godspeed_essentials_user_group->hidden = false;
                         }
                         break;
 
                     case "update":
-                        if ($fields->user_group->value != null) {
-                            $fields->required_auth->value = "1";
+                        if ($fields->godspeed_essentials_user_group->value != null) {
+                            $fields->godspeed_essentials_required_auth->value = "1";
                         }
-                        if ($fields->required_auth->value === "0") {
-                            $fields->user_group->value = null;
-                            $fields->user_group->hidden = true;
+                        if ($fields->godspeed_essentials_required_auth->value === "0") {
+                            $fields->godspeed_essentials_user_group->value = null;
+                            $fields->godspeed_essentials_user_group->hidden = true;
                         } else {
-                            $fields->user_group->hidden = false;
+                            $fields->godspeed_essentials_user_group->hidden = false;
                         }
                         break;
                 }
             });
             $model->bindEvent('model.beforeValidate', function () use ($model) {
-                if ($model->required_auth == 0) {
-                    $model->user_group = null;
+                if ($model->godspeed_essentials_required_auth == 0) {
+                    $model->godspeed_essentials_user_group = null;
                 }
-                $model->rules['user_group'] = 'nullable|exists:user_groups,id';
+                $model->rules['godspeed_essentials_user_group'] = 'nullable|exists:user_groups,id';
 
-                unset($model->required_auth);
+                unset($model->godspeed_essentials_required_auth);
             });
         });
 
@@ -348,17 +352,17 @@ class Plugin extends PluginBase
 
 
             $widget->addFields([
-                'featured_image' => [
+                'godspeed_essentials_featured_image' => [
                     'label' => 'Featured Image',
                     'type' => 'mediafinder'
                 ],
-                'required_auth' => [
+                'godspeed_essentials_required_auth' => [
                     "type" => "checkbox",
                     "label" => "Restricted Access",
                     'span' => "left"
 
                 ],
-                'user_group' => [
+                'godspeed_essentials_user_group' => [
                     'label' => "Only visible to",
                     "type" => "dropdown",
                     "options" => UserGroup::pluck('name', 'id'),
@@ -368,7 +372,7 @@ class Plugin extends PluginBase
                     "trigger" => [
 
                         'action' => 'show',
-                        'field' => "required_auth",
+                        'field' => "godspeed_essentials_required_auth",
                         'condition' => "checked"
                     ]
 
