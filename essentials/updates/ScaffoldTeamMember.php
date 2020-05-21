@@ -33,9 +33,6 @@ class ScaffoldTeamMember extends Seeder
     public function run()
     {
         // if the current  theme is set to other, dont seed the flametree data
-        if(Theme::getActiveThemeCode() !== 'flametree-theme'){
-            return;
-        }
 
         $this->tearDown();
 
@@ -53,6 +50,10 @@ class ScaffoldTeamMember extends Seeder
             }
         });
         $group = UserGroup::create($groups);
+        
+        if(Theme::getActiveThemeCode() !== 'flametree-theme'){
+            return;
+        }
 
 
         $this->generateBackendUser($roles['advertising-team']['code'], $groups['name']);

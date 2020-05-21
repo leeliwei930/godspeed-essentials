@@ -58,3 +58,6 @@
 1.1.0:
 - Fix phone number unable to update issue in UpdateProfile component,
   due to update the incorrect field name phone_number instead of godspeed_essentials_phone_number in User model.
+
+1.1.1:
+    - Fix plugin system roles doesn't get seed to database issue causing plugin doesn't show up in menu bar
