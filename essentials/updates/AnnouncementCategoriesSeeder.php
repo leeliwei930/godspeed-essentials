@@ -14,44 +14,44 @@ class AnnouncementCategoriesSeeder extends Seeder
         $annoucementCategories = [
             [
                 'name' => "Cooking",
-                'featured_image' => 'announcement-categories/cooking.jpg'
+                'godspeed_essentials_featured_image' => 'announcement-categories/cooking.jpg'
             ],
             [
                 'name' => "Discount",
-                'featured_image' => 'announcement-categories/discount.jpg'
+                'godspeed_essentials_featured_image' => 'announcement-categories/discount.jpg'
             ],
             [
                 'name' => "Health",
-                'featured_image' => 'announcement-categories/health.jpg'
+                'godspeed_essentials_featured_image' => 'announcement-categories/health.jpg'
             ],
             [
                 'name' => "Organic",
-                'featured_image' => 'announcement-categories/organic.jpg'
+                'godspeed_essentials_featured_image' => 'announcement-categories/organic.jpg'
 
             ],
             [
                 'name' => "Cultivation",
-                'featured_image' => 'announcement-categories/cultivation.jpg'
+                'godspeed_essentials_featured_image' => 'announcement-categories/cultivation.jpg'
 
             ],
             [
                 'name' => "Agriculture",
-                'featured_image' => 'announcement-categories/agriculture.jpg'
+                'godspeed_essentials_featured_image' => 'announcement-categories/agriculture.jpg'
 
             ],
             [
                 'name' => "Event",
-                'featured_image' => 'announcement-categories/event.jpg'
+                'godspeed_essentials_featured_image' => 'announcement-categories/event.jpg'
 
             ],
             [
                 'name' => "Meeting",
-                'featured_image' => 'announcement-categories/meeting.jpg'
+                'godspeed_essentials_featured_image' => 'announcement-categories/meeting.jpg'
 
             ],
             [
                 'name' => "Membership",
-                'featured_image' => 'announcement-categories/membership.png'
+                'godspeed_essentials_featured_image' => 'announcement-categories/membership.png'
             ]
         ];
         if(Theme::getActiveThemeCode() !== 'flametree-theme'){

@@ -1,4 +1,4 @@
-<div class="d-flex flex-column align-items-stretch flex-wrap m-3">
+<div class="d-flex flex-column align-items-center flex-wrap m-3">
     <div class="col-12  col-lg-12 m-0">
         <producer-card
             origin="{{ __SELF__.producer.origin }}"
@@ -16,7 +16,7 @@
 
                 <div class="d-flex flex-grow-1 flex-wrap" id="product_list">
                     {% for product in __SELF__.products  %}
-                        <div class="col-12 col-md-6 col-lg-4">
+                        <div class="col-12 col-md-6 col-lg-4 col-xl-3">
                             <product-card
                                 class="my-2  w-100"
                                 data-image="{{ product.featured_image ? product.featured_image | media : null }}"
