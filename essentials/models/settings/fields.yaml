@@ -42,5 +42,14 @@ tabs:
             type: dropdown
             tab: Lazy Load
             span: right
-
+        product_default_currency:
+            label: Product Default Currency
+            type: dropdown
+            tab: Default Value Configuration
+            span: left
+        default_timezone:
+            label: Plugin Default Timezone
+            type: dropdown
+            tab: Default Value Configuration
+            span: right
 

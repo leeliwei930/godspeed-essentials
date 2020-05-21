@@ -125,7 +125,13 @@ class Referral extends Model
         ];
         $this->rules = $rules;
     }
-    public function getValidBeforeAttributes($date)
+
+    public function filterFields($fields, $context = null){
+        if ($context === "create") {
+            $fields->timezone->value = Settings::get('default_timezone', 'Australia/Sydney');
+        }
+    }
+    public function getValidBeforeAttribute($date)
     {
         // if the system timezone is match with the record timezone, don't convert it
         if ($this->getSystemTimezone() === $this->timezone) {
@@ -139,7 +145,7 @@ class Referral extends Model
         return $validBeforeDate->setTimezone($this->timezone);
     }
 
-    public function getValidAfterAttributes($date)
+    public function getValidAfterAttribute($date)
     {
         // if the system timezone is match with the record timezone, don't convert it
         if ($this->getSystemTimezone() === $this->timezone) {
@@ -153,7 +159,7 @@ class Referral extends Model
         return $validBeforeDate->setTimezone($this->timezone);
     }
 
-    public function setValidBeforeAttribues($date)
+    public function setValidBeforeAttribute($date)
     {
 
         // if the selected timezone is match with the system timezone, just save the record
@@ -166,7 +172,7 @@ class Referral extends Model
         $this->attributes['valid_before'] = $startedAt->setTimezone($this->getSystemTimezone())->toDateTimeString();
     }
 
-    public function setValidAfterAttributes($date)
+    public function setValidAfterAttribute($date)
     {
         if ($this->getSystemTimezone() === $this->timezone) {
             $this->attributes['valid_after'] = $date;
@@ -179,7 +185,7 @@ class Referral extends Model
 
     public function getSystemTimezone()
     {
-        return config('app.timezone');
+        return \Config::get('cms.backendTimezone');
     }
 
     /**
@@ -191,6 +197,8 @@ class Referral extends Model
         $timezones = collect(timezone_identifiers_list())->mapWithKeys(function ($value) {
             return [$value => $value];
         });
+        unset($timezones['UTC']);
+
         return $timezones->toArray();
     }
 

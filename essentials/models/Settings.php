@@ -47,4 +47,20 @@ class Settings extends Model
             "gif" => "GIF"
         ];
     }
+
+    public function getProductDefaultCurrencyOptions(){
+        return \Config::get('godspeed.essentials::currencies');
+    }
+
+    public function getDefaultTimezoneOptions(){
+
+        $timezones = collect(timezone_identifiers_list())->mapWithKeys(function ($value) {
+            return [$value => $value];
+        });
+        unset($timezones['UTC']);
+
+        return $timezones->toArray();
+
+
+    }
 }

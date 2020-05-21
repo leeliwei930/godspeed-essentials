@@ -154,10 +154,21 @@ class Product extends Model
         ];
     }
 
-    public function getCurrencyOptions()
+    public function getCurrencyOptions($fieldName, $value, $formData)
     {
+
         return \Config::get('godspeed.essentials::currencies');
     }
+
+    public function filterFields($fields, $context = null)
+    {
+        if ($context == 'create') {
+            $fields->currency->value = Settings::get('product_default_currency', 'AUD');
+        }
+    }
+
+
+
 
     public function getFeaturedImageAttribute()
     {
@@ -168,13 +179,12 @@ class Product extends Model
         }
     }
 
-    public function getPriceTagAttribute(){
-        if($this->type === 'service'){
-            return money_format($this->currency . " %i/". ucfirst($this->billing_cycle) , $this->price);
-
+    public function getPriceTagAttribute()
+    {
+        if ($this->type === 'service') {
+            return money_format($this->currency . " %i/". ucfirst($this->billing_cycle), $this->price);
         } else {
             return money_format($this->currency . " %i", $this->price);
-
         }
     }
 }

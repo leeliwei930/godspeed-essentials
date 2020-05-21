@@ -59,7 +59,7 @@ class FactorySeeder extends Seeder
 
         });
 
-        factory(Product::class, 20)->create()->each(function ($product) {
+        factory(Product::class, 20)->create(['currency' =>  'AUD', 'type' => 'product'])->each(function ($product) {
             $producerCategoriesID = factory(ProductCategory::class, 5)->create()->pluck('id');
             $producer = Producer::all()->random();
             $product->categories()->attach($producerCategoriesID);

@@ -200,7 +200,9 @@ class Event extends Model
     private function makeiCalEvent()
     {
         $event = new \Eluceo\iCal\Component\Event();
+
         $event->setTimezoneString($this->timezone);
+
         $event->setDtStart($this->started_at);
         $event->setDtEnd($this->ended_at);
         $event->setSummary($this->title);
@@ -216,6 +218,7 @@ class Event extends Model
         $timezones = collect(timezone_identifiers_list())->mapWithKeys(function ($value) {
             return [$value => $value];
         });
+        unset($timezones['UTC']);
         return $timezones->toArray();
     }
 
@@ -237,7 +240,7 @@ class Event extends Model
     public function filterFields($fields, $context = null)
     {
         if ($context === "create") {
-            $fields->timezone->value = $this->getSystemTimezone();
+            $fields->timezone->value = Settings::get('default_timezone', 'Australia/Sydney');
         }
     }
 
@@ -273,6 +276,8 @@ class Event extends Model
             $this->attributes['started_at'] = $date;
             return;
         }
+
+
         // convert the time to UTC
         $startedAt = Carbon::parse($date, $this->timezone);
         $this->attributes['started_at'] = $startedAt->setTimezone($this->getSystemTimezone())->toDateTimeString();
@@ -383,6 +388,4 @@ class Event extends Model
             return $this->scopePublic($query);
         }
     }
-
-
 }
