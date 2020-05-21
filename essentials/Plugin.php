@@ -75,6 +75,7 @@ class Plugin extends PluginBase
      */
     public function register()
     {
+        $this->registerServiceProviders();
         $this->app[EloquentFactory::class]->load(plugins_path('godspeed/essentials/database/factories'));
 
         $this->registerConsoleCommand('essentials:install', Install::class);
@@ -391,6 +392,11 @@ class Plugin extends PluginBase
                 new FaqSearchProvider()
             ];
         });
+    }
+
+
+    public function registerServiceProviders(){
+        \App::register("SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider");
     }
 
 

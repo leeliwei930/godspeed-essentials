@@ -41,15 +41,5 @@
         "simplesoftwareio/simple-qrcode": "~2",
         "mbezhanov/faker-provider-collection": "^1.2"
 
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider"
-            ],
-            "aliases": {
-                "QrCode": "SimpleSoftwareIO\\QrCode\\Facades\\QrCode"
-            }
-        }
     }
 }

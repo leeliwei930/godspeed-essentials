@@ -63,3 +63,6 @@
     - Fix plugin system roles doesn't get seed to database issue causing plugin doesn't show up in menu bar
 1.1.2:
     - Remove Arcane SEO plugin dependency
+
+1.1.3:
+    - Fixing unknown class name 'qrcode' error occurred by injecting QRCodeServiceProvider into plugin register method.
