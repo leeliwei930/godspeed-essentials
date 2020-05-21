@@ -1,5 +1,5 @@
-<div class="d-flex flex-column align-items-center flex-wrap m-3">
-    <div class="col-12  col-lg-12 m-0">
+<div class="d-flex flex-column align-items-stretch flex-wrap m-3">
+    <div class="d-flex flex-grow-1">
         <producer-card
             origin="{{ __SELF__.producer.origin }}"
             name="{{ __SELF__.producer.name }}"
@@ -10,15 +10,15 @@
         >
         </producer-card>
     </div>
-    <div class="d-flex flex-column">
-        <h3 class="text-primary heading small m-3">{{ __SELF__.producer.name }}'s Products Catalogue</h3>
+    <div class="d-flex flex-column  align-items-md-stretch align-items-center">
+        <h3 class="text-primary heading small m-3 align-self-start">{{ __SELF__.producer.name }}'s Products Catalogue</h3>
         {% if __SELF__.products  is not empty %}
 
-                <div class="d-flex flex-grow-1 flex-wrap" id="product_list">
+                <div class="d-flex flex-wrap justify-content-start" id="product_list">
                     {% for product in __SELF__.products  %}
-                        <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                        <div class="d-flex mx-3 flex-grow-1 flex-md-grow-0">
                             <product-card
-                                class="my-2  w-100"
+                                class="my-2 flex-grow-1"
                                 data-image="{{ product.featured_image ? product.featured_image | media : null }}"
                                 image="{{ product.featured_image ? product.featured_image | media  |  lazyload(350, null, {quality: '15', blur : 15}) : null  }}"
                                 categories="{{ product.categories | json_encode }}"
