@@ -397,6 +397,8 @@ class Plugin extends PluginBase
 
     public function registerServiceProviders(){
         \App::register("SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider");
+        \App::register("Intervention\\Image\\ImageServiceProvider");
+
     }
 
 
