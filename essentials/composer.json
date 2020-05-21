@@ -38,8 +38,18 @@
         "james-heinrich/getid3": "dev-master",
         "intervention/image": "2.5.1",
         "eluceo/ical": "*",
-        "simplesoftwareio/simple-qrcode": "^2.0",
+        "simplesoftwareio/simple-qrcode": "~2",
         "mbezhanov/faker-provider-collection": "^1.2"
 
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SimpleSoftwareIO\\QrCode\\QrCodeServiceProvider"
+            ],
+            "aliases": {
+                "QrCode": "SimpleSoftwareIO\\QrCode\\Facades\\QrCode"
+            }
+        }
     }
 }
