@@ -1,6 +1,7 @@
 {
     "name": "godspeed/essentials",
     "description": "Provide an essential tools for  business that  require membership management feature",
+    "type": "october-plugin",
 
 
     "authors": [
