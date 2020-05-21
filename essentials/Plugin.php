@@ -43,7 +43,7 @@ class Plugin extends PluginBase
         'RainLab.MailChimp',
         'AnandPatel.WysiwygEditors',
         'Offline.SiteSearch',
-        'Arcane.Seo'
+
     ];
 
     /**
