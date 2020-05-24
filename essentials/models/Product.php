@@ -154,7 +154,7 @@ class Product extends Model
         ];
     }
 
-    public function getCurrencyOptions($fieldName, $value, $formData)
+    public function getCurrencyOptions()
     {
 
         return \Config::get('godspeed.essentials::currencies');

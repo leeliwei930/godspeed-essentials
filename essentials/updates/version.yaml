@@ -69,3 +69,6 @@
 
 1.1.4:
     - Adding default value configuration in settings page, support assign default value such as timezone and currency for product.
+
+1.1.5:
+    - Fix an error get thrown while loading the getCurrencyOptions in Product Model.
