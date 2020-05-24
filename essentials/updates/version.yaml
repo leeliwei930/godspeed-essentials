@@ -65,7 +65,7 @@
     - Remove Arcane SEO plugin dependency
 
 1.1.3:
-    - Fixing unknown class name 'qrcode' error occurred by injecting QRCodeServiceProvider into plugin register method.
+    - Fixing unknown class name qrcode error occurred by injecting QRCodeServiceProvider into plugin register method.
 
 1.1.4:
     - Adding default value configuration in settings page, support assign default value such as timezone and currency for product.
