@@ -16,7 +16,7 @@ class ImageSlider extends Seeder
     public function run()
     {
         // if the current  theme is set to other, dont seed the flametree data
-        if(Theme::getActiveThemeCode() !== 'flametree-theme'){
+        if(Theme::getActiveThemeCode() !== 'godspeed-flametree-theme'){
             return;
         }
         $slider = [

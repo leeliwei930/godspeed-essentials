@@ -54,7 +54,7 @@ class AnnouncementCategoriesSeeder extends Seeder
                 'godspeed_essentials_featured_image' => 'announcement-categories/membership.png'
             ]
         ];
-        if(Theme::getActiveThemeCode() !== 'flametree-theme'){
+        if(Theme::getActiveThemeCode() !== 'godspeed-flametree-theme'){
             return;
         }
         // teardown

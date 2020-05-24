@@ -50,8 +50,8 @@ class ScaffoldTeamMember extends Seeder
             }
         });
         $group = UserGroup::create($groups);
-        
-        if(Theme::getActiveThemeCode() !== 'flametree-theme'){
+
+        if(Theme::getActiveThemeCode() !== 'godspeed-flametree-theme'){
             return;
         }
 

@@ -14,7 +14,7 @@ class EventSeeder extends Seeder
         if (env('APP_ENV') === 'acceptance') {
             return;
         }
-        if(Theme::getActiveThemeCode() !== 'flametree-theme'){
+        if(Theme::getActiveThemeCode() !== 'godspeed-flametree-theme'){
             return;
         }
         $events  = factory(Event::class, 10)->create([
