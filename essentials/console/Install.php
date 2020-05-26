@@ -1,6 +1,7 @@
 <?php namespace GodSpeed\Essentials\Console;
 
 use Cms\Classes\Theme;
+
 use Dotenv\Dotenv;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
@@ -34,26 +35,29 @@ class Install extends Command
 
         if (!\Schema::hasTable('backend_users')) {
             $this->call('october:up');
+            $this->call('theme:use', ['name' => 'godspeed-flametree-theme']);
+
         } else {
 
             $manager = UpdateManager::instance()->setNotesOutput($this->output);
 
 
             $this->output->writeln('<info>Reinstalling plugin...</info>');
+
             $manager->updatePlugin('RainLab.Pages');
 
             $manager->updatePlugin('RainLab.User');
             $manager->updatePlugin('RainLab.Blog');
             $manager->updatePlugin('Arcane.Seo');
 
+
+
+
             $manager->updatePlugin('GodSpeed.Essentials');
 
         }
 
-        if(Theme::getActiveThemeCode() !== 'flametree-theme'){
-            $this->call('theme:use', ['name' => 'flametree-theme']);
 
-        }
     }
 
     /**
