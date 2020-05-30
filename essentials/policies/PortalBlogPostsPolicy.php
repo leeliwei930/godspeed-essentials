@@ -82,7 +82,8 @@ class PortalBlogPostsPolicy extends PolicyBase
                  **/
 
                 $builder->whereDoesntHave('categories')->orWhereHas('categories', function ($builder) use ($resourceModel, $groups) {
-                    $builder->whereIn('godspeed_essentials_user_group', array_merge([null], $groups));
+                    $builder->whereIn('godspeed_essentials_user_group', $groups)
+                        ->orWhere('godspeed_essentials_user_group', null);
                 });
             }
 

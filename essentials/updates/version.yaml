@@ -72,3 +72,6 @@
 
 1.1.5:
     - Fix an error get thrown while loading the getCurrencyOptions in Product Model.
+
+1.1.6:
+    - Fix a problem when there is a user session, public announcements page doesn't load any posts  that is public.
