@@ -11,7 +11,7 @@
                 :published-on="$tzConverter.convert('{{  post.created_at }}', 'dddd, MMM D Y hh:mm a')"
                 description="{{ str_limit(post.excerpt, 120)  }}"
             >
-                <div class="d-flex justify-content-center my-3">
+                <div class="d-flex justify-content-between my-3">
                     <a class="btn btn-primary rounded px-5" target="_blank" href="{{ "blog/announcement" | page({slug: post.slug}) }}">READ MORE
                     </a>
                 </div>
